@@ -4821,3 +4821,70 @@ body.car-page .scene {
   font-weight: 900;
   text-decoration: none;
 }
+
+/* Teacher homepage student link card */
+
+.student-link-card {
+  max-width: 640px;
+  margin: 28px auto 0;
+  padding: 18px;
+  border: 1px solid #40566b;
+  border-radius: 16px;
+  background: #101d2a;
+  text-align: left;
+}
+
+.student-link-label {
+  margin: 0;
+  color: #7dd3fc;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.student-link-help {
+  margin: 6px 0 12px;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.student-link-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.student-link-input {
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #51677a;
+  border-radius: 10px;
+  background: #0b1620;
+  color: #f8fafc;
+  font: inherit;
+}
+
+.copy-student-link-button {
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: #38bdf8;
+  color: #082032;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.student-link-status {
+  min-height: 20px;
+  margin: 8px 0 0;
+  color: #86efac;
+  font-weight: 900;
+}
+
+@media (max-width: 650px) {
+  .student-link-row {
+    grid-template-columns: 1fr;
+  }
+}

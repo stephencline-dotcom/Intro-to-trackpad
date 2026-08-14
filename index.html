@@ -21,11 +21,103 @@
 
       <a
         class="teacher-start-button"
-        href="trackpad-fullscreen.html"
+        href="lesson.html"
       >
         Start Lesson
       </a>
+
+      <section class="student-link-card">
+        <p class="student-link-label">
+          Student Link
+        </p>
+
+        <p class="student-link-help">
+          Copy this link and paste it into GoGuardian.
+        </p>
+
+        <div class="student-link-row">
+          <input
+            id="studentLinkInput"
+            class="student-link-input"
+            type="text"
+            readonly
+            aria-label="Student lesson link"
+          />
+
+          <button
+            id="copyStudentLinkButton"
+            class="copy-student-link-button"
+            type="button"
+          >
+            Copy Student Link
+          </button>
+        </div>
+
+        <p
+          id="studentLinkStatus"
+          class="student-link-status"
+          aria-live="polite"
+        ></p>
+      </section>
     </section>
   </main>
+
+  <script>
+    const studentLinkInput =
+      document.getElementById(
+        'studentLinkInput'
+      );
+
+    const copyStudentLinkButton =
+      document.getElementById(
+        'copyStudentLinkButton'
+      );
+
+    const studentLinkStatus =
+      document.getElementById(
+        'studentLinkStatus'
+      );
+
+    const studentUrl =
+      new URL(
+        'lesson.html?view=student',
+        window.location.href
+      ).href;
+
+    studentLinkInput.value =
+      studentUrl;
+
+    copyStudentLinkButton.addEventListener(
+      'click',
+      async () => {
+        try {
+          await navigator.clipboard.writeText(
+            studentUrl
+          );
+
+          studentLinkStatus.textContent =
+            'Copied!';
+        } catch {
+          studentLinkInput.select();
+
+          document.execCommand(
+            'copy'
+          );
+
+          studentLinkStatus.textContent =
+            'Copied!';
+        }
+
+        window.setTimeout(
+          () => {
+            studentLinkStatus.textContent =
+              '';
+          },
+          1800
+        );
+      }
+    );
+  </script>
+
 </body>
 </html>

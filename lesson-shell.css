@@ -1,0 +1,1966 @@
+.lesson-page {
+  margin: 0;
+  min-height: 100vh;
+  background: #0f1722;
+  color: #f8fafc;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.lesson-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 28px;
+}
+
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.lesson-eyebrow,
+.teacher-panel-label {
+  margin: 0 0 6px;
+  color: #7dd3fc;
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.lesson-title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.lesson-progress {
+  width: 190px;
+  text-align: right;
+  font-weight: 800;
+}
+
+.lesson-progress-track {
+  height: 8px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #26384a;
+}
+
+.lesson-progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: #38bdf8;
+  transition: width 180ms ease;
+}
+
+.lesson-card {
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  overflow: hidden;
+  border: 1px solid #40566b;
+  border-radius: 22px;
+  background: #162332;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.25);
+}
+
+.teacher-panel {
+  padding: 30px;
+  border-right: 1px solid #40566b;
+  background: #13202d;
+}
+
+.teacher-panel h2 {
+  margin: 0 0 18px;
+  font-size: 1.65rem;
+}
+
+.teacher-prompt {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.lesson-activity {
+  min-height: 500px;
+  display: grid;
+  place-items: center;
+  padding: 36px;
+  box-sizing: border-box;
+}
+
+.lesson-activity-message {
+  max-width: 700px;
+  text-align: center;
+}
+
+.lesson-activity-message h2 {
+  margin: 0 0 16px;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
+.lesson-activity-message p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.lesson-big-icon {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 6rem;
+}
+
+.lesson-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.lesson-nav-button,
+.lesson-home-button {
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1px solid #50677d;
+  border-radius: 12px;
+  background: #1d2d3d;
+  color: #f8fafc;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lesson-nav-button:first-child {
+  justify-self: start;
+}
+
+.lesson-nav-button:last-child {
+  justify-self: end;
+}
+
+.lesson-home-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lesson-nav-button-primary {
+  border-color: #38bdf8;
+  background: #38bdf8;
+  color: #082032;
+}
+
+.lesson-nav-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 800px) {
+  .lesson-card {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-panel {
+    border-right: 0;
+    border-bottom: 1px solid #40566b;
+  }
+}
+
+.lesson-trackpad-image {
+  display: block;
+  width: min(420px, 80%);
+  max-height: 300px;
+  margin: 0 auto 24px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.25));
+}
+
+/* Student display mode
+   Uses the same lesson content but removes teacher-only information.
+*/
+
+.lesson-page[data-lesson-view="student"] .teacher-panel {
+  display: none;
+}
+
+.lesson-page[data-lesson-view="student"] .lesson-card {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.lesson-page[data-lesson-view="student"] .lesson-activity {
+  min-height: 620px;
+  border-radius: 24px;
+  background: #ffffff;
+  color: #0b2b55;
+}
+
+.lesson-page[data-lesson-view="student"] .lesson-header {
+  margin-bottom: 14px;
+}
+
+.lesson-page[data-lesson-view="student"] .lesson-controls {
+  margin-top: 16px;
+}
+
+.teacher-sync-panel {
+  margin-top: 18px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid #40566b;
+  border-radius: 14px;
+  background: #13202d;
+}
+
+.teacher-sync-label {
+  margin: 0;
+  font-weight: 900;
+  color: #f8fafc;
+}
+
+.teacher-sync-status {
+  margin: 3px 0 0;
+  color: #94a3b8;
+  font-size: 0.88rem;
+}
+
+.teacher-sync-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.teacher-sync-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.teacher-sync-switch {
+  width: 54px;
+  height: 30px;
+  position: relative;
+  border-radius: 999px;
+  background: #475569;
+  transition: background 160ms ease;
+}
+
+.teacher-sync-switch::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 160ms ease;
+}
+
+.teacher-sync-toggle input:checked + .teacher-sync-switch {
+  background: #38bdf8;
+}
+
+.teacher-sync-toggle input:checked + .teacher-sync-switch::after {
+  transform: translateX(24px);
+}
+
+.lesson-page[data-lesson-view="student"] .teacher-sync-panel {
+  display: none;
+}
+
+/* Lesson 1 — Find Your Trackpad */
+
+.lesson-find-trackpad {
+  width: min(760px, 100%);
+  text-align: center;
+}
+
+.lesson-find-trackpad h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.lesson-kid-prompt {
+  margin: 8px 0 22px;
+  color: #47617b;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.lesson-device-visual {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.lesson-keyboard-card {
+  width: min(420px, 85%);
+}
+
+.lesson-keyboard-label,
+.lesson-trackpad-label {
+  margin-bottom: 7px;
+  color: #2f7ed8;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.lesson-keyboard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  padding: 16px;
+  border: 4px solid #6f8192;
+  border-radius: 18px;
+  background: #dfe7ef;
+}
+
+.lesson-keyboard span {
+  height: 24px;
+  border-radius: 6px;
+  background: #8fa0b0;
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.lesson-down-arrow {
+  color: #f5b800;
+  font-size: 4rem;
+  font-weight: 1000;
+  line-height: 0.8;
+}
+
+.lesson-trackpad-callout {
+  position: relative;
+  width: min(320px, 70%);
+}
+
+.lesson-pointer-hand {
+  position: absolute;
+  z-index: 3;
+  left: -45px;
+  top: 18px;
+  font-size: 3.7rem;
+  transform: rotate(-18deg);
+}
+
+.lesson-trackpad-image {
+  display: block;
+  width: 100%;
+  max-height: 180px;
+  margin: 0 auto 8px;
+  object-fit: contain;
+}
+
+.lesson-find-challenge {
+  margin: 24px auto 0;
+  width: fit-content;
+  max-width: 90%;
+  padding: 12px 20px;
+  border: 3px solid #f5b800;
+  border-radius: 999px;
+  background: #fff7c7;
+  color: #18344f;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.lesson-page[data-lesson-view="student"] .lesson-activity {
+  background: #ffffff;
+}
+
+/* Kinder-friendly Chromebook visual */
+
+.chromebook-visual {
+  width: min(620px, 95%);
+  margin: 20px auto 0;
+  padding: 24px 28px 22px;
+  border: 4px solid #8194a6;
+  border-radius: 26px;
+  background: #dfe7ef;
+  box-sizing: border-box;
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.18);
+}
+
+.chromebook-keyboard {
+  padding: 18px;
+  border-radius: 18px;
+  background: #cbd6df;
+}
+
+.keyboard-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.keyboard-row:last-child {
+  margin-bottom: 0;
+}
+
+.keyboard-row-short {
+  grid-template-columns:
+    1fr 1fr 1fr 1fr 3fr 1fr 1fr;
+}
+
+.keyboard-row span {
+  height: 30px;
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc,
+      #cbd5e1
+    );
+  border: 1px solid #94a3b8;
+  box-shadow:
+    0 2px 0 rgba(71, 85, 105, 0.25);
+}
+
+.keyboard-row .space-key {
+  min-width: 120px;
+}
+
+.trackpad-pointer {
+  height: 72px;
+  position: relative;
+}
+
+.trackpad-arrow {
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  transform: translateX(-50%);
+  color: #f4b400;
+  font-size: 4.5rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.trackpad-hand {
+  position: absolute;
+  right: 17%;
+  top: 12px;
+  font-size: 3.5rem;
+  transform: rotate(-10deg);
+}
+
+.trackpad-focus {
+  width: min(320px, 70%);
+  margin: 0 auto;
+  padding: 8px;
+  border: 5px solid #f4b400;
+  border-radius: 20px;
+  background: #fff8d7;
+  box-shadow:
+    0 8px 18px rgba(15, 23, 42, 0.16);
+}
+
+.trackpad-focus img {
+  display: block;
+  width: 100%;
+  max-height: 155px;
+  object-fit: contain;
+}
+
+.trackpad-word {
+  margin: 12px 0 0;
+  color: #2563eb;
+  font-size: 1.1rem;
+  font-weight: 1000;
+  letter-spacing: 0.1em;
+}
+
+.lesson-page[data-lesson-view="student"] .chromebook-visual {
+  max-width: 720px;
+}
+
+/* Better kindergarten keyboard + trackpad visual */
+
+.chromebook-keyboard {
+  width: min(520px, 94%);
+  margin: 0 auto;
+  padding: 18px;
+  border: 4px solid #7b8da0;
+  border-radius: 18px;
+  background: #dbe4ec;
+  box-sizing: border-box;
+}
+
+.keyboard-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.keyboard-row-middle {
+  grid-template-columns: repeat(9, 1fr);
+  padding: 0 18px;
+}
+
+.keyboard-row-bottom {
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0 48px;
+}
+
+.keyboard-row span {
+  display: grid;
+  place-items: center;
+  height: 34px;
+  border: 1px solid #8798aa;
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #cbd5e1
+    );
+  color: #31465b;
+  font-size: 0.82rem;
+  font-weight: 900;
+  box-shadow:
+    0 2px 0 rgba(51, 65, 85, 0.22);
+}
+
+.keyboard-space-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.keyboard-space-key {
+  width: 42%;
+  height: 30px;
+  border: 1px solid #8798aa;
+  border-radius: 6px;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #cbd5e1
+    );
+  box-shadow:
+    0 2px 0 rgba(51, 65, 85, 0.22);
+}
+
+.generic-trackpad {
+  width: min(300px, 65%);
+  height: 145px;
+  margin: 0 auto;
+  border: 5px solid #f4b400;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc,
+      #d8e1e9
+    );
+  box-shadow:
+    inset 0 0 0 2px #9fb0bf,
+    0 8px 18px rgba(15, 23, 42, 0.15);
+}
+
+.trackpad-pointer {
+  height: 74px;
+  position: relative;
+}
+
+.trackpad-arrow {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  color: #f4b400;
+  font-size: 4.4rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.trackpad-hand {
+  position: absolute;
+  right: 18%;
+  top: 16px;
+  font-size: 3.4rem;
+  transform: rotate(-12deg);
+}
+
+/* Chromebook-style trackpad */
+.generic-trackpad {
+  width: min(300px, 65%);
+  height: 145px;
+  margin: 0 auto;
+
+  border: 6px solid #66727d;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #3d4650 0%,
+      #252c33 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 2px #4f5963,
+    0 8px 18px rgba(15, 23, 42, 0.18);
+}
+
+/* Lesson 1 — Step 2: Pointer Finger */
+
+.lesson-pointer-finger-step {
+  width: min(760px, 100%);
+  text-align: center;
+}
+
+.lesson-pointer-finger-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.pointer-finger-visual {
+  margin: 26px auto 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 28px;
+  width: min(640px, 95%);
+}
+
+.pointer-hand-card,
+.pointer-trackpad-card {
+  min-height: 250px;
+  padding: 24px;
+  border: 3px solid #d6e0ea;
+  border-radius: 24px;
+  background: #f8fbff;
+  box-sizing: border-box;
+}
+
+.pointer-hand-emoji {
+  font-size: 7rem;
+  line-height: 1;
+}
+
+.pointer-finger-arrow {
+  margin-top: -10px;
+  color: #f4b400;
+  font-size: 3rem;
+  font-weight: 1000;
+}
+
+.pointer-finger-label,
+.pointer-slide-label {
+  margin-top: 8px;
+  color: #2563eb;
+  font-size: 0.95rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.pointer-finger-plus {
+  color: #f4b400;
+  font-size: 3rem;
+  font-weight: 1000;
+}
+
+.pointer-trackpad-small {
+  width: 190px;
+  height: 120px;
+}
+
+.pointer-slide-arrow {
+  margin-top: 12px;
+  color: #f4b400;
+  font-size: 3rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+@media (max-width: 700px) {
+  .pointer-finger-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .pointer-finger-plus {
+    transform: rotate(90deg);
+  }
+}
+
+/* Step 2 animated pointer-finger demonstration */
+
+.finger-demo {
+  position: relative;
+  width: 240px;
+  height: 205px;
+  margin: 0 auto;
+}
+
+.finger-demo .pointer-trackpad-small {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+.animated-pointer-finger {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: -12px;
+  font-size: 4.6rem;
+  line-height: 1;
+
+  transform:
+    translateX(-50%)
+    rotate(180deg);
+
+  animation:
+    pointerFingerPractice 3.2s
+    ease-in-out
+    infinite;
+}
+
+.finger-motion-path {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 42px;
+
+  transform: translateX(-50%);
+
+  color: #f4b400;
+  font-size: 3.3rem;
+  font-weight: 1000;
+
+  opacity: 0.8;
+}
+
+@keyframes pointerFingerPractice {
+  0% {
+    left: 50%;
+    top: -12px;
+  }
+
+  18% {
+    left: 50%;
+    top: 55px;
+  }
+
+  35% {
+    left: 30%;
+    top: 115px;
+  }
+
+  55% {
+    left: 70%;
+    top: 115px;
+  }
+
+  75% {
+    left: 38%;
+    top: 115px;
+  }
+
+  88% {
+    left: 50%;
+    top: 55px;
+  }
+
+  100% {
+    left: 50%;
+    top: -12px;
+  }
+}
+
+/* Step 2 — keep pointer finger upright */
+.animated-pointer-finger {
+  transform:
+    translateX(-50%)
+    rotate(0deg);
+}
+
+/* Right pointer hand — back of hand facing student */
+
+.lesson-right-hand {
+  position: relative;
+  width: 115px;
+  height: 180px;
+  margin: 0 auto;
+}
+
+.lesson-index-finger {
+  position: absolute;
+  z-index: 3;
+  left: 45px;
+  top: 0;
+  width: 28px;
+  height: 105px;
+  border: 3px solid #9a6649;
+  border-radius: 18px 18px 12px 12px;
+  background: #e6ae82;
+  box-sizing: border-box;
+}
+
+.lesson-index-finger::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  width: 12px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0c5a4;
+  opacity: 0.7;
+}
+
+.lesson-hand-body {
+  position: absolute;
+  z-index: 2;
+  left: 24px;
+  top: 82px;
+  width: 78px;
+  height: 88px;
+  border: 3px solid #9a6649;
+  border-radius: 32px 32px 28px 28px;
+  background: #e6ae82;
+  box-sizing: border-box;
+}
+
+.lesson-tucked-finger {
+  position: absolute;
+  top: 5px;
+  width: 19px;
+  height: 42px;
+  border: 2px solid #9a6649;
+  border-radius: 12px;
+  background: #dda276;
+  box-sizing: border-box;
+}
+
+.lesson-tucked-finger.finger-one {
+  left: 8px;
+}
+
+.lesson-tucked-finger.finger-two {
+  left: 28px;
+}
+
+.lesson-tucked-finger.finger-three {
+  left: 48px;
+}
+
+.lesson-thumb {
+  position: absolute;
+  right: -17px;
+  top: 35px;
+  width: 31px;
+  height: 55px;
+  border: 3px solid #9a6649;
+  border-radius: 18px;
+  background: #dda276;
+  transform: rotate(22deg);
+  transform-origin: top left;
+  box-sizing: border-box;
+}
+
+/* Smaller copy used in the animated trackpad demonstration. */
+
+.lesson-right-hand-small {
+  transform: scale(0.55);
+  transform-origin: top center;
+}
+
+/*
+ * The wrapper moves.
+ * The hand itself remains upright with the
+ * pointer finger pointing toward the top
+ * of the student's screen.
+ */
+
+.animated-pointer-finger {
+  width: 115px;
+  height: 100px;
+  margin-left: -57px;
+  transform: none;
+}
+
+/* Lesson 1 — Step 3: finger movement moves the cursor */
+
+.lesson-arrow-step {
+  width: min(820px, 100%);
+  text-align: center;
+}
+
+.lesson-arrow-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.arrow-motion-demo {
+  width: min(760px, 96%);
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.demo-screen {
+  position: relative;
+  height: 265px;
+  overflow: hidden;
+  border: 6px solid #384b5e;
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      180deg,
+      #dff4ff 0%,
+      #ffffff 100%
+    );
+  box-shadow:
+    0 12px 22px rgba(15, 23, 42, 0.15);
+}
+
+.demo-screen-label {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  color: #2f7ed8;
+  font-size: 0.85rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.moving-cursor {
+  position: absolute;
+  left: 18%;
+  top: 48%;
+  color: #0b2b55;
+  font-size: 4.2rem;
+  line-height: 1;
+
+  animation:
+    cursorMoveDemo 3.2s
+    ease-in-out
+    infinite;
+}
+
+.motion-equals {
+  color: #f4b400;
+  font-size: 3rem;
+  font-weight: 1000;
+}
+
+.demo-trackpad-area {
+  display: grid;
+  justify-items: center;
+}
+
+.step3-finger-demo {
+  height: 205px;
+}
+
+.step3-pointer-finger {
+  animation:
+    pointerFingerPractice 3.2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes cursorMoveDemo {
+  0% {
+    left: 45%;
+  }
+
+  18% {
+    left: 45%;
+  }
+
+  35% {
+    left: 20%;
+  }
+
+  55% {
+    left: 70%;
+  }
+
+  75% {
+    left: 30%;
+  }
+
+  88% {
+    left: 45%;
+  }
+
+  100% {
+    left: 45%;
+  }
+}
+
+@media (max-width: 760px) {
+  .arrow-motion-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .motion-equals {
+    transform: rotate(90deg);
+  }
+}
+
+/* Step 3 — make the computer screen unmistakable */
+
+.demo-laptop {
+  width: 100%;
+}
+
+.demo-screen {
+  position: relative;
+  height: 265px;
+  overflow: hidden;
+  border: 12px solid #303942;
+  border-bottom-width: 16px;
+  border-radius: 18px 18px 10px 10px;
+  background:
+    linear-gradient(
+      180deg,
+      #ccefff 0%,
+      #eefaff 72%,
+      #ffffff 100%
+    );
+  box-sizing: border-box;
+  box-shadow:
+    0 12px 22px rgba(15, 23, 42, 0.18);
+}
+
+.demo-camera {
+  position: absolute;
+  z-index: 3;
+  top: -8px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #111827;
+}
+
+.demo-screen-label {
+  top: 14px;
+  font-size: 0.9rem;
+}
+
+.demo-screen-shelf {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border-top: 1px solid #cbd5e1;
+}
+
+.demo-screen-shelf span {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  background: #5ba9e6;
+}
+
+.demo-laptop-base {
+  width: 108%;
+  height: 14px;
+  margin-left: -4%;
+  border-radius: 2px 2px 12px 12px;
+  background: #687580;
+  box-shadow:
+    0 4px 6px rgba(15, 23, 42, 0.18);
+}
+
+/* Step 3 — Chromebook-style mouse cursor */
+
+.moving-cursor {
+  position: absolute;
+  z-index: 5;
+  left: 18%;
+  top: 48%;
+
+  width: 0;
+  height: 0;
+
+  border-top: 22px solid #ffffff;
+  border-right: 10px solid transparent;
+  border-left: 3px solid transparent;
+
+  filter:
+    drop-shadow(1px 0 0 #111827)
+    drop-shadow(-1px 0 0 #111827)
+    drop-shadow(0 1px 0 #111827)
+    drop-shadow(0 -1px 0 #111827);
+
+  transform:
+    rotate(-35deg);
+
+  transform-origin: top left;
+
+  animation:
+    cursorMoveDemo 3.2s
+    ease-in-out
+    infinite;
+}
+
+/* FINAL Step 3 cursor — override all earlier cursor artwork */
+.moving-cursor {
+  width: 22px !important;
+  height: 30px !important;
+
+  border: 0 !important;
+  background: transparent !important;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    7px 78%,
+    12px 98%,
+    17px 96%,
+    12px 75%,
+    22px 75%
+  );
+
+  background-color: #ffffff !important;
+
+  filter:
+    drop-shadow(1px 0 0 #111827)
+    drop-shadow(-1px 0 0 #111827)
+    drop-shadow(0 1px 0 #111827)
+    drop-shadow(0 -1px 0 #111827);
+
+  transform: rotate(-12deg);
+
+  transform-origin: top left;
+
+  animation:
+    cursorMoveDemo 3.2s
+    ease-in-out
+    infinite;
+}
+
+/* Final cursor shape with a clean dark outline */
+.moving-cursor {
+  width: 25px !important;
+  height: 34px !important;
+  border: 0 !important;
+  background: #111827 !important;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    8px 78%,
+    13px 100%,
+    19px 97%,
+    14px 75%,
+    25px 75%
+  );
+
+  filter: none !important;
+  transform: rotate(-12deg);
+}
+
+.moving-cursor::after {
+  content: "";
+  position: absolute;
+
+  left: 3px;
+  top: 3px;
+
+  width: 18px;
+  height: 26px;
+
+  background: #ffffff;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    6px 76%,
+    10px 96%,
+    14px 94%,
+    10px 73%,
+    18px 73%
+  );
+}
+EOFcat >> lesson-shell.css <<'EOF'
+
+/* Final cursor shape with a clean dark outline */
+.moving-cursor {
+  width: 25px !important;
+  height: 34px !important;
+  border: 0 !important;
+  background: #111827 !important;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    8px 78%,
+    13px 100%,
+    19px 97%,
+    14px 75%,
+    25px 75%
+  );
+
+  filter: none !important;
+  transform: rotate(-12deg);
+}
+
+.moving-cursor::after {
+  content: "";
+  position: absolute;
+
+  left: 3px;
+  top: 3px;
+
+  width: 18px;
+  height: 26px;
+
+  background: #ffffff;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    6px 76%,
+    10px 96%,
+    14px 94%,
+    10px 73%,
+    18px 73%
+  );
+}
+
+/* Teacher Sync is never visible in student view */
+body[data-lesson-view="student"] #teacherSyncPanel {
+  display: none !important;
+}
+
+/* Lesson 1 — Step 4: Move to the Star */
+
+.lesson-star-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.star-step-heading h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.star-practice-area {
+  position: relative;
+  width: min(760px, 95%);
+  height: 350px;
+  margin: 20px auto 0;
+  overflow: hidden;
+
+  border: 5px solid #77bdf2;
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #dff5ff 0%,
+      #f8fcff 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 3px #ffffff,
+    0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+.practice-star {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  display: grid;
+  place-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 5rem;
+  line-height: 1;
+
+  cursor: default;
+
+  transition:
+    left 350ms ease,
+    top 350ms ease,
+    transform 160ms ease;
+}
+
+.practice-star.is-found {
+  transform:
+    translate(-50%, -50%)
+    scale(1.3);
+}
+
+.star-success {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+
+  transform: translateX(-50%);
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 1.05rem;
+  font-weight: 1000;
+
+  opacity: 0;
+
+  transition: opacity 150ms ease;
+}
+
+.star-success.is-visible {
+  opacity: 1;
+}
+
+.star-step-reminder {
+  width: fit-content;
+  margin: 16px auto 0;
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background: #fff4bf;
+  color: #18344f;
+
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.practice-star-target {
+  position: absolute;
+  left: 78%;
+  top: 25%;
+
+  display: grid;
+  place-items: center;
+
+  width: 100px;
+  height: 100px;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 5rem;
+  line-height: 1;
+
+  opacity: 0.25;
+  filter: grayscale(0.25);
+}
+
+.practice-star {
+  pointer-events: auto;
+  user-select: none;
+}
+
+.star-practice-count {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: #18344f;
+
+  font-size: 1rem;
+  font-weight: 1000;
+}
+
+/* Lesson 1 — Step 5: Follow the Path */
+
+.lesson-path-step {
+  width: min(860px, 100%);
+  text-align: center;
+}
+
+.lesson-path-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.path-practice-area {
+  position: relative;
+  width: min(760px, 95%);
+  height: 360px;
+  margin: 22px auto 0;
+  overflow: hidden;
+
+  border: 5px solid #7abff0;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e8f7ff 0%,
+      #ffffff 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 3px #ffffff,
+    0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+.path-start,
+.path-finish {
+  position: absolute;
+  z-index: 5;
+
+  padding: 9px 14px;
+
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 1000;
+}
+
+.path-start {
+  left: 22px;
+  bottom: 30px;
+
+  background: #dcfce7;
+  color: #166534;
+}
+
+.path-finish {
+  right: 22px;
+  top: 30px;
+
+  background: #fff3b8;
+  color: #8a5a00;
+}
+
+.practice-path {
+  position: absolute;
+  inset: 0;
+}
+
+.path-segment {
+  position: absolute;
+  height: 58px;
+
+  border-radius: 999px;
+
+  background: #8bd2ff;
+
+  box-shadow:
+    inset 0 0 0 4px rgba(255, 255, 255, 0.75);
+}
+
+.path-one {
+  left: 70px;
+  bottom: 70px;
+  width: 190px;
+  transform: rotate(-6deg);
+}
+
+.path-two {
+  left: 220px;
+  bottom: 125px;
+  width: 180px;
+  transform: rotate(-30deg);
+}
+
+.path-three {
+  left: 355px;
+  top: 115px;
+  width: 190px;
+  transform: rotate(18deg);
+}
+
+.path-four {
+  right: 90px;
+  top: 70px;
+  width: 160px;
+  transform: rotate(-12deg);
+}
+
+.path-success {
+  position: absolute;
+  left: 50%;
+  top: 16px;
+
+  transform: translateX(-50%);
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 1rem;
+  font-weight: 1000;
+
+  opacity: 0;
+
+  transition: opacity 160ms ease;
+}
+
+.path-success.is-visible {
+  opacity: 1;
+}
+
+.path-finish.is-found {
+  transform: scale(1.15);
+}
+
+/* Step 5 — continuous beginner path */
+
+.practice-path {
+  display: none;
+}
+
+.practice-path-svg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+  pointer-events: none;
+}
+
+.practice-path-outline,
+.practice-path-road,
+.practice-path-center {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.practice-path-outline {
+  stroke: #b7e3ff;
+  stroke-width: 76;
+}
+
+.practice-path-road {
+  stroke: #7bc7f5;
+  stroke-width: 64;
+}
+
+.practice-path-center {
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 4;
+  stroke-dasharray: 12 14;
+}
+
+/* Put START and FINISH directly at the ends. */
+
+.path-start {
+  left: 35px;
+  bottom: 34px;
+}
+
+.path-finish {
+  right: 25px;
+  top: 25px;
+}
+
+/* Step 5 — make START obvious */
+
+.path-start {
+  z-index: 8;
+  border: 3px solid #22c55e;
+  box-shadow:
+    0 0 0 0 rgba(34, 197, 94, 0.45);
+
+  animation:
+    pathStartPulse 1.25s
+    ease-out
+    infinite;
+}
+
+@keyframes pathStartPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(34, 197, 94, 0.5);
+  }
+
+  55% {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 0 12px rgba(34, 197, 94, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.path-start.is-active {
+  animation: none;
+  background: #22c55e;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.path-finish.is-locked {
+  opacity: 0.45;
+}
+
+/* Step 5 — FINISH becomes the target after START */
+
+.path-finish.is-locked {
+  opacity: 0.35;
+  filter: grayscale(0.65);
+  animation: none;
+}
+
+.path-finish.is-ready {
+  opacity: 1;
+  filter: none;
+
+  border: 3px solid #f4b400;
+  background: #ffe66d;
+  color: #6b4700;
+
+  box-shadow:
+    0 0 0 0 rgba(244, 180, 0, 0.55);
+
+  animation:
+    pathFinishPulse 1.2s
+    ease-out
+    infinite;
+}
+
+@keyframes pathFinishPulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(244, 180, 0, 0.55);
+  }
+
+  55% {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 0 12px rgba(244, 180, 0, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 0 rgba(244, 180, 0, 0);
+  }
+}
+
+.path-finish.is-found {
+  animation: none;
+  background: #22c55e;
+  border-color: #16a34a;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Lesson 1 — Step 6: Find the Picture */
+
+.lesson-find-picture-step {
+  width: min(860px, 100%);
+  text-align: center;
+}
+
+.lesson-find-picture-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.picture-target-prompt {
+  width: fit-content;
+  margin: 14px auto 18px;
+  padding: 10px 20px;
+
+  border-radius: 999px;
+
+  background: #fff4bf;
+  color: #18344f;
+
+  font-size: 1.2rem;
+  font-weight: 1000;
+}
+
+.picture-practice-area {
+  position: relative;
+
+  width: min(760px, 95%);
+  height: 360px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, 1fr);
+  grid-template-rows:
+    repeat(2, 1fr);
+
+  gap: 18px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border: 5px solid #7abff0;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e8f7ff,
+      #ffffff
+    );
+}
+
+.picture-choice {
+  display: grid;
+  place-items: center;
+
+  border: 3px solid #d6e7f5;
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  font-size: 4rem;
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+.picture-choice.is-target {
+  border-color: #f4b400;
+  background: #fff9d8;
+}
+
+.picture-choice.is-found {
+  transform: scale(1.08);
+  border-color: #22c55e;
+  background: #dcfce7;
+}
+
+.picture-practice-success {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+
+  transform: translateX(-50%);
+
+  padding: 8px 18px;
+
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-weight: 1000;
+
+  opacity: 0;
+
+  transition: opacity 150ms ease;
+}
+
+.picture-practice-success.is-visible {
+  opacity: 1;
+}
+
+.picture-practice-count {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  color: #18344f;
+  font-weight: 1000;
+}
+
+/* Lesson 1 — Step 7: Reveal the Picture */
+
+.lesson-reveal-step {
+  width: min(860px, 100%);
+  text-align: center;
+}
+
+.lesson-reveal-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.reveal-practice-area {
+  position: relative;
+
+  width: min(760px, 95%);
+  height: 380px;
+
+  margin: 22px auto 0;
+  overflow: hidden;
+
+  border: 5px solid #7abff0;
+  border-radius: 28px;
+
+  background: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 3px #ffffff,
+    0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+.hidden-picture-scene {
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  grid-template-rows: 1fr 1.4fr 0.8fr;
+
+  background:
+    linear-gradient(
+      180deg,
+      #bfe9ff 0%,
+      #eefaff 58%,
+      #a9df80 58%,
+      #78bd59 100%
+    );
+}
+
+.hidden-picture-sky,
+.hidden-picture-main,
+.hidden-picture-ground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden-picture-sky {
+  justify-content: flex-end;
+  padding-right: 70px;
+  font-size: 4.5rem;
+}
+
+.hidden-picture-main {
+  font-size: clamp(4rem, 9vw, 7rem);
+  letter-spacing: 18px;
+}
+
+.hidden-picture-ground {
+  font-size: clamp(3rem, 7vw, 5rem);
+  letter-spacing: 10px;
+}
+
+.reveal-canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  cursor: default;
+  touch-action: none;
+}
+
+.reveal-progress {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 14px;
+
+  transform: translateX(-50%);
+
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.94);
+  color: #18344f;
+
+  font-size: 0.95rem;
+  font-weight: 1000;
+
+  pointer-events: none;
+}
+
+/* Step 7 hidden picture image */
+
+.hidden-picture-scene {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.hidden-picture-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Step 7 — make hidden image fill the reveal area */
+.hidden-picture-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

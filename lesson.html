@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intro to Trackpad Lesson</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="lesson-shell.css" />
+</head>
+
+<body class="lesson-page" data-lesson-view="teacher">
+
+  <main class="lesson-shell">
+
+    <header class="lesson-header">
+      <div>
+        <p id="lessonEyebrow" class="lesson-eyebrow">
+          Teacher-Led Lesson
+        </p>
+
+        <h1 id="lessonTitle" class="lesson-title">
+          Lesson
+        </h1>
+      </div>
+
+      <div class="lesson-progress">
+        <span id="lessonProgressText">
+          1 of 1
+        </span>
+
+        <div class="lesson-progress-track">
+          <div
+            id="lessonProgressFill"
+            class="lesson-progress-fill"
+          ></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="lesson-card">
+
+      <aside class="teacher-panel">
+        <p class="teacher-panel-label">
+          Teacher Guide
+        </p>
+
+        <h2 id="stepTitle">
+          Loading...
+        </h2>
+
+        <p id="teacherPrompt" class="teacher-prompt"></p>
+      </aside>
+
+      <section
+        id="lessonActivity"
+        class="lesson-activity"
+        aria-live="polite"
+      ></section>
+
+    </section>
+
+    <section
+      id="teacherSyncPanel"
+      class="teacher-sync-panel"
+      aria-label="Teacher Sync controls"
+    >
+      <div>
+        <p class="teacher-sync-label">
+          Teacher Sync
+        </p>
+
+        <p
+          id="teacherSyncStatus"
+          class="teacher-sync-status"
+        >
+          Students move independently
+        </p>
+      </div>
+
+      <label class="teacher-sync-toggle">
+        <input
+          id="teacherSyncToggle"
+          type="checkbox"
+        />
+
+        <span class="teacher-sync-switch"></span>
+      </label>
+    </section>
+
+    <footer class="lesson-controls">
+
+      <button
+        id="previousStepButton"
+        class="lesson-nav-button"
+        type="button"
+      >
+        ← Previous
+      </button>
+
+      <a
+        class="lesson-home-button"
+        href="index.html"
+      >
+        Lesson Home
+      </a>
+
+      <button
+        id="nextStepButton"
+        class="lesson-nav-button lesson-nav-button-primary"
+        type="button"
+      >
+        Next →
+      </button>
+
+    </footer>
+
+  </main>
+
+  <script src="lessons/lesson-1.js"></script>
+  <script src="lesson-shell.js"></script>
+
+</body>
+</html>
