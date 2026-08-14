@@ -11,6 +11,18 @@ const lessonView =
 document.body.dataset.lessonView =
   lessonView;
 
+const lessonHomeButton =
+  document.getElementById(
+    'lessonHomeButton'
+  );
+
+if (lessonHomeButton) {
+  lessonHomeButton.href =
+    lessonView === 'student'
+      ? 'student-home.html'
+      : 'index.html';
+}
+
 const lesson =
   window.trackpadLesson;
 

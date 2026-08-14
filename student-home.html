@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Intro to Trackpad</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="lesson-shell.css"
+  />
+</head>
+
+<body class="student-home-page">
+
+  <main class="student-home-shell">
+
+    <section class="student-home-card">
+
+      <div class="student-home-icon">
+        ☝️
+      </div>
+
+      <h1>
+        Intro to Trackpad
+      </h1>
+
+      <p id="studentHomeMessage">
+        Ready to practice your trackpad skills?
+      </p>
+
+      <a
+        id="studentHomeStart"
+        class="student-home-start"
+        href="lesson.html?view=student"
+      >
+        Start Lesson
+      </a>
+
+    </section>
+
+  </main>
+
+  <script>
+    const studentHomeStart =
+      document.getElementById(
+        'studentHomeStart'
+      );
+
+    const studentHomeMessage =
+      document.getElementById(
+        'studentHomeMessage'
+      );
+
+    async function updateStudentHome() {
+      try {
+        const response =
+          await fetch(
+            '/api/lesson-state',
+            {
+              cache: 'no-store',
+            }
+          );
+
+        if (!response.ok) {
+          return;
+        }
+
+        const state =
+          await response.json();
+
+        if (
+          state &&
+          state.syncEnabled === true
+        ) {
+          studentHomeStart.textContent =
+            'Return to Class';
+
+          studentHomeMessage.textContent =
+            'Your class lesson is in progress.';
+
+          studentHomeStart.href =
+            'lesson.html?view=student';
+
+          return;
+        }
+      } catch {
+        // Keep normal Start Lesson behavior.
+      }
+
+      studentHomeStart.textContent =
+        'Start Lesson';
+
+      studentHomeMessage.textContent =
+        'Ready to practice your trackpad skills?';
+
+      studentHomeStart.href =
+        'lesson.html?view=student';
+    }
+
+    updateStudentHome();
+  </script>
+
+</body>
+</html>
