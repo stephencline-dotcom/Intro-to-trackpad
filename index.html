@@ -10,21 +10,63 @@
 <body class="teacher-app-page">
   <main class="teacher-home">
     <section class="teacher-hero">
-      <p class="teacher-eyebrow">Teacher-Led Lesson</p>
+      <p class="teacher-eyebrow">
+        Teacher-Led Lessons
+      </p>
 
       <h1>Intro to Trackpad</h1>
 
       <p class="teacher-intro">
-        Guide students through the basic trackpad skills they will use
-        throughout Hands-On Trackpad.
+        Guide your class through short, visual trackpad lessons one week at a time.
       </p>
 
-      <a
-        class="teacher-start-button"
-        href="lesson.html"
-      >
-        Start Lesson
-      </a>
+      <div class="teacher-lesson-grid">
+
+        <article class="teacher-lesson-card">
+          <div class="teacher-lesson-week">
+            Week 1
+          </div>
+
+          <h2>
+            Meet the Trackpad
+          </h2>
+
+          <p>
+            Find the trackpad, use the right pointer finger,
+            and learn how sliding moves the cursor.
+          </p>
+
+          <a
+            class="teacher-lesson-button"
+            href="lesson.html?lesson=1"
+          >
+            Start Week 1
+          </a>
+        </article>
+
+        <article class="teacher-lesson-card">
+          <div class="teacher-lesson-week">
+            Week 2
+          </div>
+
+          <h2>
+            Smooth Sliding
+          </h2>
+
+          <p>
+            Review Week 1 and practice smoother,
+            more controlled cursor movement.
+          </p>
+
+          <a
+            class="teacher-lesson-button"
+            href="lesson.html?lesson=2"
+          >
+            Start Week 2
+          </a>
+        </article>
+
+      </div>
 
       <section class="student-link-card">
         <p class="student-link-label">
@@ -59,6 +101,7 @@
           aria-live="polite"
         ></p>
       </section>
+    </section>
     </section>
   </main>
 

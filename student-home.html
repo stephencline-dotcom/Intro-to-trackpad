@@ -88,8 +88,21 @@
           studentHomeMessage.textContent =
             'Your class lesson is in progress.';
 
+          const activeLesson =
+            Number.isInteger(
+              Number.parseInt(
+                state.lesson,
+                10
+              )
+            )
+              ? Number.parseInt(
+                  state.lesson,
+                  10
+                )
+              : 1;
+
           studentHomeStart.href =
-            'lesson.html?view=student';
+            `lesson.html?lesson=${activeLesson}&view=student`;
 
           return;
         }

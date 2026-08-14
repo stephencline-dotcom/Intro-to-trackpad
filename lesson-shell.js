@@ -8,6 +8,17 @@ const lessonView =
     ? 'student'
     : 'teacher';
 
+const requestedLessonNumber =
+  Number.parseInt(
+    lessonParams.get('lesson') || '1',
+    10
+  );
+
+const currentLessonNumber =
+  requestedLessonNumber === 2
+    ? 2
+    : 1;
+
 document.body.dataset.lessonView =
   lessonView;
 
@@ -108,6 +119,34 @@ function renderLessonStep() {
     'revealPractice'
   ) {
     initializeRevealPractice();
+  }
+
+  if (
+    step.activityType ===
+    'followLeader'
+  ) {
+    initializeFollowLeader();
+  }
+
+  if (
+    step.activityType ===
+    'butterflyPractice'
+  ) {
+    initializeButterflyPractice();
+  }
+
+  if (
+    step.activityType ===
+    'dotPractice'
+  ) {
+    initializeDotPractice();
+  }
+
+  if (
+    step.activityType ===
+    'sceneSearch'
+  ) {
+    initializeSceneSearch();
   }
 
   lessonProgressText.textContent =
@@ -634,28 +673,20 @@ function initializePicturePractice() {
     return;
   }
 
-  const rounds = [
-    {
-      key: 'apple',
-      label: 'Apple 🍎',
-    },
-    {
-      key: 'star',
-      label: 'Star ⭐',
-    },
-    {
-      key: 'balloon',
-      label: 'Balloon 🎈',
-    },
-    {
-      key: 'sun',
-      label: 'Sun ☀️',
-    },
-    {
-      key: 'flower',
-      label: 'Flower 🌼',
-    },
-  ];
+  const rounds =
+    choices
+      .map((choice) => ({
+        key:
+          choice.dataset.picture,
+
+        label:
+          choice.dataset.label ||
+          choice.dataset.picture,
+      }))
+      .filter(
+        (round) =>
+          Boolean(round.key)
+      );
 
   for (
     let index =
@@ -677,6 +708,14 @@ function initializePicturePractice() {
       rounds[index],
     ];
   }
+
+  /*
+   * Keep each round short.
+   * Six pictures can be displayed,
+   * but students complete five.
+   */
+  rounds.splice(5);
+
 
   let roundIndex = 0;
   let locked = false;
@@ -1046,7 +1085,8 @@ async function saveSharedLessonState() {
               teacherSyncToggle.checked
             ),
 
-          lesson: 1,
+          lesson:
+            currentLessonNumber,
 
           step:
             currentStepIndex,
@@ -1074,6 +1114,23 @@ function applyStudentSyncState(
 
   document.body.dataset.synced =
     String(synced);
+
+  const teacherLesson =
+    Number.parseInt(
+      state.lesson,
+      10
+    );
+
+  if (
+    synced &&
+    Number.isInteger(teacherLesson) &&
+    teacherLesson !== currentLessonNumber
+  ) {
+    window.location.href =
+      `lesson.html?lesson=${teacherLesson}&view=student`;
+
+    return;
+  }
 
   /*
    * When Teacher Sync is on,
@@ -1306,3 +1363,879 @@ window.addEventListener(
   'blur',
   stopLessonDragSound
 );
+
+function initializeFollowLeader() {
+  const area =
+    document.getElementById(
+      'followLeaderArea'
+    );
+
+  const dot =
+    document.getElementById(
+      'followLeaderDot'
+    );
+
+  const progressFill =
+    document.getElementById(
+      'followLeaderProgressFill'
+    );
+
+  const success =
+    document.getElementById(
+      'followLeaderSuccess'
+    );
+
+  if (
+    !area ||
+    !dot ||
+    !progressFill ||
+    !success
+  ) {
+    return;
+  }
+
+  const requiredSeconds = 10;
+  const followDistance = 85;
+
+  let followTime = 0;
+  let lastTimestamp = 0;
+  let pointerX = null;
+  let pointerY = null;
+  let pointerMoving = false;
+  let pointerMoveTimer = 0;
+  let completed = false;
+
+  function step(timestamp) {
+    if (completed) {
+      return;
+    }
+
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+    }
+
+    const delta =
+      Math.min(
+        0.05,
+        (
+          timestamp -
+          lastTimestamp
+        ) / 1000
+      );
+
+    lastTimestamp = timestamp;
+
+    if (
+      pointerX !== null &&
+      pointerY !== null
+    ) {
+      const dotRect =
+        dot.getBoundingClientRect();
+
+      const dotX =
+        dotRect.left +
+        dotRect.width / 2;
+
+      const dotY =
+        dotRect.top +
+        dotRect.height / 2;
+
+      const distance =
+        Math.hypot(
+          pointerX - dotX,
+          pointerY - dotY
+        );
+
+      const following =
+        distance <= followDistance;
+
+      if (following) {
+        followTime += delta;
+
+        if (pointerMoving) {
+          startLessonDragSound();
+        }
+      } else {
+        stopLessonDragSound();
+      }
+
+      const progress =
+        Math.min(
+          1,
+          followTime /
+          requiredSeconds
+        );
+
+      progressFill.style.width =
+        `${progress * 100}%`;
+
+      if (
+        followTime >=
+        requiredSeconds
+      ) {
+        completed = true;
+
+        stopLessonDragSound();
+
+        dot.style.animationPlayState =
+          'paused';
+
+        progressFill.style.width =
+          '100%';
+
+        success.classList.add(
+          'is-visible'
+        );
+
+        playLessonSuccessSound();
+
+        return;
+      }
+    }
+
+    window.requestAnimationFrame(
+      step
+    );
+  }
+
+  area.addEventListener(
+    'pointermove',
+    (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+
+      pointerMoving = true;
+
+      window.clearTimeout(
+        pointerMoveTimer
+      );
+
+      pointerMoveTimer =
+        window.setTimeout(
+          () => {
+            pointerMoving = false;
+            stopLessonDragSound();
+          },
+          140
+        );
+    }
+  );
+
+  area.addEventListener(
+    'pointerleave',
+    () => {
+      pointerX = null;
+      pointerY = null;
+
+      pointerMoving = false;
+
+      stopLessonDragSound();
+    }
+  );
+
+  window.requestAnimationFrame(
+    step
+  );
+}
+
+function initializeButterflyPractice() {
+  const area =
+    document.getElementById(
+      'butterflyPracticeArea'
+    );
+
+  const butterfly =
+    document.getElementById(
+      'movingButterfly'
+    );
+
+  const success =
+    document.getElementById(
+      'butterflySuccess'
+    );
+
+  const count =
+    document.getElementById(
+      'butterflyCount'
+    );
+
+  if (
+    !area ||
+    !butterfly ||
+    !success ||
+    !count
+  ) {
+    return;
+  }
+
+  const positions = [
+    { x: 76, y: 24 },
+    { x: 25, y: 25 },
+    { x: 72, y: 72 },
+    { x: 30, y: 72 },
+    { x: 52, y: 42 },
+  ];
+
+  let completed = 0;
+  let locked = false;
+
+  function moveButterfly() {
+    if (completed >= positions.length) {
+      return;
+    }
+
+    const position =
+      positions[completed];
+
+    butterfly.style.left =
+      `${position.x}%`;
+
+    butterfly.style.top =
+      `${position.y}%`;
+  }
+
+  butterfly.addEventListener(
+    'pointerenter',
+    () => {
+      if (
+        locked ||
+        completed >= positions.length
+      ) {
+        return;
+      }
+
+      locked = true;
+
+      butterfly.classList.add(
+        'is-caught'
+      );
+
+      success.classList.add(
+        'is-visible'
+      );
+
+      playLessonSuccessSound();
+
+      completed += 1;
+
+      count.textContent =
+        `${completed} / 5`;
+
+      window.setTimeout(
+        () => {
+          butterfly.classList.remove(
+            'is-caught'
+          );
+
+          success.classList.remove(
+            'is-visible'
+          );
+
+          if (completed >= 5) {
+            butterfly.textContent =
+              '⭐';
+
+            success.textContent =
+              'You caught them all!';
+
+            success.classList.add(
+              'is-visible'
+            );
+
+            return;
+          }
+
+          moveButterfly();
+
+          locked = false;
+        },
+        1100
+      );
+    }
+  );
+
+  moveButterfly();
+}
+
+function initializeDotPractice() {
+  const area =
+    document.getElementById(
+      'dotPracticeArea'
+    );
+
+  const dots =
+    Array.from(
+      document.querySelectorAll(
+        '.practice-dot'
+      )
+    );
+
+  const lineLayer =
+    document.getElementById(
+      'dotLineLayer'
+    );
+
+  const success =
+    document.getElementById(
+      'dotSuccess'
+    );
+
+  if (
+    !area ||
+    dots.length === 0 ||
+    !lineLayer ||
+    !success
+  ) {
+    return;
+  }
+
+  let currentDot = 0;
+  let completed = false;
+
+  let lastPoint = null;
+  let activeLine = null;
+
+  function getDotCenter(dot) {
+    const areaRect =
+      area.getBoundingClientRect();
+
+    const dotRect =
+      dot.getBoundingClientRect();
+
+    return {
+      x:
+        dotRect.left -
+        areaRect.left +
+        dotRect.width / 2,
+
+      y:
+        dotRect.top -
+        areaRect.top +
+        dotRect.height / 2,
+    };
+  }
+
+  function createLine(
+    x1,
+    y1,
+    x2,
+    y2,
+    isActive = false
+  ) {
+    const line =
+      document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'line'
+      );
+
+    line.setAttribute(
+      'x1',
+      String(x1)
+    );
+
+    line.setAttribute(
+      'y1',
+      String(y1)
+    );
+
+    line.setAttribute(
+      'x2',
+      String(x2)
+    );
+
+    line.setAttribute(
+      'y2',
+      String(y2)
+    );
+
+    line.setAttribute(
+      'class',
+      isActive
+        ? 'dot-follow-line is-active'
+        : 'dot-follow-line is-complete'
+    );
+
+    lineLayer.appendChild(
+      line
+    );
+
+    return line;
+  }
+
+  function startFollowingFrom(dot) {
+    lastPoint =
+      getDotCenter(dot);
+
+    activeLine =
+      createLine(
+        lastPoint.x,
+        lastPoint.y,
+        lastPoint.x,
+        lastPoint.y,
+        true
+      );
+  }
+
+  function lockActiveLineTo(dot) {
+    if (
+      !activeLine ||
+      !lastPoint
+    ) {
+      return;
+    }
+
+    const targetPoint =
+      getDotCenter(dot);
+
+    activeLine.setAttribute(
+      'x2',
+      String(targetPoint.x)
+    );
+
+    activeLine.setAttribute(
+      'y2',
+      String(targetPoint.y)
+    );
+
+    activeLine.setAttribute(
+      'class',
+      'dot-follow-line is-complete'
+    );
+
+    activeLine = null;
+    lastPoint = targetPoint;
+  }
+
+  function updateDots() {
+    dots.forEach(
+      (dot, index) => {
+        dot.classList.toggle(
+          'is-active',
+          index === currentDot
+        );
+      }
+    );
+  }
+
+  area.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        completed ||
+        !activeLine ||
+        !lastPoint
+      ) {
+        return;
+      }
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left;
+
+      const y =
+        event.clientY -
+        areaRect.top;
+
+      activeLine.setAttribute(
+        'x2',
+        String(x)
+      );
+
+      activeLine.setAttribute(
+        'y2',
+        String(y)
+      );
+
+      startLessonDragSound();
+    }
+  );
+
+  area.addEventListener(
+    'pointerleave',
+    stopLessonDragSound
+  );
+
+  dots.forEach(
+    (dot, index) => {
+      dot.addEventListener(
+        'pointerenter',
+        () => {
+          if (
+            completed ||
+            index !== currentDot
+          ) {
+            return;
+          }
+
+          stopLessonDragSound();
+
+          dot.classList.remove(
+            'is-active'
+          );
+
+          dot.classList.add(
+            'is-complete'
+          );
+
+          playLessonSuccessSound();
+
+          if (currentDot === 0) {
+            startFollowingFrom(dot);
+            currentDot += 1;
+            updateDots();
+            return;
+          }
+
+          lockActiveLineTo(dot);
+
+          currentDot += 1;
+
+          if (
+            currentDot >=
+            dots.length
+          ) {
+            completed = true;
+
+            success.textContent =
+              'GREAT JOB! ⭐';
+
+            success.classList.add(
+              'is-visible'
+            );
+
+            return;
+          }
+
+          startFollowingFrom(dot);
+          updateDots();
+        }
+      );
+    }
+  );
+
+  updateDots();
+}
+
+function initializeSceneSearch() {
+  const area =
+    document.getElementById(
+      'sceneSearchArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'sceneSearchPrompt'
+    );
+
+  const success =
+    document.getElementById(
+      'sceneSearchSuccess'
+    );
+
+  const count =
+    document.getElementById(
+      'sceneSearchCount'
+    );
+
+  const objects =
+    Array.from(
+      document.querySelectorAll(
+        '.scene-search-object'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !success ||
+    !count ||
+    objects.length === 0
+  ) {
+    return;
+  }
+
+  const rounds =
+    objects.map(
+      (object) => ({
+        key:
+          object.dataset.search,
+
+        label:
+          object.dataset.label,
+      })
+    );
+
+  for (
+    let index =
+      rounds.length - 1;
+    index > 0;
+    index -= 1
+  ) {
+    const swapIndex =
+      Math.floor(
+        Math.random() *
+        (index + 1)
+      );
+
+    [
+      rounds[index],
+      rounds[swapIndex],
+    ] = [
+      rounds[swapIndex],
+      rounds[index],
+    ];
+  }
+
+  rounds.splice(5);
+
+  const movers =
+    objects.map(
+      (object, index) => ({
+        element: object,
+
+        x:
+          80 +
+          (index % 3) * 190,
+
+        y:
+          65 +
+          Math.floor(index / 3) * 180,
+
+        vx:
+          index % 2 === 0
+            ? 38 + index * 3
+            : -(34 + index * 3),
+
+        vy:
+          index % 3 === 0
+            ? 28
+            : -26,
+      })
+    );
+
+  let lastTimestamp = 0;
+  let roundIndex = 0;
+  let locked = false;
+  let finished = false;
+
+  function updateRound() {
+    const round =
+      rounds[roundIndex];
+
+    objects.forEach(
+      (object) => {
+        object.classList.remove(
+          'is-target',
+          'is-found'
+        );
+
+        if (
+          object.dataset.search ===
+          round.key
+        ) {
+          object.classList.add(
+            'is-target'
+          );
+        }
+      }
+    );
+
+    prompt.textContent =
+      `Find the ${round.label}`;
+
+    count.textContent =
+      `${roundIndex} / 5`;
+  }
+
+  function animateObjects(timestamp) {
+    if (finished) {
+      return;
+    }
+
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+    }
+
+    const delta =
+      Math.min(
+        0.04,
+        (
+          timestamp -
+          lastTimestamp
+        ) / 1000
+      );
+
+    lastTimestamp = timestamp;
+
+    const areaRect =
+      area.getBoundingClientRect();
+
+    movers.forEach(
+      (mover) => {
+        const object =
+          mover.element;
+
+        const width =
+          object.offsetWidth || 90;
+
+        const height =
+          object.offsetHeight || 90;
+
+        mover.x +=
+          mover.vx * delta;
+
+        mover.y +=
+          mover.vy * delta;
+
+        if (
+          mover.x <= 5 ||
+          mover.x + width >=
+            areaRect.width - 5
+        ) {
+          mover.vx *= -1;
+
+          mover.x =
+            Math.max(
+              5,
+              Math.min(
+                areaRect.width -
+                  width -
+                  5,
+                mover.x
+              )
+            );
+        }
+
+        if (
+          mover.y <= 5 ||
+          mover.y + height >=
+            areaRect.height - 5
+        ) {
+          mover.vy *= -1;
+
+          mover.y =
+            Math.max(
+              5,
+              Math.min(
+                areaRect.height -
+                  height -
+                  5,
+                mover.y
+              )
+            );
+        }
+
+        object.style.left =
+          `${mover.x}px`;
+
+        object.style.top =
+          `${mover.y}px`;
+
+        object.style.right =
+          'auto';
+
+        object.style.bottom =
+          'auto';
+      }
+    );
+
+    window.requestAnimationFrame(
+      animateObjects
+    );
+  }
+
+  objects.forEach(
+    (object) => {
+      object.addEventListener(
+        'pointerenter',
+        () => {
+          if (
+            locked ||
+            finished
+          ) {
+            return;
+          }
+
+          const round =
+            rounds[roundIndex];
+
+          if (
+            object.dataset.search !==
+            round.key
+          ) {
+            return;
+          }
+
+          locked = true;
+
+          object.classList.add(
+            'is-found'
+          );
+
+          success.textContent =
+            'Found it! ⭐';
+
+          success.classList.add(
+            'is-visible'
+          );
+
+          playLessonSuccessSound();
+
+          roundIndex += 1;
+
+          count.textContent =
+            `${roundIndex} / 5`;
+
+          window.setTimeout(
+            () => {
+              success.classList.remove(
+                'is-visible'
+              );
+
+              if (
+                roundIndex >=
+                rounds.length
+              ) {
+                finished = true;
+
+                prompt.textContent =
+                  'Finished!';
+
+                success.textContent =
+                  'YOU FOUND THEM ALL! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'is-complete'
+                );
+
+                objects.forEach(
+                  (item) => {
+                    item.classList.remove(
+                      'is-target'
+                    );
+                  }
+                );
+
+                return;
+              }
+
+              locked = false;
+              updateRound();
+            },
+            1100
+          );
+        }
+      );
+    }
+  );
+
+  updateRound();
+
+  window.requestAnimationFrame(
+    animateObjects
+  );
+}

@@ -118,7 +118,30 @@
 
   </main>
 
-  <script src="lessons/lesson-1.js"></script>
+  <script>
+    const lessonFileParams =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const requestedLesson =
+      Number.parseInt(
+        lessonFileParams.get('lesson') || '1',
+        10
+      );
+
+    const lessonFileNumber =
+      requestedLesson === 2
+        ? 2
+        : 1;
+
+    document.write(
+      '<script src="lessons/lesson-' +
+      lessonFileNumber +
+      '.js"><\/script>'
+    );
+  </script>
+
   <script src="lesson-shell.js"></script>
 
 </body>
