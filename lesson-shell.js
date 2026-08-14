@@ -15,7 +15,7 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  [1, 2, 3].includes(
+  [1, 2, 3, 4].includes(
     requestedLessonNumber
   )
     ? requestedLessonNumber
@@ -156,6 +156,55 @@ function renderLessonStep() {
     'clickTeaching'
   ) {
     initializeClickTeaching();
+  }
+
+  if (
+    step.activityType ===
+    'week4Review'
+  ) {
+    initializeWeek4Review();
+  }
+
+  if (
+    step.activityType ===
+    'followClick'
+  ) {
+    initializeFollowClick();
+  }
+
+  if (
+    step.activityType ===
+    'week4MovingSearch'
+  ) {
+    initializeWeek4MovingSearch();
+  }
+
+  if (
+    step.activityType ===
+    'checkpointMaze'
+  ) {
+    initializeCheckpointMaze();
+  }
+
+  if (
+    step.activityType ===
+    'week4Sequence'
+  ) {
+    initializeWeek4Sequence();
+  }
+
+  if (
+    step.activityType ===
+    'whackTarget'
+  ) {
+    initializeWhackTarget();
+  }
+
+  if (
+    step.activityType ===
+    'week4RevealChoose'
+  ) {
+    initializeWeek4RevealChoose();
   }
 
   if (
@@ -3656,4 +3705,1809 @@ function initializeClickWaitTeaching() {
   }
 
   void run();
+}
+
+function initializeWeek4Review() {
+  const grid =
+    document.getElementById(
+      'week4ReviewGrid'
+    );
+
+  const ready =
+    document.getElementById(
+      'week4ReviewReady'
+    );
+
+  if (!grid || !ready) {
+    return;
+  }
+
+  const cards =
+    Array.from(
+      grid.querySelectorAll(
+        '.week4-review-card'
+      )
+    );
+
+  let stopped = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function run() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          grid
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active',
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.remove(
+        'is-visible'
+      );
+
+      for (
+        let index = 0;
+        index < cards.length;
+        index += 1
+      ) {
+        cards.forEach(
+          (card) =>
+            card.classList.remove(
+              'is-active'
+            )
+        );
+
+        cards[index].classList.add(
+          'is-active'
+        );
+
+        await wait(900);
+
+        if (stopped) {
+          return;
+        }
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active'
+          );
+
+          card.classList.add(
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.add(
+        'is-visible'
+      );
+
+      await wait(1800);
+    }
+  }
+
+  void run();
+}
+
+function initializeFollowClick() {
+  const area =
+    document.getElementById(
+      'followClickArea'
+    );
+
+  const target =
+    document.getElementById(
+      'followClickTarget'
+    );
+
+  const instruction =
+    document.getElementById(
+      'followClickInstruction'
+    );
+
+  const count =
+    document.getElementById(
+      'followClickCount'
+    );
+
+  const success =
+    document.getElementById(
+      'followClickSuccess'
+    );
+
+  if (
+    !area ||
+    !target ||
+    !instruction ||
+    !count ||
+    !success
+  ) {
+    return;
+  }
+
+  const positions = [
+    { x: 76, y: 30 },
+    { x: 25, y: 72 },
+    { x: 72, y: 70 },
+    { x: 30, y: 28 },
+    { x: 52, y: 52 },
+  ];
+
+  const clickWaitGuard =
+    createClickWaitGuard(1000);
+
+  let completed = 0;
+  let readyToClick = false;
+  let locked = false;
+  let stopped = false;
+  let firstMoveStarted = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function moveTarget() {
+    if (
+      stopped ||
+      completed >=
+        positions.length
+    ) {
+      return;
+    }
+
+    readyToClick = false;
+    locked = false;
+
+    target.classList.remove(
+      'is-ready',
+      'is-correct'
+    );
+
+    target.classList.add(
+      'is-moving'
+    );
+
+    instruction.textContent =
+      'FOLLOW THE STAR';
+
+    instruction.classList.remove(
+      'is-ready'
+    );
+
+    /*
+     * Make the first round visibly move
+     * before students are allowed to click.
+     */
+    if (!firstMoveStarted) {
+      firstMoveStarted = true;
+
+      target.style.transition =
+        'none';
+
+      target.style.left =
+        '8%';
+
+      target.style.top =
+        '78%';
+
+      void target.offsetWidth;
+
+      target.style.transition = '';
+    }
+
+    const position =
+      positions[completed];
+
+    requestAnimationFrame(
+      () => {
+        target.style.left =
+          `${position.x}%`;
+
+        target.style.top =
+          `${position.y}%`;
+      }
+    );
+
+    await wait(1600);
+
+    if (
+      stopped ||
+      !document.body.contains(
+        target
+      )
+    ) {
+      stopped = true;
+      return;
+    }
+
+    target.classList.remove(
+      'is-moving'
+    );
+
+    target.classList.add(
+      'is-ready'
+    );
+
+    instruction.textContent =
+      'STOP — CLICK ONCE!';
+
+    instruction.classList.add(
+      'is-ready'
+    );
+
+    readyToClick = true;
+  }
+
+  target.addEventListener(
+    'click',
+    () => {
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * Clicking while the target is moving
+       * does not count.
+       */
+      if (!readyToClick) {
+        return;
+      }
+
+      if (locked) {
+        showClickWaitReminder();
+        return;
+      }
+
+      if (!clickWaitGuard.begin()) {
+        return;
+      }
+
+      locked = true;
+      readyToClick = false;
+
+      clickWaitGuard.lock();
+
+      playLessonClickSound();
+
+      target.classList.remove(
+        'is-ready'
+      );
+
+      target.classList.add(
+        'is-correct'
+      );
+
+      completed += 1;
+
+      count.textContent =
+        `${completed} / 5`;
+
+      window.setTimeout(
+        playLessonSuccessSound,
+        250
+      );
+
+      if (
+        completed >=
+        positions.length
+      ) {
+        window.setTimeout(
+          () => {
+            target.hidden = true;
+
+            instruction.hidden =
+              true;
+
+            success.textContent =
+              'GREAT JOB! ⭐';
+
+            success.classList.add(
+              'is-visible',
+              'is-complete'
+            );
+          },
+          900
+        );
+
+        return;
+      }
+
+      window.setTimeout(
+        () => {
+          void moveTarget();
+        },
+        1100
+      );
+    }
+  );
+
+  void moveTarget();
+}
+
+function initializeWeek4MovingSearch() {
+  const area =
+    document.getElementById(
+      'week4SearchArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week4SearchPrompt'
+    );
+
+  const count =
+    document.getElementById(
+      'week4SearchCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week4SearchSuccess'
+    );
+
+  const objects =
+    Array.from(
+      document.querySelectorAll(
+        '.week4-search-object'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !count ||
+    !success ||
+    objects.length === 0
+  ) {
+    return;
+  }
+
+  const rounds =
+    objects.map(
+      (object) => ({
+        key:
+          object.dataset.search,
+
+        label:
+          object.dataset.label,
+      })
+    );
+
+  /*
+   * Randomize which five objects
+   * students must find.
+   */
+  for (
+    let index =
+      rounds.length - 1;
+    index > 0;
+    index -= 1
+  ) {
+    const swapIndex =
+      Math.floor(
+        Math.random() *
+        (index + 1)
+      );
+
+    [
+      rounds[index],
+      rounds[swapIndex],
+    ] = [
+      rounds[swapIndex],
+      rounds[index],
+    ];
+  }
+
+  rounds.splice(5);
+
+  const movers =
+    objects.map(
+      (object, index) => ({
+        element: object,
+
+        x:
+          45 +
+          (index % 3) * 210,
+
+        y:
+          55 +
+          Math.floor(index / 3) * 175,
+
+        vx:
+          index % 2 === 0
+            ? 34 + index * 2
+            : -(32 + index * 2),
+
+        vy:
+          index % 3 === 0
+            ? 25
+            : -23,
+      })
+    );
+
+  const clickWaitGuard =
+    createClickWaitGuard(900);
+
+  let roundIndex = 0;
+  let locked = false;
+  let finished = false;
+  let lastTimestamp = 0;
+
+  function updateRound() {
+    const round =
+      rounds[roundIndex];
+
+    objects.forEach(
+      (object) => {
+        object.classList.remove(
+          'is-target',
+          'is-correct'
+        );
+
+        if (
+          object.dataset.search ===
+          round.key
+        ) {
+          object.classList.add(
+            'is-target'
+          );
+        }
+      }
+    );
+
+    prompt.textContent =
+      `Find and click the ${round.label}`;
+
+    count.textContent =
+      `${roundIndex} / 5`;
+  }
+
+  function animate(timestamp) {
+    if (
+      finished ||
+      !document.body.contains(area)
+    ) {
+      return;
+    }
+
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+    }
+
+    const delta =
+      Math.min(
+        0.04,
+        (
+          timestamp -
+          lastTimestamp
+        ) / 1000
+      );
+
+    lastTimestamp = timestamp;
+
+    const areaRect =
+      area.getBoundingClientRect();
+
+    movers.forEach(
+      (mover) => {
+        const object =
+          mover.element;
+
+        const width =
+          object.offsetWidth || 88;
+
+        const height =
+          object.offsetHeight || 88;
+
+        mover.x +=
+          mover.vx * delta;
+
+        mover.y +=
+          mover.vy * delta;
+
+        if (
+          mover.x <= 8 ||
+          mover.x + width >=
+            areaRect.width - 8
+        ) {
+          mover.vx *= -1;
+
+          mover.x =
+            Math.max(
+              8,
+              Math.min(
+                areaRect.width -
+                  width -
+                  8,
+                mover.x
+              )
+            );
+        }
+
+        if (
+          mover.y <= 8 ||
+          mover.y + height >=
+            areaRect.height - 8
+        ) {
+          mover.vy *= -1;
+
+          mover.y =
+            Math.max(
+              8,
+              Math.min(
+                areaRect.height -
+                  height -
+                  8,
+                mover.y
+              )
+            );
+        }
+
+        object.style.left =
+          `${mover.x}px`;
+
+        object.style.top =
+          `${mover.y}px`;
+      }
+    );
+
+    window.requestAnimationFrame(
+      animate
+    );
+  }
+
+  objects.forEach(
+    (object) => {
+      object.addEventListener(
+        'click',
+        () => {
+          if (finished) {
+            return;
+          }
+
+          if (locked) {
+            showClickWaitReminder();
+            return;
+          }
+
+          const round =
+            rounds[roundIndex];
+
+          /*
+           * Wrong object:
+           * no penalty. Just keep looking.
+           */
+          if (
+            object.dataset.search !==
+            round.key
+          ) {
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          locked = true;
+
+          clickWaitGuard.lock();
+
+          playLessonClickSound();
+
+          object.classList.add(
+            'is-correct'
+          );
+
+          roundIndex += 1;
+
+          count.textContent =
+            `${roundIndex} / 5`;
+
+          window.setTimeout(
+            playLessonSuccessSound,
+            250
+          );
+
+          window.setTimeout(
+            () => {
+              if (
+                roundIndex >=
+                rounds.length
+              ) {
+                finished = true;
+
+                prompt.textContent =
+                  'Finished!';
+
+                objects.forEach(
+                  (item) => {
+                    item.classList.remove(
+                      'is-target'
+                    );
+
+                    item.classList.add(
+                      'is-finished'
+                    );
+                  }
+                );
+
+                success.textContent =
+                  'GREAT JOB! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'is-complete'
+                );
+
+                return;
+              }
+
+              locked = false;
+              updateRound();
+            },
+            1100
+          );
+        }
+      );
+    }
+  );
+
+  updateRound();
+
+  window.requestAnimationFrame(
+    animate
+  );
+}
+
+function initializeCheckpointMaze() {
+  const area =
+    document.getElementById(
+      'checkpointMazeArea'
+    );
+
+  const start =
+    document.getElementById(
+      'checkpointMazeStart'
+    );
+
+  const prompt =
+    document.getElementById(
+      'checkpointMazePrompt'
+    );
+
+  const success =
+    document.getElementById(
+      'checkpointMazeSuccess'
+    );
+
+  const checkpoints =
+    Array.from(
+      document.querySelectorAll(
+        '.maze-checkpoint'
+      )
+    );
+
+  if (
+    !area ||
+    !start ||
+    !prompt ||
+    !success ||
+    checkpoints.length === 0
+  ) {
+    return;
+  }
+
+  const clickWaitGuard =
+    createClickWaitGuard(850);
+
+  let started = false;
+  let currentCheckpoint = 0;
+  let locked = false;
+  let finished = false;
+
+  function updateCheckpoint() {
+    checkpoints.forEach(
+      (checkpoint, index) => {
+        checkpoint.classList.toggle(
+          'is-active',
+          index === currentCheckpoint
+        );
+      }
+    );
+
+    if (
+      currentCheckpoint <
+      checkpoints.length
+    ) {
+      prompt.textContent =
+        `Follow the road → Click ${currentCheckpoint + 1}`;
+    }
+  }
+
+  start.addEventListener(
+    'pointerenter',
+    () => {
+      if (started) {
+        return;
+      }
+
+      started = true;
+
+      start.classList.add(
+        'is-started'
+      );
+
+      startLessonDragSound();
+
+      updateCheckpoint();
+    }
+  );
+
+  area.addEventListener(
+    'pointermove',
+    () => {
+      if (
+        started &&
+        !finished &&
+        !locked
+      ) {
+        startLessonDragSound();
+      }
+    }
+  );
+
+  area.addEventListener(
+    'pointerleave',
+    stopLessonDragSound
+  );
+
+  checkpoints.forEach(
+    (checkpoint, index) => {
+      checkpoint.addEventListener(
+        'click',
+        () => {
+          if (
+            !started ||
+            finished
+          ) {
+            return;
+          }
+
+          if (locked) {
+            showClickWaitReminder();
+            return;
+          }
+
+          if (
+            index !==
+            currentCheckpoint
+          ) {
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          locked = true;
+
+          clickWaitGuard.lock();
+
+          stopLessonDragSound();
+
+          playLessonClickSound();
+
+          checkpoint.classList.remove(
+            'is-active'
+          );
+
+          checkpoint.classList.add(
+            'is-complete'
+          );
+
+          window.setTimeout(
+            playLessonSuccessSound,
+            250
+          );
+
+          currentCheckpoint += 1;
+
+          window.setTimeout(
+            () => {
+              if (
+                currentCheckpoint >=
+                checkpoints.length
+              ) {
+                finished = true;
+
+                prompt.textContent =
+                  'Finished!';
+
+                success.textContent =
+                  'GREAT JOB! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'is-complete'
+                );
+
+                return;
+              }
+
+              locked = false;
+
+              updateCheckpoint();
+
+              startLessonDragSound();
+            },
+            900
+          );
+        }
+      );
+    }
+  );
+}
+
+function initializeWeek4Sequence() {
+  const area =
+    document.getElementById(
+      'week4SequenceArea'
+    );
+
+  const lineLayer =
+    document.getElementById(
+      'week4SequenceLines'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week4SequencePrompt'
+    );
+
+  const success =
+    document.getElementById(
+      'week4SequenceSuccess'
+    );
+
+  const targets =
+    Array.from(
+      document.querySelectorAll(
+        '.week4-sequence-target'
+      )
+    );
+
+  if (
+    !area ||
+    !lineLayer ||
+    !prompt ||
+    !success ||
+    targets.length === 0
+  ) {
+    return;
+  }
+
+  const clickWaitGuard =
+    createClickWaitGuard(850);
+
+  let current = 0;
+  let locked = false;
+  let finished = false;
+
+  function getCenter(target) {
+    const areaRect =
+      area.getBoundingClientRect();
+
+    const targetRect =
+      target.getBoundingClientRect();
+
+    return {
+      x:
+        targetRect.left -
+        areaRect.left +
+        targetRect.width / 2,
+
+      y:
+        targetRect.top -
+        areaRect.top +
+        targetRect.height / 2,
+    };
+  }
+
+  function drawLine(
+    fromTarget,
+    toTarget
+  ) {
+    const from =
+      getCenter(fromTarget);
+
+    const to =
+      getCenter(toTarget);
+
+    const line =
+      document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'line'
+      );
+
+    line.setAttribute(
+      'x1',
+      String(from.x)
+    );
+
+    line.setAttribute(
+      'y1',
+      String(from.y)
+    );
+
+    line.setAttribute(
+      'x2',
+      String(to.x)
+    );
+
+    line.setAttribute(
+      'y2',
+      String(to.y)
+    );
+
+    line.setAttribute(
+      'class',
+      'week4-sequence-line'
+    );
+
+    lineLayer.appendChild(
+      line
+    );
+  }
+
+  function updateTarget() {
+    targets.forEach(
+      (target, index) => {
+        target.classList.toggle(
+          'is-active',
+          index === current
+        );
+      }
+    );
+
+    if (current < targets.length) {
+      prompt.textContent =
+        `Click ${current + 1}`;
+    }
+  }
+
+  targets.forEach(
+    (target, index) => {
+      target.addEventListener(
+        'click',
+        () => {
+          if (finished) {
+            return;
+          }
+
+          if (locked) {
+            showClickWaitReminder();
+            return;
+          }
+
+          if (index !== current) {
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          locked = true;
+          clickWaitGuard.lock();
+
+          playLessonClickSound();
+
+          target.classList.remove(
+            'is-active'
+          );
+
+          target.classList.add(
+            'is-complete'
+          );
+
+          if (current > 0) {
+            drawLine(
+              targets[current - 1],
+              target
+            );
+          }
+
+          current += 1;
+
+          window.setTimeout(
+            playLessonSuccessSound,
+            250
+          );
+
+          window.setTimeout(
+            () => {
+              if (
+                current >=
+                targets.length
+              ) {
+                finished = true;
+
+                prompt.textContent =
+                  'Finished!';
+
+                success.textContent =
+                  'GREAT JOB! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'is-complete'
+                );
+
+                return;
+              }
+
+              locked = false;
+              updateTarget();
+            },
+            850
+          );
+        }
+      );
+    }
+  );
+
+  updateTarget();
+}
+
+function initializeWhackTarget() {
+  const button =
+    document.getElementById(
+      'whackTarget'
+    );
+
+  const words =
+    document.getElementById(
+      'waitGreenWords'
+    );
+
+  const count =
+    document.getElementById(
+      'whackTargetCount'
+    );
+
+  const success =
+    document.getElementById(
+      'whackTargetSuccess'
+    );
+
+  if (
+    !button ||
+    !words ||
+    !count ||
+    !success
+  ) {
+    return;
+  }
+
+  let completed = 0;
+  let state = 'red';
+  let finished = false;
+  let roundToken = 0;
+
+  /*
+   * True after the first correct green click
+   * while we check whether the student waits.
+   */
+  let waitingAfterClick = false;
+  let extraClickDetected = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  function setState(nextState) {
+    state = nextState;
+
+    button.classList.remove(
+      'is-red',
+      'is-yellow',
+      'is-green',
+      'is-correct'
+    );
+
+    button.classList.add(
+      `is-${nextState}`
+    );
+
+    if (nextState === 'red') {
+      button.textContent = '✋';
+
+      words.textContent =
+        'STOP — DO NOT CLICK';
+    }
+
+    if (nextState === 'yellow') {
+      button.textContent = '👀';
+
+      words.textContent =
+        'GET READY...';
+    }
+
+    if (nextState === 'green') {
+      button.textContent = '👇';
+
+      words.textContent =
+        'CLICK ONCE!';
+    }
+  }
+
+  async function runRound() {
+    if (
+      finished ||
+      !document.body.contains(
+        button
+      )
+    ) {
+      return;
+    }
+
+    const token =
+      ++roundToken;
+
+    waitingAfterClick = false;
+    extraClickDetected = false;
+
+    setState('red');
+
+    const redWait =
+      1100 +
+      Math.floor(
+        Math.random() * 900
+      );
+
+    await wait(redWait);
+
+    if (
+      finished ||
+      token !== roundToken
+    ) {
+      return;
+    }
+
+    setState('yellow');
+
+    await wait(
+      650 +
+      Math.floor(
+        Math.random() * 350
+      )
+    );
+
+    if (
+      finished ||
+      token !== roundToken
+    ) {
+      return;
+    }
+
+    setState('green');
+  }
+
+  async function checkSingleClick() {
+    waitingAfterClick = true;
+    extraClickDetected = false;
+
+    button.classList.remove(
+      'is-green'
+    );
+
+    button.classList.add(
+      'is-correct'
+    );
+
+    button.textContent = '✋';
+
+    words.textContent =
+      'NOW WAIT...';
+
+    /*
+     * This is the important teaching window.
+     * The point is NOT earned yet.
+     */
+    await wait(750);
+
+    if (
+      finished ||
+      !document.body.contains(
+        button
+      )
+    ) {
+      return;
+    }
+
+    waitingAfterClick = false;
+
+    if (extraClickDetected) {
+      /*
+       * They clicked more than once.
+       * No point. Retry.
+       */
+      words.textContent =
+        'CLICK ONCE — THEN WAIT!';
+
+      button.classList.remove(
+        'is-correct'
+      );
+
+      await wait(900);
+
+      if (!finished) {
+        void runRound();
+      }
+
+      return;
+    }
+
+    /*
+     * They clicked once AND waited.
+     * Now the point is earned.
+     */
+    completed += 1;
+
+    count.textContent =
+      `${completed} / 5`;
+
+    button.textContent = '⭐';
+
+    words.textContent =
+      'GOOD WAITING!';
+
+    playLessonSuccessSound();
+
+    await wait(900);
+
+    if (completed >= 5) {
+      finished = true;
+
+      button.hidden = true;
+      words.hidden = true;
+
+      success.textContent =
+        'GREAT JOB! ⭐';
+
+      success.classList.add(
+        'is-visible',
+        'is-complete'
+      );
+
+      return;
+    }
+
+    void runRound();
+  }
+
+  button.addEventListener(
+    'click',
+    () => {
+      if (finished) {
+        return;
+      }
+
+      /*
+       * A second click during the waiting
+       * window cancels this round's point.
+       */
+      if (waitingAfterClick) {
+        if (!extraClickDetected) {
+          extraClickDetected = true;
+
+          playLessonWrongSound();
+          showClickWaitReminder();
+
+          words.textContent =
+            'TOO MANY CLICKS — WAIT!';
+        }
+
+        return;
+      }
+
+      /*
+       * Clicking before green:
+       * no point.
+       */
+      if (
+        state === 'red' ||
+        state === 'yellow'
+      ) {
+        playLessonWrongSound();
+        showClickWaitReminder();
+
+        words.textContent =
+          'WAIT FOR GREEN! ✋';
+
+        return;
+      }
+
+      if (state !== 'green') {
+        return;
+      }
+
+      /*
+       * First correct click.
+       * Still no point until they wait.
+       */
+      state = 'checking';
+
+      playLessonClickSound();
+
+      void checkSingleClick();
+    }
+  );
+
+  count.textContent = '0 / 5';
+
+  void runRound();
+}
+
+function initializeWeek4RevealChoose() {
+  const area =
+    document.getElementById(
+      'week4RevealArea'
+    );
+
+  const canvas =
+    document.getElementById(
+      'week4RevealCanvas'
+    );
+
+  const progress =
+    document.getElementById(
+      'week4RevealProgress'
+    );
+
+  const success =
+    document.getElementById(
+      'week4RevealSuccess'
+    );
+
+  if (
+    !area ||
+    !canvas ||
+    !progress ||
+    !success
+  ) {
+    return;
+  }
+
+  const context =
+    canvas.getContext('2d');
+
+  if (!context) {
+    return;
+  }
+
+  const rect =
+    area.getBoundingClientRect();
+
+  const scale =
+    window.devicePixelRatio || 1;
+
+  canvas.width =
+    Math.round(
+      rect.width * scale
+    );
+
+  canvas.height =
+    Math.round(
+      rect.height * scale
+    );
+
+  canvas.style.width =
+    `${rect.width}px`;
+
+  canvas.style.height =
+    `${rect.height}px`;
+
+  context.setTransform(
+    scale,
+    0,
+    0,
+    scale,
+    0,
+    0
+  );
+
+  context.globalCompositeOperation =
+    'source-over';
+
+  context.fillStyle =
+    '#66788a';
+
+  context.fillRect(
+    0,
+    0,
+    rect.width,
+    rect.height
+  );
+
+  context.fillStyle =
+    'rgba(255,255,255,0.13)';
+
+  for (
+    let y = 0;
+    y < rect.height;
+    y += 32
+  ) {
+    for (
+      let x = 0;
+      x < rect.width;
+      x += 32
+    ) {
+      context.beginPath();
+
+      context.arc(
+        x + 16,
+        y + 16,
+        3,
+        0,
+        Math.PI * 2
+      );
+
+      context.fill();
+    }
+  }
+
+  context.globalCompositeOperation =
+    'destination-out';
+
+  const columns = 14;
+  const rows = 8;
+
+  const revealedCells =
+    new Set();
+
+  const totalCells =
+    columns * rows;
+
+  const spiderThresholds =
+    [0.30, 0.50, 0.70, 0.85];
+
+  const spiderPositions = [
+    { x: 24, y: 28 },
+    { x: 72, y: 30 },
+    { x: 34, y: 68 },
+    { x: 70, y: 70 },
+  ];
+
+  let nextSpiderIndex = 0;
+  let spiderActive = false;
+  let finished = false;
+
+  const spider =
+    document.createElement(
+      'button'
+    );
+
+  spider.type = 'button';
+  spider.className =
+    'week4-reveal-spider';
+
+  spider.textContent = '🕷️';
+
+  spider.hidden = true;
+  spider.style.display = 'none';
+
+  area.appendChild(spider);
+
+  function showSpider() {
+    if (
+      spiderActive ||
+      nextSpiderIndex >=
+        spiderThresholds.length
+    ) {
+      return;
+    }
+
+    const position =
+      spiderPositions[
+        nextSpiderIndex
+      ];
+
+    spider.style.left =
+      `${position.x}%`;
+
+    spider.style.top =
+      `${position.y}%`;
+
+    spider.hidden = false;
+    spider.style.display = '';
+
+    spiderActive = true;
+
+    stopLessonDragSound();
+
+    progress.textContent =
+      'Click the spider! 🕷️';
+  }
+
+  function finishChallenge() {
+    if (finished) {
+      return;
+    }
+
+    finished = true;
+
+    stopLessonDragSound();
+
+    context.clearRect(
+      0,
+      0,
+      rect.width,
+      rect.height
+    );
+
+    spider.hidden = true;
+
+    progress.hidden = true;
+
+    playLessonSuccessSound();
+
+    success.textContent =
+      'GREAT JOB! ⭐';
+
+    success.classList.add(
+      'is-visible',
+      'is-complete'
+    );
+  }
+
+  function checkProgress() {
+    const ratio =
+      revealedCells.size /
+      totalCells;
+
+    if (
+      !spiderActive &&
+      nextSpiderIndex <
+        spiderThresholds.length &&
+      ratio >=
+        spiderThresholds[
+          nextSpiderIndex
+        ]
+    ) {
+      showSpider();
+    }
+
+    if (
+      ratio >= 0.95 &&
+      nextSpiderIndex >=
+        spiderThresholds.length &&
+      !spiderActive
+    ) {
+      finishChallenge();
+    }
+  }
+
+  function markCell(x, y) {
+    const column =
+      Math.max(
+        0,
+        Math.min(
+          columns - 1,
+          Math.floor(
+            (x / rect.width) *
+            columns
+          )
+        )
+      );
+
+    const row =
+      Math.max(
+        0,
+        Math.min(
+          rows - 1,
+          Math.floor(
+            (y / rect.height) *
+            rows
+          )
+        )
+      );
+
+    for (
+      let rowOffset = -1;
+      rowOffset <= 1;
+      rowOffset += 1
+    ) {
+      for (
+        let columnOffset = -1;
+        columnOffset <= 1;
+        columnOffset += 1
+      ) {
+        const nearbyColumn =
+          column + columnOffset;
+
+        const nearbyRow =
+          row + rowOffset;
+
+        if (
+          nearbyColumn >= 0 &&
+          nearbyColumn < columns &&
+          nearbyRow >= 0 &&
+          nearbyRow < rows
+        ) {
+          revealedCells.add(
+            `${nearbyColumn}-${nearbyRow}`
+          );
+        }
+      }
+    }
+
+    checkProgress();
+  }
+
+  function revealAt(event) {
+    if (
+      finished ||
+      spiderActive
+    ) {
+      return;
+    }
+
+    const bounds =
+      canvas.getBoundingClientRect();
+
+    const x =
+      event.clientX -
+      bounds.left;
+
+    const y =
+      event.clientY -
+      bounds.top;
+
+    context.beginPath();
+
+    context.arc(
+      x,
+      y,
+      28,
+      0,
+      Math.PI * 2
+    );
+
+    context.fill();
+
+    startLessonDragSound();
+
+    markCell(x, y);
+  }
+
+  canvas.addEventListener(
+    'pointermove',
+    revealAt
+  );
+
+  canvas.addEventListener(
+    'pointerleave',
+    stopLessonDragSound
+  );
+
+  let waitingAfterSpiderClick = false;
+  let extraClickDetected = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  spider.addEventListener(
+    'click',
+    async () => {
+      if (
+        finished ||
+        !spiderActive
+      ) {
+        return;
+      }
+
+      if (waitingAfterSpiderClick) {
+        if (!extraClickDetected) {
+          extraClickDetected = true;
+
+          showClickWaitReminder();
+        }
+
+        return;
+      }
+
+      waitingAfterSpiderClick = true;
+      extraClickDetected = false;
+
+      playLessonClickSound();
+
+      spider.classList.add(
+        'is-clicked'
+      );
+
+      progress.textContent =
+        'Now wait...';
+
+      await wait(700);
+
+      waitingAfterSpiderClick =
+        false;
+
+      if (extraClickDetected) {
+        spider.classList.remove(
+          'is-clicked'
+        );
+
+        progress.textContent =
+          'Click once — then wait!';
+
+        await wait(700);
+
+        progress.textContent =
+          'Click the spider! 🕷️';
+
+        return;
+      }
+
+      spider.classList.remove(
+        'is-clicked'
+      );
+
+      spider.hidden = true;
+      spider.style.display = 'none';
+
+      spiderActive = false;
+
+      nextSpiderIndex += 1;
+
+      playLessonSuccessSound();
+
+      progress.textContent =
+        'Keep revealing!';
+
+      checkProgress();
+    }
+  );
 }
