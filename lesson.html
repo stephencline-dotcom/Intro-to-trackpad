@@ -131,8 +131,10 @@
       );
 
     const lessonFileNumber =
-      requestedLesson === 2
-        ? 2
+      [1, 2, 3].includes(
+        requestedLesson
+      )
+        ? requestedLesson
         : 1;
 
     document.write(

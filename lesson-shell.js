@@ -15,8 +15,10 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  requestedLessonNumber === 2
-    ? 2
+  [1, 2, 3].includes(
+    requestedLessonNumber
+  )
+    ? requestedLessonNumber
     : 1;
 
 document.body.dataset.lessonView =
@@ -147,6 +149,13 @@ function renderLessonStep() {
     'sceneSearch'
   ) {
     initializeSceneSearch();
+  }
+
+  if (
+    step.activityType ===
+    'clickTeaching'
+  ) {
+    initializeClickTeaching();
   }
 
   lessonProgressText.textContent =
@@ -2238,4 +2247,109 @@ function initializeSceneSearch() {
   window.requestAnimationFrame(
     animateObjects
   );
+}
+
+/* ----------------------------------------
+   Reusable click sound
+----------------------------------------- */
+
+const lessonClickSound =
+  new Audio(
+    'sounds/click.mp3'
+  );
+
+lessonClickSound.preload =
+  'auto';
+
+lessonClickSound.volume =
+  0.9;
+
+function playLessonClickSound() {
+  try {
+    lessonClickSound.currentTime =
+      0;
+
+    void lessonClickSound.play();
+  } catch {
+    // Keep lesson usable if audio is blocked.
+  }
+}
+
+function initializeClickTeaching() {
+  const sequence =
+    document.getElementById(
+      'clickTeachingSequence'
+    );
+
+  if (!sequence) {
+    return;
+  }
+
+  const steps =
+    Array.from(
+      sequence.querySelectorAll(
+        '.click-sequence-step'
+      )
+    );
+
+  if (steps.length === 0) {
+    return;
+  }
+
+  let stepIndex = 0;
+  let stopped = false;
+
+  function clearStates() {
+    steps.forEach(
+      (step) => {
+        step.classList.remove(
+          'is-active',
+          'is-clicking'
+        );
+      }
+    );
+  }
+
+  function showStep() {
+    if (stopped) {
+      return;
+    }
+
+    clearStates();
+
+    const step =
+      steps[stepIndex];
+
+    step.classList.add(
+      'is-active'
+    );
+
+    if (
+      step.dataset.clickStep ===
+      'click'
+    ) {
+      step.classList.add(
+        'is-clicking'
+      );
+
+      playLessonClickSound();
+    }
+
+    window.setTimeout(
+      () => {
+        stepIndex =
+          (stepIndex + 1) %
+          steps.length;
+
+        showStep();
+      },
+      1400
+    );
+  }
+
+  showStep();
+
+  return () => {
+    stopped = true;
+  };
 }
