@@ -158,6 +158,48 @@ function renderLessonStep() {
     initializeClickTeaching();
   }
 
+  if (
+    step.activityType ===
+    'clickWaitTeaching'
+  ) {
+    initializeClickWaitTeaching();
+  }
+
+  if (
+    step.activityType ===
+    'watchClick'
+  ) {
+    initializeWatchClick();
+  }
+
+  if (
+    step.activityType ===
+    'bigButtonPractice'
+  ) {
+    initializeBigButtonPractice();
+  }
+
+  if (
+    step.activityType ===
+    'clickPicturePractice'
+  ) {
+    initializeClickPicturePractice();
+  }
+
+  if (
+    step.activityType ===
+    'bubblePractice'
+  ) {
+    initializeBubblePractice();
+  }
+
+  if (
+    step.activityType ===
+    'treasurePractice'
+  ) {
+    initializeTreasurePractice();
+  }
+
   lessonProgressText.textContent =
     `${currentStepIndex + 1} of ${lesson.steps.length}`;
 
@@ -2264,8 +2306,30 @@ lessonClickSound.preload =
 lessonClickSound.volume =
   0.9;
 
+let lastLessonClickSoundAt = 0;
+
 function playLessonClickSound() {
+  const now =
+    performance.now();
+
+  /*
+   * Prevent duplicate click triggers from
+   * stacking on top of one another.
+   */
+  if (
+    now -
+    lastLessonClickSoundAt <
+    900
+  ) {
+    return;
+  }
+
+  lastLessonClickSoundAt =
+    now;
+
   try {
+    lessonClickSound.pause();
+
     lessonClickSound.currentTime =
       0;
 
@@ -2298,6 +2362,7 @@ function initializeClickTeaching() {
 
   let stepIndex = 0;
   let stopped = false;
+  let clickPlayedThisCycle = false;
 
   function clearStates() {
     steps.forEach(
@@ -2311,8 +2376,18 @@ function initializeClickTeaching() {
   }
 
   function showStep() {
-    if (stopped) {
+    if (
+      stopped ||
+      !document.body.contains(
+        sequence
+      )
+    ) {
+      stopped = true;
       return;
+    }
+
+    if (stepIndex === 0) {
+      clickPlayedThisCycle = false;
     }
 
     clearStates();
@@ -2332,11 +2407,24 @@ function initializeClickTeaching() {
         'is-clicking'
       );
 
-      playLessonClickSound();
+      if (!clickPlayedThisCycle) {
+        clickPlayedThisCycle = true;
+        playLessonClickSound();
+      }
     }
 
     window.setTimeout(
       () => {
+        if (
+          stopped ||
+          !document.body.contains(
+            sequence
+          )
+        ) {
+          stopped = true;
+          return;
+        }
+
         stepIndex =
           (stepIndex + 1) %
           steps.length;
@@ -2348,8 +2436,1224 @@ function initializeClickTeaching() {
   }
 
   showStep();
+}
 
-  return () => {
-    stopped = true;
+function initializeWatchClick() {
+  const cursor =
+    document.getElementById(
+      'watchClickCursor'
+    );
+
+  const finger =
+    document.getElementById(
+      'watchClickFinger'
+    );
+
+  const button =
+    document.getElementById(
+      'watchClickButton'
+    );
+
+  const stage =
+    document.getElementById(
+      'watchClickStage'
+    );
+
+  const pressRing =
+    document.getElementById(
+      'watchClickPress'
+    );
+
+  if (
+    !cursor ||
+    !finger ||
+    !button ||
+    !stage ||
+    !pressRing
+  ) {
+    return;
+  }
+
+  let stopped = false;
+  let clickPlayedThisCycle = false;
+
+  async function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function runDemo() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          cursor
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      clickPlayedThisCycle = false;
+
+      stage.textContent =
+        'MOVE';
+
+      cursor.style.left =
+        '15%';
+
+      cursor.style.top =
+        '63%';
+
+      finger.classList.remove(
+        'is-moving',
+        'is-stopped',
+        'is-clicking'
+      );
+
+      pressRing.classList.remove(
+        'is-active'
+      );
+
+      button.classList.remove(
+        'is-clicked'
+      );
+
+      await wait(700);
+
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * The finger slides across the trackpad
+       * while the cursor moves on the screen.
+       */
+      finger.classList.add(
+        'is-moving'
+      );
+
+      cursor.style.left =
+        '47%';
+
+      cursor.style.top =
+        '48%';
+
+      await wait(950);
+
+      if (stopped) {
+        return;
+      }
+
+      finger.classList.remove(
+        'is-moving'
+      );
+
+      finger.classList.add(
+        'is-stopped'
+      );
+
+      if (stopped) {
+        return;
+      }
+
+      stage.textContent =
+        'STOP';
+
+      await wait(650);
+
+      if (stopped) {
+        return;
+      }
+
+      stage.textContent =
+        'CLICK';
+
+      finger.classList.add(
+        'is-clicking'
+      );
+
+      button.classList.add(
+        'is-clicked'
+      );
+
+      pressRing.classList.remove(
+        'is-active'
+      );
+
+      void pressRing.offsetWidth;
+
+      pressRing.classList.add(
+        'is-active'
+      );
+
+      if (!clickPlayedThisCycle) {
+        clickPlayedThisCycle = true;
+        playLessonClickSound();
+      }
+
+      /*
+       * Let the click register, then give
+       * immediate success feedback while
+       * the button is still reacting.
+       */
+      await wait(300);
+
+      if (stopped) {
+        return;
+      }
+
+      playLessonSuccessSound();
+
+      await wait(220);
+
+      if (stopped) {
+        return;
+      }
+
+      stage.textContent =
+        'LIFT';
+
+      finger.classList.remove(
+        'is-clicking'
+      );
+
+      await wait(650);
+
+      if (stopped) {
+        return;
+      }
+
+      stage.textContent =
+        'GOOD!';
+
+      await wait(900);
+    }
+  }
+
+  void runDemo();
+}
+
+function initializeBigButtonPractice() {
+  const button =
+    document.getElementById(
+      'bigClickButton'
+    );
+
+  const success =
+    document.getElementById(
+      'bigButtonSuccess'
+    );
+
+  const count =
+    document.getElementById(
+      'bigButtonCount'
+    );
+
+  if (
+    !button ||
+    !success ||
+    !count
+  ) {
+    return;
+  }
+
+  const positions = [
+    {
+      x: 50,
+      y: 50,
+      label: 'CLICK ME!',
+    },
+    {
+      x: 25,
+      y: 30,
+      label: 'CLICK HERE!',
+    },
+    {
+      x: 74,
+      y: 68,
+      label: 'ONE MORE!',
+    },
+  ];
+
+  let completed = 0;
+  let locked = false;
+
+  const clickWaitGuard =
+    createClickWaitGuard(1100);
+
+  function showButton() {
+    const position =
+      positions[completed];
+
+    button.style.left =
+      `${position.x}%`;
+
+    button.style.top =
+      `${position.y}%`;
+
+    button.textContent =
+      position.label;
+  }
+
+  button.addEventListener(
+    'click',
+    () => {
+      if (
+        completed >= positions.length
+      ) {
+        return;
+      }
+
+      if (locked) {
+        showClickWaitReminder();
+        return;
+      }
+
+      if (!clickWaitGuard.begin()) {
+        return;
+      }
+
+      locked = true;
+      clickWaitGuard.lock();
+
+      /*
+       * Physical action feedback first.
+       */
+      playLessonClickSound();
+
+      button.classList.add(
+        'is-correct'
+      );
+
+      /*
+       * Success follows shortly after
+       * the physical click.
+       */
+      window.setTimeout(
+        () => {
+          playLessonSuccessSound();
+
+          success.textContent =
+            'Great job! ⭐';
+
+          success.classList.add(
+            'is-visible'
+          );
+        },
+        250
+      );
+
+      completed += 1;
+
+      count.textContent =
+        `${completed} / 3`;
+
+      window.setTimeout(
+        () => {
+          if (
+            completed >=
+            positions.length
+          ) {
+            button.hidden = true;
+
+            success.textContent =
+              'GREAT JOB! ⭐';
+
+            success.classList.add(
+              'is-visible',
+              'is-complete'
+            );
+
+            return;
+          }
+
+          success.classList.remove(
+            'is-visible'
+          );
+
+          button.classList.remove(
+            'is-correct'
+          );
+
+          showButton();
+
+          locked = false;
+        },
+        1200
+      );
+    }
+  );
+
+  showButton();
+}
+
+function initializeClickPicturePractice() {
+  const prompt =
+    document.getElementById(
+      'clickPicturePrompt'
+    );
+
+  const success =
+    document.getElementById(
+      'clickPictureSuccess'
+    );
+
+  const count =
+    document.getElementById(
+      'clickPictureCount'
+    );
+
+  const choices =
+    Array.from(
+      document.querySelectorAll(
+        '.click-picture-choice'
+      )
+    );
+
+  if (
+    !prompt ||
+    !success ||
+    !count ||
+    choices.length === 0
+  ) {
+    return;
+  }
+
+  const rounds =
+    choices.map(
+      (choice) => ({
+        key:
+          choice.dataset.clickPicture,
+
+        label:
+          choice.dataset.label,
+      })
+    );
+
+  /*
+   * Randomize the targets so students
+   * cannot predict where to move next.
+   */
+  for (
+    let index =
+      rounds.length - 1;
+    index > 0;
+    index -= 1
+  ) {
+    const swapIndex =
+      Math.floor(
+        Math.random() *
+        (index + 1)
+      );
+
+    [
+      rounds[index],
+      rounds[swapIndex],
+    ] = [
+      rounds[swapIndex],
+      rounds[index],
+    ];
+  }
+
+  rounds.splice(5);
+
+  let roundIndex = 0;
+  let locked = false;
+
+  const clickWaitGuard =
+    createClickWaitGuard(1100);
+
+  function updateRound() {
+    const round =
+      rounds[roundIndex];
+
+    choices.forEach(
+      (choice) => {
+        choice.classList.remove(
+          'is-target',
+          'is-correct'
+        );
+
+        if (
+          choice.dataset.clickPicture ===
+          round.key
+        ) {
+          choice.classList.add(
+            'is-target'
+          );
+        }
+      }
+    );
+
+    prompt.textContent =
+      `Click the ${round.label}`;
+
+    count.textContent =
+      `${roundIndex} / 5`;
+  }
+
+  choices.forEach(
+    (choice) => {
+      choice.addEventListener(
+        'click',
+        () => {
+          if (locked) {
+            showClickWaitReminder();
+            return;
+          }
+
+          const round =
+            rounds[roundIndex];
+
+          /*
+           * Wrong picture:
+           * no penalty and no negative sound.
+           */
+          if (
+            choice.dataset.clickPicture !==
+            round.key
+          ) {
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          locked = true;
+          clickWaitGuard.lock();
+
+          playLessonClickSound();
+
+          choice.classList.add(
+            'is-correct'
+          );
+
+          window.setTimeout(
+            () => {
+              playLessonSuccessSound();
+
+              success.textContent =
+                'Great job! ⭐';
+
+              success.classList.add(
+                'is-visible'
+              );
+            },
+            250
+          );
+
+          roundIndex += 1;
+
+          count.textContent =
+            `${roundIndex} / 5`;
+
+          window.setTimeout(
+            () => {
+              success.classList.remove(
+                'is-visible'
+              );
+
+              if (
+                roundIndex >=
+                rounds.length
+              ) {
+                prompt.textContent =
+                  'Finished!';
+
+                success.textContent =
+                  'GREAT JOB! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'click-picture-final-banner'
+                );
+
+                choices.forEach(
+                  (item) => {
+                    item.classList.remove(
+                      'is-target'
+                    );
+                  }
+                );
+
+                return;
+              }
+
+              locked = false;
+              updateRound();
+            },
+            1200
+          );
+        }
+      );
+    }
+  );
+
+  updateRound();
+}
+
+function initializeBubblePractice() {
+  const area =
+    document.getElementById(
+      'bubblePracticeArea'
+    );
+
+  const bubbles =
+    Array.from(
+      document.querySelectorAll(
+        '.practice-bubble'
+      )
+    );
+
+  const count =
+    document.getElementById(
+      'bubbleCount'
+    );
+
+  const success =
+    document.getElementById(
+      'bubbleSuccess'
+    );
+
+  if (
+    !area ||
+    bubbles.length === 0 ||
+    !count ||
+    !success
+  ) {
+    return;
+  }
+
+  const movers =
+    bubbles.map(
+      (bubble, index) => ({
+        element: bubble,
+
+        x:
+          55 +
+          (index % 3) * 210,
+
+        y:
+          45 +
+          Math.floor(index / 3) * 190,
+
+        vx:
+          index % 2 === 0
+            ? 32 + index * 3
+            : -(30 + index * 3),
+
+        vy:
+          index % 3 === 0
+            ? 24
+            : -22,
+
+        popped: false,
+      })
+    );
+
+  let poppedCount = 0;
+  let lastTimestamp = 0;
+  let finished = false;
+  let bubbleClickWaiting = false;
+
+  const clickWaitGuard =
+    createClickWaitGuard(650);
+
+  function animateBubbles(timestamp) {
+    if (finished) {
+      return;
+    }
+
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+    }
+
+    const delta =
+      Math.min(
+        0.04,
+        (
+          timestamp -
+          lastTimestamp
+        ) / 1000
+      );
+
+    lastTimestamp = timestamp;
+
+    const areaRect =
+      area.getBoundingClientRect();
+
+    movers.forEach(
+      (mover) => {
+        if (mover.popped) {
+          return;
+        }
+
+        const bubble =
+          mover.element;
+
+        const width =
+          bubble.offsetWidth || 88;
+
+        const height =
+          bubble.offsetHeight || 88;
+
+        mover.x +=
+          mover.vx * delta;
+
+        mover.y +=
+          mover.vy * delta;
+
+        if (
+          mover.x <= 8 ||
+          mover.x + width >=
+            areaRect.width - 8
+        ) {
+          mover.vx *= -1;
+
+          mover.x =
+            Math.max(
+              8,
+              Math.min(
+                areaRect.width -
+                  width -
+                  8,
+                mover.x
+              )
+            );
+        }
+
+        if (
+          mover.y <= 8 ||
+          mover.y + height >=
+            areaRect.height - 8
+        ) {
+          mover.vy *= -1;
+
+          mover.y =
+            Math.max(
+              8,
+              Math.min(
+                areaRect.height -
+                  height -
+                  8,
+                mover.y
+              )
+            );
+        }
+
+        bubble.style.left =
+          `${mover.x}px`;
+
+        bubble.style.top =
+          `${mover.y}px`;
+      }
+    );
+
+    window.requestAnimationFrame(
+      animateBubbles
+    );
+  }
+
+  area.addEventListener(
+    'click',
+    (event) => {
+      if (!bubbleClickWaiting) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      showClickWaitReminder();
+    },
+    true
+  );
+
+  movers.forEach(
+    (mover) => {
+      mover.element.addEventListener(
+        'click',
+        () => {
+          if (finished) {
+            return;
+          }
+
+          if (mover.popped) {
+            showClickWaitReminder();
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          clickWaitGuard.lock();
+          mover.popped = true;
+
+          bubbleClickWaiting = true;
+
+          window.setTimeout(
+            () => {
+              bubbleClickWaiting = false;
+            },
+            750
+          );
+
+          playLessonClickSound();
+
+          mover.element.classList.add(
+            'is-popping'
+          );
+
+          poppedCount += 1;
+
+          count.textContent =
+            `${poppedCount} / 5`;
+
+          window.setTimeout(
+            playLessonSuccessSound,
+            220
+          );
+
+          window.setTimeout(
+            () => {
+              mover.element.hidden =
+                true;
+            },
+            300
+          );
+
+          if (
+            poppedCount >=
+            bubbles.length
+          ) {
+            finished = true;
+
+            window.setTimeout(
+              () => {
+                success.textContent =
+                  'GREAT JOB! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'is-complete'
+                );
+              },
+              500
+            );
+          }
+        }
+      );
+    }
+  );
+
+  count.textContent =
+    `0 / ${bubbles.length}`;
+
+  window.requestAnimationFrame(
+    animateBubbles
+  );
+}
+
+function initializeTreasurePractice() {
+  const area =
+    document.getElementById(
+      'treasurePracticeArea'
+    );
+
+  const boxes =
+    Array.from(
+      document.querySelectorAll(
+        '.treasure-box'
+      )
+    );
+
+  const success =
+    document.getElementById(
+      'treasureSuccess'
+    );
+
+  if (
+    !area ||
+    boxes.length === 0 ||
+    !success
+  ) {
+    return;
+  }
+
+  const treasureIndex =
+    Math.floor(
+      Math.random() *
+      boxes.length
+    );
+
+  let finished = false;
+
+  const clickWaitGuard =
+    createClickWaitGuard(700);
+
+  const wrongReveals = [
+    '🍪',
+    '🐸',
+    '🎈',
+    '🧸',
+    '🌼',
+    '⚽',
+  ];
+
+  boxes.forEach(
+    (box, index) => {
+      let opened = false;
+
+      box.addEventListener(
+        'click',
+        () => {
+          if (finished) {
+            return;
+          }
+
+          if (opened) {
+            showClickWaitReminder();
+            return;
+          }
+
+          if (!clickWaitGuard.begin()) {
+            return;
+          }
+
+          clickWaitGuard.lock();
+          opened = true;
+
+          playLessonClickSound();
+
+          if (
+            index ===
+            treasureIndex
+          ) {
+            finished = true;
+
+            box.classList.add(
+              'is-treasure'
+            );
+
+            box.innerHTML = `
+              <span class="treasure-box-reveal">
+                ⭐
+              </span>
+            `;
+
+            window.setTimeout(
+              () => {
+                playLessonSuccessSound();
+
+                success.textContent =
+                  'YOU FOUND THE TREASURE! ⭐';
+
+                success.classList.add(
+                  'is-visible',
+                  'treasure-final-banner'
+                );
+              },
+              250
+            );
+
+            return;
+          }
+
+          box.classList.add(
+            'is-open'
+          );
+
+          box.innerHTML = `
+            <span class="treasure-box-reveal">
+              ${
+                wrongReveals[
+                  index %
+                  wrongReveals.length
+                ]
+              }
+            </span>
+          `;
+        }
+      );
+    }
+  );
+}
+
+/* ----------------------------------------
+   Click Once + Wait teaching system
+----------------------------------------- */
+
+const lessonWrongSound =
+  new Audio(
+    'sounds/wrong.mp3'
+  );
+
+lessonWrongSound.preload =
+  'auto';
+
+lessonWrongSound.volume =
+  0.75;
+
+let lastWrongSoundAt = 0;
+let clickWaitReminderTimer = 0;
+
+function playLessonWrongSound() {
+  const now =
+    performance.now();
+
+  if (
+    now - lastWrongSoundAt <
+    900
+  ) {
+    return;
+  }
+
+  lastWrongSoundAt =
+    now;
+
+  try {
+    lessonWrongSound.pause();
+
+    lessonWrongSound.currentTime =
+      0;
+
+    void lessonWrongSound.play();
+  } catch {
+    // Keep lesson usable if audio is blocked.
+  }
+}
+
+function showClickWaitReminder() {
+  const reminder =
+    document.getElementById(
+      'clickWaitReminder'
+    );
+
+  if (!reminder) {
+    return;
+  }
+
+  playLessonWrongSound();
+
+  window.clearTimeout(
+    clickWaitReminderTimer
+  );
+
+  reminder.hidden = false;
+
+  reminder.classList.remove(
+    'is-showing'
+  );
+
+  void reminder.offsetWidth;
+
+  reminder.classList.add(
+    'is-showing'
+  );
+
+  clickWaitReminderTimer =
+    window.setTimeout(
+      () => {
+        reminder.hidden = true;
+
+        reminder.classList.remove(
+          'is-showing'
+        );
+      },
+      1400
+    );
+}
+
+function createClickWaitGuard(
+  waitMilliseconds = 900
+) {
+  let lockedUntil = 0;
+
+  return {
+    begin() {
+      const now =
+        performance.now();
+
+      if (now < lockedUntil) {
+        showClickWaitReminder();
+
+        return false;
+      }
+
+      return true;
+    },
+
+    lock() {
+      lockedUntil =
+        performance.now() +
+        waitMilliseconds;
+    },
+
+    clear() {
+      lockedUntil = 0;
+    },
   };
+}
+
+function initializeClickWaitTeaching() {
+  const demo =
+    document.getElementById(
+      'clickWaitTeachingDemo'
+    );
+
+  const button =
+    document.getElementById(
+      'clickWaitDemoButton'
+    );
+
+  const thinking =
+    document.getElementById(
+      'clickWaitDemoThinking'
+    );
+
+  const answer =
+    document.getElementById(
+      'clickWaitDemoAnswer'
+    );
+
+  const words =
+    document.getElementById(
+      'clickWaitTeachingWords'
+    );
+
+  if (
+    !demo ||
+    !button ||
+    !thinking ||
+    !answer ||
+    !words
+  ) {
+    return;
+  }
+
+  const cards =
+    Array.from(
+      demo.querySelectorAll(
+        '.click-wait-teaching-card'
+      )
+    );
+
+  let stopped = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  function activateCard(name) {
+    cards.forEach(
+      (card) => {
+        card.classList.toggle(
+          'is-active',
+          card.dataset.waitStep === name
+        );
+      }
+    );
+  }
+
+  async function run() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          demo
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      button.classList.remove(
+        'is-clicked'
+      );
+
+      thinking.classList.remove(
+        'is-visible'
+      );
+
+      answer.classList.remove(
+        'is-visible'
+      );
+
+      activateCard('click');
+
+      words.textContent =
+        'CLICK ONCE';
+
+      await wait(700);
+
+      if (stopped) {
+        return;
+      }
+
+      button.classList.add(
+        'is-clicked'
+      );
+
+      playLessonClickSound();
+
+      await wait(350);
+
+      if (stopped) {
+        return;
+      }
+
+      button.classList.remove(
+        'is-clicked'
+      );
+
+      activateCard('wait');
+
+      words.textContent =
+        'HANDS OFF — WAIT';
+
+      thinking.classList.add(
+        'is-visible'
+      );
+
+      /*
+       * The intentional wait is the lesson.
+       */
+      await wait(1800);
+
+      if (stopped) {
+        return;
+      }
+
+      thinking.classList.remove(
+        'is-visible'
+      );
+
+      activateCard('watch');
+
+      words.textContent =
+        'WATCH WHAT HAPPENS';
+
+      answer.classList.add(
+        'is-visible'
+      );
+
+      playLessonSuccessSound();
+
+      await wait(1400);
+    }
+  }
+
+  void run();
 }

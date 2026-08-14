@@ -3288,3 +3288,1190 @@ body[data-lesson-view="student"] #teacherSyncPanel {
     transform: rotate(90deg);
   }
 }
+
+/* ========================================
+   WEEK 3 — STEP 3: WATCH THE CLICK
+======================================== */
+
+.week3-watch-click {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week3-watch-click h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week3-click-demo {
+  width: min(760px, 95%);
+  margin: 28px auto 0;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.week3-demo-screen {
+  position: relative;
+
+  height: 270px;
+
+  overflow: hidden;
+
+  border: 11px solid #39444e;
+  border-bottom-width: 15px;
+  border-radius: 18px 18px 10px 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #d6f3ff,
+      #ffffff
+    );
+
+  box-shadow:
+    0 12px 24px
+    rgba(15, 23, 42, 0.16);
+}
+
+.week3-demo-screen-label {
+  position: absolute;
+
+  top: 12px;
+  left: 0;
+  right: 0;
+
+  color: #2f7ed8;
+
+  font-size: 0.82rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.week3-demo-button {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding: 18px 28px;
+
+  border: 4px solid #168ac0;
+  border-radius: 16px;
+
+  background: #38bdf8;
+  color: #082032;
+
+  font-size: 1.25rem;
+  font-weight: 1000;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease;
+}
+
+.week3-demo-button.is-clicked {
+  transform:
+    translate(-50%, -50%)
+    scale(0.93);
+
+  border-color: #16a34a;
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.week3-demo-cursor {
+  position: absolute;
+
+  left: 15%;
+  top: 63%;
+
+  width: 25px;
+  height: 34px;
+
+  background: #111827;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    8px 78%,
+    13px 100%,
+    19px 97%,
+    14px 75%,
+    25px 75%
+  );
+
+  transform: rotate(-12deg);
+
+  transition:
+    left 850ms ease,
+    top 850ms ease;
+}
+
+.week3-demo-cursor::after {
+  content: "";
+
+  position: absolute;
+
+  left: 3px;
+  top: 3px;
+
+  width: 18px;
+  height: 26px;
+
+  background: #ffffff;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    6px 76%,
+    10px 96%,
+    14px 94%,
+    10px 73%,
+    18px 73%
+  );
+}
+
+.week3-demo-trackpad {
+  position: relative;
+
+  width: 240px;
+  height: 220px;
+
+  display: grid;
+  place-items: end center;
+}
+
+.week3-watch-trackpad {
+  width: 220px;
+  height: 125px;
+}
+
+.week3-demo-finger {
+  position: absolute;
+
+  left: 35%;
+  top: 8px;
+
+  font-size: 4.8rem;
+
+  transition:
+    left 850ms ease,
+    top 280ms ease,
+    transform 280ms ease;
+}
+
+.week3-demo-finger.is-stopped {
+  left: 55%;
+}
+
+.week3-demo-finger.is-clicking {
+  top: 88px;
+
+  transform:
+    scaleY(0.94);
+}
+
+.week3-watch-stage {
+  width: fit-content;
+
+  margin: 24px auto 0;
+  padding: 10px 22px;
+
+  border: 3px solid #f4b400;
+  border-radius: 999px;
+
+  background: #fff8cf;
+  color: #7a5200;
+
+  font-size: 1rem;
+  font-weight: 1000;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 760px) {
+  .week3-click-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .motion-equals {
+    transform: rotate(90deg);
+  }
+}
+
+/* Week 3 Step 3 — center finger and show physical click */
+
+.week3-demo-trackpad {
+  position: relative;
+  width: 250px;
+  height: 225px;
+  display: grid;
+  place-items: end center;
+}
+
+.week3-watch-trackpad {
+  position: relative;
+  width: 220px;
+  height: 125px;
+}
+
+.week3-demo-finger {
+  position: absolute;
+
+  left: 50%;
+  top: 10px;
+
+  font-size: 4.8rem;
+  line-height: 1;
+
+  transform:
+    translateX(-50%);
+
+  transition:
+    left 850ms ease,
+    top 280ms ease,
+    transform 280ms ease;
+}
+
+/* The finger remains centered over the trackpad. */
+.week3-demo-finger.is-stopped {
+  left: 50%;
+}
+
+/* Press farther down into the middle of the trackpad. */
+.week3-demo-finger.is-clicking {
+  top: 105px;
+
+  transform:
+    translateX(-50%)
+    scaleY(0.92);
+}
+
+.week3-click-press-ring {
+  position: absolute;
+  z-index: 4;
+
+  left: 50%;
+  top: 50%;
+
+  width: 22px;
+  height: 22px;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.3);
+
+  border: 4px solid #f4b400;
+  border-radius: 50%;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.week3-click-press-ring.is-active {
+  animation:
+    week3ClickPressRing 520ms
+    ease-out;
+}
+
+@keyframes week3ClickPressRing {
+  0% {
+    opacity: 0.95;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.35);
+  }
+
+  65% {
+    opacity: 0.65;
+
+    transform:
+      translate(-50%, -50%)
+      scale(2.2);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(3);
+  }
+}
+
+/* Week 3 Step 3 — tighter finger/press alignment */
+
+.week3-demo-finger.is-clicking {
+  top: 118px;
+
+  transform:
+    translateX(-50%)
+    scaleY(0.92);
+}
+
+.week3-click-press-ring {
+  left: 50%;
+  top: 58%;
+}
+
+/* Week 3 Step 3 — click ripple directly under fingertip */
+.week3-click-press-ring {
+  left: 50%;
+  top: 30%;
+}
+
+/* Week 3 Step 3 — hand movement should drive cursor movement */
+
+.week3-demo-finger {
+  left: 30%;
+}
+
+.week3-demo-finger.is-moving {
+  left: 50%;
+}
+
+.week3-demo-finger.is-stopped {
+  left: 50%;
+}
+
+/* Week 3 Step 3 — clearer move / stop / click hand positions */
+
+.week3-demo-finger {
+  left: 35%;
+  top: 92px;
+}
+
+.week3-demo-finger.is-moving {
+  left: 58%;
+  top: 92px;
+}
+
+.week3-demo-finger.is-stopped {
+  left: 50%;
+  top: 48px;
+}
+
+.week3-demo-finger.is-clicking {
+  left: 50%;
+  top: 118px;
+
+  transform:
+    translateX(-50%)
+    scaleY(0.92);
+}
+
+/* Week 3 Step 3 — finger slides through middle of trackpad */
+
+.week3-demo-finger {
+  left: 35%;
+  top: 145px;
+}
+
+.week3-demo-finger.is-moving {
+  left: 58%;
+  top: 145px;
+}
+
+/* STOP lifts the finger away from the trackpad */
+.week3-demo-finger.is-stopped {
+  left: 50%;
+  top: 48px;
+}
+
+/* CLICK comes back down onto the trackpad */
+.week3-demo-finger.is-clicking {
+  left: 50%;
+  top: 118px;
+
+  transform:
+    translateX(-50%)
+    scaleY(0.92);
+}
+
+/* ========================================
+   WEEK 3 — STEP 4: CLICK THE BIG BUTTON
+======================================== */
+
+.week3-big-button-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.week3-big-button-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.big-button-practice-area {
+  position: relative;
+
+  width: min(760px, 95%);
+  height: 360px;
+
+  margin: 22px auto 0;
+
+  overflow: hidden;
+
+  border: 5px solid #7abff0;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e5f7ff,
+      #ffffff
+    );
+}
+
+.big-click-button {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  min-width: 210px;
+  min-height: 100px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 5px solid #168ac0;
+  border-radius: 22px;
+
+  background: #38bdf8;
+  color: #082032;
+
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 1000;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 0 #168ac0;
+
+  transition:
+    left 350ms ease,
+    top 350ms ease,
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.big-click-button:active {
+  transform:
+    translate(-50%, -50%)
+    translateY(5px);
+
+  box-shadow:
+    0 3px 0 #168ac0;
+}
+
+.big-click-button.is-correct {
+  border-color: #16a34a;
+  background: #22c55e;
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 0 #15803d;
+}
+
+.week3-practice-count {
+  position: absolute;
+
+  right: 16px;
+  bottom: 14px;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.94);
+  color: #18344f;
+
+  font-weight: 1000;
+}
+
+.week3-success-banner {
+  position: absolute;
+  z-index: 20;
+
+  left: 50%;
+  top: 16px;
+
+  transform: translateX(-50%);
+
+  padding: 10px 22px;
+
+  border: 4px solid #16a34a;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 1.15rem;
+  font-weight: 1000;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.week3-success-banner.is-visible {
+  opacity: 1;
+}
+
+.week3-success-banner.is-complete {
+  top: 50%;
+
+  width: min(420px, 75%);
+  padding: 20px 28px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 20px;
+
+  background: #22c55e;
+  color: #ffffff;
+
+  font-size: 1.9rem;
+
+  box-shadow:
+    0 12px 30px
+    rgba(22, 163, 74, 0.3);
+}
+
+/* ========================================
+   WEEK 3 — STEP 5: CLICK THE PICTURE
+======================================== */
+
+.week3-picture-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.week3-picture-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.click-picture-choice {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  border: 3px solid #d6e7f5;
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  font: inherit;
+  font-size: 4rem;
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+.click-picture-choice:hover {
+  border-color: #9ccdea;
+}
+
+.click-picture-choice:active {
+  transform: scale(0.95);
+}
+
+.click-picture-choice.is-target {
+  border-color: #f4b400;
+  background: #fff9d8;
+}
+
+.click-picture-choice.is-correct {
+  transform: scale(1.06);
+
+  border-color: #22c55e;
+  background: #dcfce7;
+}
+
+.click-picture-final-banner {
+  position: absolute;
+  z-index: 20;
+
+  left: 50%;
+  top: 50%;
+
+  width: min(430px, 75%);
+  padding: 20px 26px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 5px solid #16a34a;
+  border-radius: 20px;
+
+  background: #22c55e;
+  color: #ffffff;
+
+  font-size: 1.8rem;
+  font-weight: 1000;
+
+  box-shadow:
+    0 12px 30px
+    rgba(22, 163, 74, 0.3);
+}
+
+/* ========================================
+   WEEK 3 — STEP 6: POP THE BUBBLES
+======================================== */
+
+.week3-bubble-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.week3-bubble-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.bubble-practice-area {
+  position: relative;
+
+  width: min(760px, 95%);
+  height: 380px;
+
+  margin: 22px auto 0;
+  overflow: hidden;
+
+  border: 5px solid #7abff0;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #dff6ff 0%,
+      #f8fdff 100%
+    );
+}
+
+.practice-bubble {
+  position: absolute;
+
+  width: 88px;
+  height: 88px;
+
+  padding: 0;
+
+  border: 4px solid
+    rgba(56, 189, 248, 0.75);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(255,255,255,0.95) 0 8%,
+      rgba(255,255,255,0.35) 9% 18%,
+      rgba(125,211,252,0.35) 40%,
+      rgba(56,189,248,0.5) 100%
+    );
+
+  box-shadow:
+    inset -8px -10px 18px
+      rgba(14,165,233,0.18),
+    0 6px 14px
+      rgba(15,23,42,0.12);
+
+  cursor: pointer;
+}
+
+.practice-bubble::after {
+  content: "";
+
+  position: absolute;
+
+  left: 21px;
+  top: 15px;
+
+  width: 18px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,0.8);
+
+  transform: rotate(-35deg);
+}
+
+.practice-bubble:active {
+  transform: scale(0.92);
+}
+
+.practice-bubble.is-popping {
+  pointer-events: none;
+
+  animation:
+    week3BubblePop 300ms
+    ease-out
+    forwards;
+}
+
+@keyframes week3BubblePop {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  55% {
+    opacity: 0.9;
+    transform: scale(1.35);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+/* ========================================
+   WEEK 3 — STEP 7: TREASURE HUNT
+======================================== */
+
+.week3-treasure-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.week3-treasure-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.treasure-practice-area {
+  position: relative;
+
+  width: min(760px, 95%);
+  height: 380px;
+
+  margin: 22px auto 0;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
+  gap: 22px;
+
+  border: 5px solid #d6ad55;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff6d7,
+      #f8e7ad
+    );
+}
+
+.treasure-box {
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #b7791f;
+  border-radius: 22px;
+
+  background: #fff9e8;
+
+  font: inherit;
+  font-size: 4.7rem;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.treasure-box:active {
+  transform: scale(0.94);
+}
+
+.treasure-box.is-open {
+  background: #f4ead0;
+  border-color: #9a7b44;
+}
+
+.treasure-box.is-treasure {
+  background: #dcfce7;
+  border-color: #22c55e;
+
+  transform: scale(1.08);
+}
+
+.treasure-box-reveal {
+  font-size: 4.3rem;
+  line-height: 1;
+}
+
+.treasure-final-banner {
+  position: absolute;
+  z-index: 20;
+
+  left: 50%;
+  top: 50%;
+
+  width: min(460px, 78%);
+  padding: 22px 28px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 5px solid #16a34a;
+  border-radius: 22px;
+
+  background: #22c55e;
+  color: #ffffff;
+
+  font-size: 1.7rem;
+  font-weight: 1000;
+  text-align: center;
+
+  box-shadow:
+    0 12px 30px
+    rgba(22, 163, 74, 0.3);
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.treasure-final-banner.is-visible {
+  opacity: 1;
+}
+
+/* Click Once + Wait reminder */
+
+.click-wait-reminder {
+  position: fixed;
+  z-index: 1000;
+
+  left: 50%;
+  top: 18px;
+
+  width: min(460px, 82%);
+  padding: 14px 22px;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  border: 5px solid #f4b400;
+  border-radius: 20px;
+
+  background: #fff4bf;
+  color: #6b4700;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.24);
+
+  pointer-events: none;
+}
+
+.click-wait-reminder[hidden] {
+  display: none;
+}
+
+.click-wait-reminder-icon {
+  font-size: 2.8rem;
+}
+
+.click-wait-reminder strong {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 1000;
+}
+
+.click-wait-reminder span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.click-wait-reminder.is-showing {
+  animation:
+    clickWaitReminderPulse 250ms
+    ease-out;
+}
+
+@keyframes clickWaitReminderPulse {
+  0% {
+    transform:
+      translateX(-50%)
+      scale(0.9);
+  }
+
+  70% {
+    transform:
+      translateX(-50%)
+      scale(1.05);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+}
+
+/* ========================================
+   WEEK 3 — CLICK ONCE AND WAIT
+======================================== */
+
+.week3-click-wait-step {
+  width: min(880px, 100%);
+  text-align: center;
+}
+
+.week3-click-wait-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.click-wait-teaching-demo {
+  width: min(760px, 95%);
+  margin: 26px auto 0;
+
+  display: grid;
+  grid-template-columns:
+    1fr auto 1fr auto 1fr;
+
+  align-items: center;
+  gap: 14px;
+}
+
+.click-wait-teaching-card {
+  position: relative;
+
+  min-height: 145px;
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: 4px solid #d8e5ef;
+  border-radius: 22px;
+
+  background: #f8fcff;
+  color: #34516a;
+
+  opacity: 0.45;
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.click-wait-teaching-card.is-active {
+  opacity: 1;
+
+  transform: scale(1.05);
+
+  border-color: #f4b400;
+  background: #fff8cf;
+}
+
+.click-wait-number {
+  position: absolute;
+  left: 9px;
+  top: 9px;
+
+  width: 28px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #38bdf8;
+  color: #082032;
+
+  font-weight: 1000;
+}
+
+.click-wait-icon {
+  font-size: 3.7rem;
+}
+
+.click-wait-teaching-card strong {
+  font-size: 0.95rem;
+  font-weight: 1000;
+}
+
+.click-wait-arrow {
+  color: #f4b400;
+  font-size: 2rem;
+  font-weight: 1000;
+}
+
+.click-wait-demo-screen {
+  position: relative;
+
+  width: min(470px, 85%);
+  height: 105px;
+
+  margin: 24px auto 0;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #9ccdea;
+  border-radius: 20px;
+
+  background: #eaf8ff;
+}
+
+.click-wait-demo-button {
+  min-width: 145px;
+  min-height: 55px;
+
+  border: 4px solid #168ac0;
+  border-radius: 14px;
+
+  background: #38bdf8;
+  color: #082032;
+
+  font: inherit;
+  font-weight: 1000;
+
+  pointer-events: none;
+}
+
+.click-wait-demo-button.is-clicked {
+  background: #bae6fd;
+  transform: scale(0.95);
+}
+
+.click-wait-demo-thinking,
+.click-wait-demo-answer {
+  position: absolute;
+
+  right: 24px;
+
+  font-weight: 1000;
+
+  opacity: 0;
+}
+
+.click-wait-demo-thinking {
+  color: #d28a00;
+  font-size: 1.6rem;
+  letter-spacing: 5px;
+}
+
+.click-wait-demo-thinking.is-visible {
+  opacity: 1;
+
+  animation:
+    clickWaitThinking 700ms
+    ease-in-out
+    infinite;
+}
+
+.click-wait-demo-answer {
+  color: #15803d;
+  font-size: 1.15rem;
+}
+
+.click-wait-demo-answer.is-visible {
+  opacity: 1;
+}
+
+.click-wait-teaching-words {
+  width: fit-content;
+
+  margin: 18px auto 0;
+  padding: 10px 22px;
+
+  border: 3px solid #f4b400;
+  border-radius: 999px;
+
+  background: #fff8cf;
+  color: #6b4700;
+
+  font-size: 1.1rem;
+  font-weight: 1000;
+}
+
+@keyframes clickWaitThinking {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Click Once + Wait — center reminder on student screen */
+
+.click-wait-reminder {
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+.click-wait-reminder.is-showing {
+  animation:
+    clickWaitReminderCenterPulse 250ms
+    ease-out;
+}
+
+@keyframes clickWaitReminderCenterPulse {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.88);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.06);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}

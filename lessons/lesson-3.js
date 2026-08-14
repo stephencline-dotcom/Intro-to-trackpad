@@ -153,6 +153,93 @@ window.trackpadLesson = {
     },
 
     {
+      title: 'Click Once and Wait',
+
+      teacherPrompt:
+        'Teach students to click one time and then wait for the computer to respond. Explain that clicking again and again does not make the computer work faster. Practice the words together: Click once. Hands off. Wait. Watch.',
+
+      activityHtml: `
+        <div class="week3-click-wait-step">
+          <h2>Click Once — Then Wait!</h2>
+
+          <p class="lesson-kid-prompt">
+            Give the computer time to answer.
+          </p>
+
+          <div
+            id="clickWaitTeachingDemo"
+            class="click-wait-teaching-demo"
+          >
+            <div
+              class="click-wait-teaching-card"
+              data-wait-step="click"
+            >
+              <div class="click-wait-number">1</div>
+              <div class="click-wait-icon">👇</div>
+              <strong>CLICK ONCE</strong>
+            </div>
+
+            <div class="click-wait-arrow">→</div>
+
+            <div
+              class="click-wait-teaching-card"
+              data-wait-step="wait"
+            >
+              <div class="click-wait-number">2</div>
+              <div class="click-wait-icon">✋</div>
+              <strong>WAIT</strong>
+            </div>
+
+            <div class="click-wait-arrow">→</div>
+
+            <div
+              class="click-wait-teaching-card"
+              data-wait-step="watch"
+            >
+              <div class="click-wait-number">3</div>
+              <div class="click-wait-icon">💻</div>
+              <strong>WATCH</strong>
+            </div>
+          </div>
+
+          <div class="click-wait-demo-screen">
+            <button
+              id="clickWaitDemoButton"
+              class="click-wait-demo-button"
+              type="button"
+              tabindex="-1"
+            >
+              CLICK ME
+            </button>
+
+            <div
+              id="clickWaitDemoThinking"
+              class="click-wait-demo-thinking"
+            >
+              • • •
+            </div>
+
+            <div
+              id="clickWaitDemoAnswer"
+              class="click-wait-demo-answer"
+            >
+              ✓ READY!
+            </div>
+          </div>
+
+          <div
+            id="clickWaitTeachingWords"
+            class="click-wait-teaching-words"
+          >
+            CLICK ONCE
+          </div>
+        </div>
+      `,
+
+      activityType: 'clickWaitTeaching',
+    },
+
+    {
       title: 'Watch the Click',
 
       teacherPrompt:
@@ -166,13 +253,27 @@ window.trackpadLesson = {
             Move → Stop → Click → Lift
           </p>
 
-          <div class="week3-click-demo">
+          <div
+            id="watchClickDemo"
+            class="week3-click-demo"
+          >
             <div class="week3-demo-screen">
-              <div class="week3-demo-button">
+              <div class="week3-demo-screen-label">
+                COMPUTER SCREEN
+              </div>
+
+              <div
+                id="watchClickButton"
+                class="week3-demo-button"
+              >
                 CHOOSE ME
               </div>
 
-              <div class="week3-demo-cursor"></div>
+              <div
+                id="watchClickCursor"
+                class="week3-demo-cursor"
+                aria-hidden="true"
+              ></div>
             </div>
 
             <div class="motion-equals">
@@ -180,15 +281,37 @@ window.trackpadLesson = {
             </div>
 
             <div class="week3-demo-trackpad">
-              <div class="generic-trackpad"></div>
+              <div
+                class="generic-trackpad week3-watch-trackpad"
+              >
+                <div
+                  id="watchClickPress"
+                  class="week3-click-press-ring"
+                  aria-hidden="true"
+                ></div>
+              </div>
 
-              <div class="week3-demo-finger">
+              <div
+                id="watchClickFinger"
+                class="week3-demo-finger"
+                aria-hidden="true"
+              >
                 👆
               </div>
             </div>
           </div>
+
+          <div
+            id="watchClickStage"
+            class="week3-watch-stage"
+          >
+            MOVE
+          </div>
         </div>
       `,
+
+      activityType: 'watchClick',
+
     },
 
     {
