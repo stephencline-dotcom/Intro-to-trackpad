@@ -384,6 +384,8 @@ function initializeStarPractice() {
     locked = true;
     draggingByHover = false;
 
+    stopLessonDragSound();
+
     completed += 1;
 
     updateCount();
@@ -395,6 +397,8 @@ function initializeStarPractice() {
     success.classList.add(
       'is-visible'
     );
+
+    playLessonSuccessSound();
 
     window.setTimeout(
       () => {
@@ -442,18 +446,27 @@ function initializeStarPractice() {
       }
 
       draggingByHover = true;
+
+      startLessonDragSound();
     }
   );
 
   area.addEventListener(
     'pointermove',
-    moveStarWithPointer
+    (event) => {
+      if (draggingByHover) {
+        startLessonDragSound();
+      }
+
+      moveStarWithPointer(event);
+    }
   );
 
   area.addEventListener(
     'pointerleave',
     () => {
       draggingByHover = false;
+      stopLessonDragSound();
     }
   );
 
@@ -501,6 +514,8 @@ function initializePathPractice() {
 
       started = true;
 
+      startLessonDragSound();
+
       startTarget.classList.add(
         'is-active'
       );
@@ -515,6 +530,32 @@ function initializePathPractice() {
     }
   );
 
+  const practiceArea =
+    document.getElementById(
+      'pathPracticeArea'
+    );
+
+  if (practiceArea) {
+    practiceArea.addEventListener(
+      'pointermove',
+      () => {
+        if (
+          started &&
+          !completed
+        ) {
+          startLessonDragSound();
+        }
+      }
+    );
+
+    practiceArea.addEventListener(
+      'pointerleave',
+      () => {
+        stopLessonDragSound();
+      }
+    );
+  }
+
   finish.addEventListener(
     'pointerenter',
     () => {
@@ -526,6 +567,8 @@ function initializePathPractice() {
       }
 
       completed = true;
+
+      stopLessonDragSound();
 
       finish.classList.remove(
         'is-ready'
@@ -541,6 +584,8 @@ function initializePathPractice() {
       success.classList.add(
         'is-visible'
       );
+
+      playLessonSuccessSound();
     }
   );
 }
@@ -678,6 +723,8 @@ function initializePicturePractice() {
       'is-visible'
     );
 
+    playLessonSuccessSound();
+
     roundIndex += 1;
 
     countDisplay.textContent =
@@ -710,7 +757,7 @@ function initializePicturePractice() {
         locked = false;
         updateRound();
       },
-      650
+      1250
     );
   }
 
@@ -829,7 +876,73 @@ function initializeRevealPractice() {
   context.globalCompositeOperation =
     'destination-out';
 
+  const columns = 12;
+  const rows = 7;
+
+  const revealedCells =
+    new Set();
+
+  const totalCells =
+    columns * rows;
+
+  let finished = false;
+
+  function markRevealedCell(x, y) {
+    const column =
+      Math.max(
+        0,
+        Math.min(
+          columns - 1,
+          Math.floor(
+            (x / rect.width) *
+            columns
+          )
+        )
+      );
+
+    const row =
+      Math.max(
+        0,
+        Math.min(
+          rows - 1,
+          Math.floor(
+            (y / rect.height) *
+            rows
+          )
+        )
+      );
+
+    revealedCells.add(
+      `${column}-${row}`
+    );
+
+    const ratio =
+      revealedCells.size /
+      totalCells;
+
+    if (
+      !finished &&
+      ratio >= 0.92
+    ) {
+      finished = true;
+
+      stopLessonDragSound();
+      playLessonSuccessSound();
+
+      progress.textContent =
+        'Great job! ⭐';
+
+      progress.classList.add(
+        'reveal-complete'
+      );
+    }
+  }
+
   function revealAt(event) {
+    if (finished) {
+      return;
+    }
+
     const bounds =
       canvas.getBoundingClientRect();
 
@@ -853,13 +966,22 @@ function initializeRevealPractice() {
 
     context.fill();
 
-    progress.textContent =
-      'Keep sliding!';
+    startLessonDragSound();
+
+    markRevealedCell(
+      x,
+      y
+    );
   }
 
   canvas.addEventListener(
     'pointermove',
     revealAt
+  );
+
+  canvas.addEventListener(
+    'pointerleave',
+    stopLessonDragSound
   );
 }
 
@@ -1039,3 +1161,136 @@ if (lessonView === 'student') {
       500
     );
 }
+
+/* ----------------------------------------
+   Lesson sound system
+----------------------------------------- */
+
+const lessonSuccessSound =
+  new Audio(
+    'sounds/sparkle.mp3'
+  );
+
+const lessonDragSound =
+  new Audio(
+    'sounds/sparkledrag.mp3'
+  );
+
+lessonSuccessSound.preload =
+  'auto';
+
+lessonDragSound.preload =
+  'auto';
+
+lessonDragSound.loop = true;
+
+lessonSuccessSound.volume =
+  0.85;
+
+lessonDragSound.volume =
+  0.45;
+
+let lessonDragSoundActive =
+  false;
+
+let lessonDragStopTimer = 0;
+
+function playLessonSuccessSound() {
+  try {
+    lessonSuccessSound.currentTime =
+      0;
+
+    void lessonSuccessSound.play();
+  } catch {
+    // Keep the lesson usable if audio is blocked.
+  }
+}
+
+function startLessonDragSound() {
+  window.clearTimeout(
+    lessonDragStopTimer
+  );
+
+  if (!lessonDragSoundActive) {
+    lessonDragSoundActive = true;
+
+    try {
+      void lessonDragSound.play();
+    } catch {
+      // Keep the lesson usable if audio is blocked.
+    }
+  }
+
+  lessonDragStopTimer =
+    window.setTimeout(
+      stopLessonDragSound,
+      140
+    );
+}
+
+function stopLessonDragSound() {
+  window.clearTimeout(
+    lessonDragStopTimer
+  );
+
+  lessonDragStopTimer = 0;
+
+  if (!lessonDragSoundActive) {
+    return;
+  }
+
+  lessonDragSoundActive = false;
+
+  lessonDragSound.pause();
+
+  try {
+    lessonDragSound.currentTime =
+      0;
+  } catch {
+    // Reset is optional.
+  }
+}
+
+document.addEventListener(
+  'pointermove',
+  () => {
+    const step =
+      lesson &&
+      Array.isArray(lesson.steps)
+        ? lesson.steps[
+            currentStepIndex
+          ]
+        : null;
+
+    if (
+      !step ||
+      !step.activityType
+    ) {
+      return;
+    }
+
+    const movementActivities =
+      new Set([
+        'picturePractice',
+        'revealPractice',
+      ]);
+
+    if (
+      movementActivities.has(
+        step.activityType
+      )
+    ) {
+      startLessonDragSound();
+    }
+  }
+);
+
+document.addEventListener(
+  'pointerleave',
+  stopLessonDragSound
+);
+
+window.addEventListener(
+  'blur',
+  stopLessonDragSound
+);
