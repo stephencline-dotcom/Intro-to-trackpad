@@ -77,7 +77,7 @@ window.trackpadLesson = {
       title: 'What Is a Click?',
 
       teacherPrompt:
-        'Introduce clicking. Explain that a click tells the computer, “I choose this.” Model the four steps slowly: MOVE the arrow, STOP on the object, CLICK the trackpad one time, then LIFT your finger.',
+        'Introduce clicking. Explain that a click tells the computer, “I choose this.” Model the steps slowly: MOVE the arrow, STOP on the object, CLICK one time, then WAIT for the computer to respond.',
 
       activityHtml: `
         <div class="week3-click-intro">
@@ -144,7 +144,7 @@ window.trackpadLesson = {
           </div>
 
           <div class="week3-click-definition">
-            Move → Stop → Click → Lift
+            Move → Stop → Click Once → Wait
           </div>
         </div>
       `,
@@ -243,14 +243,14 @@ window.trackpadLesson = {
       title: 'Watch the Click',
 
       teacherPrompt:
-        'Demonstrate the whole action. The finger slides, the cursor moves to the button, the finger stops, presses once, and lifts. Point out that simply moving onto the button does not choose it — the click does.',
+        'Demonstrate the whole action. The cursor moves to the button, stops, clicks once, and waits for the computer to respond. Point out that simply moving onto the button does not choose it — the click does.',
 
       activityHtml: `
         <div class="week3-watch-click">
           <h2>Watch the Click</h2>
 
           <p class="lesson-kid-prompt">
-            Move → Stop → Click → Lift
+            Move → Stop → Click Once → Wait
           </p>
 
           <div

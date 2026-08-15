@@ -15,7 +15,7 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  [1, 2, 3, 4].includes(
+  [1, 2, 3, 4, 5].includes(
     requestedLessonNumber
   )
     ? requestedLessonNumber
@@ -205,6 +205,27 @@ function renderLessonStep() {
     'week4RevealChoose'
   ) {
     initializeWeek4RevealChoose();
+  }
+
+  if (
+    step.activityType ===
+    'week5Review'
+  ) {
+    initializeWeek5Review();
+  }
+
+  if (
+    step.activityType ===
+    'week5TeamDemo'
+  ) {
+    initializeWeek5TeamDemo();
+  }
+
+  if (
+    step.activityType ===
+    'week5TargetPractice'
+  ) {
+    initializeWeek5TargetPractice();
   }
 
   if (
@@ -5510,4 +5531,889 @@ function initializeWeek4RevealChoose() {
       checkProgress();
     }
   );
+}
+
+function initializeWeek5TeamDemo() {
+  const cursor =
+    document.getElementById(
+      'week5TeamCursor'
+    );
+
+  const rightHand =
+    document.getElementById(
+      'week5DemoRight'
+    );
+
+  const leftHand =
+    document.getElementById(
+      'week5DemoLeft'
+    );
+
+  const pressHold =
+    document.getElementById(
+      'week5LeftPressHold'
+    );
+
+  const words =
+    document.getElementById(
+      'week5TeamWords'
+    );
+
+  const target =
+    document.querySelector(
+      '.week5-team-target'
+    );
+
+  if (
+    !cursor ||
+    !rightHand ||
+    !leftHand ||
+    !pressHold ||
+    !words ||
+    !target
+  ) {
+    return;
+  }
+
+  let stopped = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function run() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          cursor
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      /*
+       * RESET
+       */
+      stopLessonSlideSound();
+
+      cursor.style.left = '18%';
+      cursor.style.top = '62%';
+
+      target.style.left = '70%';
+      target.style.top = '45%';
+
+      rightHand.classList.remove(
+        'is-moving',
+        'is-moving-to-star',
+        'is-dragging-star'
+      );
+
+      leftHand.classList.remove(
+        'is-clicking'
+      );
+
+      pressHold.classList.remove(
+        'is-holding'
+      );
+
+      target.classList.remove(
+        'is-clicked',
+        'is-held'
+      );
+
+      words.textContent =
+        'RIGHT HAND — MOVE TO THE STAR';
+
+      await wait(700);
+
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * RIGHT HAND MOVES CURSOR
+       * TO THE STAR.
+       */
+      rightHand.classList.add(
+        'is-moving-to-star'
+      );
+
+      cursor.style.left = '66%';
+      cursor.style.top = '43%';
+
+      await wait(1200);
+
+      if (stopped) {
+        return;
+      }
+
+      words.textContent =
+        'RIGHT HAND — STOP';
+
+      await wait(550);
+
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * LEFT HAND PRESSES.
+       * IT STAYS DOWN.
+       */
+      words.textContent =
+        'LEFT HAND — PRESS AND HOLD';
+
+      leftHand.classList.add(
+        'is-clicking'
+      );
+
+      pressHold.classList.add(
+        'is-holding'
+      );
+
+      target.classList.add(
+        'is-held'
+      );
+
+      playLessonClickSound();
+
+      await wait(650);
+
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * LEFT REMAINS HELD.
+       * RIGHT HAND NOW DRAGS.
+       */
+      words.textContent =
+        'KEEP HOLDING — RIGHT HAND MOVES';
+
+      /*
+       * The click has become a drag:
+       * LEFT is held while RIGHT moves.
+       */
+      startLessonSlideSound();
+
+      rightHand.classList.remove(
+        'is-moving-to-star'
+      );
+
+      await wait(150);
+
+      rightHand.classList.add(
+        'is-dragging-star'
+      );
+
+      cursor.style.left = '30%';
+      cursor.style.top = '68%';
+
+      target.style.left = '34%';
+      target.style.top = '69%';
+
+      await wait(1250);
+
+      if (stopped) {
+        return;
+      }
+
+      /*
+       * RELEASE ONLY AFTER
+       * THE STAR HAS MOVED.
+       */
+      words.textContent =
+        'LEFT HAND — RELEASE';
+
+      /*
+       * Movement is finished, so the
+       * dragging sound stops before release.
+       */
+      stopLessonSlideSound();
+
+      leftHand.classList.remove(
+        'is-clicking'
+      );
+
+      pressHold.classList.remove(
+        'is-holding'
+      );
+
+      target.classList.remove(
+        'is-held'
+      );
+
+      target.classList.add(
+        'is-clicked'
+      );
+
+      playLessonSuccessSound();
+
+      await wait(800);
+
+      words.textContent =
+        'TWO HANDS — TWO JOBS!';
+
+      await wait(1200);
+    }
+  }
+
+  void run();
+}
+
+/* ----------------------------------------
+   Two-hand drag / hold sound
+----------------------------------------- */
+
+const lessonSlideSound =
+  new Audio(
+    'sounds/slide.mp3'
+  );
+
+lessonSlideSound.preload =
+  'auto';
+
+lessonSlideSound.loop =
+  true;
+
+lessonSlideSound.volume =
+  0.7;
+
+let lessonSlideSoundPlaying =
+  false;
+
+function startLessonSlideSound() {
+  if (lessonSlideSoundPlaying) {
+    return;
+  }
+
+  lessonSlideSoundPlaying =
+    true;
+
+  try {
+    lessonSlideSound.currentTime =
+      0;
+
+    void lessonSlideSound.play();
+  } catch {
+    lessonSlideSoundPlaying =
+      false;
+  }
+}
+
+function stopLessonSlideSound() {
+  lessonSlideSoundPlaying =
+    false;
+
+  try {
+    lessonSlideSound.pause();
+
+    lessonSlideSound.currentTime =
+      0;
+  } catch {
+    // Keep lesson usable if audio is blocked.
+  }
+}
+
+document.addEventListener(
+  'pointerleave',
+  stopLessonSlideSound
+);
+
+window.addEventListener(
+  'blur',
+  stopLessonSlideSound
+);
+
+function initializeWeek5Review() {
+  const row =
+    document.getElementById(
+      'week5ReviewRow'
+    );
+
+  const ready =
+    document.getElementById(
+      'week5ReviewReady'
+    );
+
+  if (!row || !ready) {
+    return;
+  }
+
+  const cards =
+    Array.from(
+      row.querySelectorAll(
+        '.week5-review-card'
+      )
+    );
+
+  let stopped = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function run() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          row
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active',
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.remove(
+        'is-visible'
+      );
+
+      for (
+        let index = 0;
+        index < cards.length;
+        index += 1
+      ) {
+        cards.forEach(
+          (card) =>
+            card.classList.remove(
+              'is-active'
+            )
+        );
+
+        cards[index].classList.add(
+          'is-active'
+        );
+
+        await wait(1400);
+
+        if (stopped) {
+          return;
+        }
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active'
+          );
+
+          card.classList.add(
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.add(
+        'is-visible'
+      );
+
+      await wait(2200);
+    }
+  }
+
+  void run();
+}
+
+function initializeWeek5TargetPractice() {
+  const area =
+    document.getElementById(
+      'week5TargetArea'
+    );
+
+  const star =
+    document.getElementById(
+      'week5DragStar'
+    );
+
+  const target =
+    document.getElementById(
+      'week5DropTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week5HoldPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week5HoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week5TargetCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week5TargetSuccess'
+    );
+
+  if (
+    !area ||
+    !star ||
+    !target ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      starX: 18,
+      starY: 55,
+      targetX: 75,
+      targetY: 55,
+    },
+    {
+      starX: 72,
+      starY: 28,
+      targetX: 24,
+      targetY: 70,
+    },
+    {
+      starX: 24,
+      starY: 28,
+      targetX: 72,
+      targetY: 72,
+    },
+    {
+      starX: 74,
+      starY: 68,
+      targetX: 28,
+      targetY: 30,
+    },
+    {
+      starX: 20,
+      starY: 72,
+      targetX: 72,
+      targetY: 28,
+    },
+  ];
+
+  let roundIndex = 0;
+  let holding = false;
+  let dragging = false;
+  let finished = false;
+
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function positionRound() {
+    const round =
+      rounds[roundIndex];
+
+    star.style.left =
+      `${round.starX}%`;
+
+    star.style.top =
+      `${round.starY}%`;
+
+    target.style.left =
+      `${round.targetX}%`;
+
+    target.style.top =
+      `${round.targetY}%`;
+
+    target.style.right =
+      'auto';
+
+    target.style.transform =
+      'translate(-50%, -50%)';
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    target.classList.remove(
+      'is-ready-release'
+    );
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    prompt.textContent =
+      '1. PRESS AND HOLD THE STAR';
+
+    holding = false;
+    dragging = false;
+
+    stopLessonSlideSound();
+  }
+
+  function starIsInsideTarget() {
+    const starRect =
+      star.getBoundingClientRect();
+
+    const targetRect =
+      target.getBoundingClientRect();
+
+    const starCenterX =
+      starRect.left +
+      starRect.width / 2;
+
+    const starCenterY =
+      starRect.top +
+      starRect.height / 2;
+
+    return (
+      starCenterX >=
+        targetRect.left &&
+      starCenterX <=
+        targetRect.right &&
+      starCenterY >=
+        targetRect.top &&
+      starCenterY <=
+        targetRect.bottom
+    );
+  }
+
+  star.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (finished) {
+        return;
+      }
+
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      star.setPointerCapture(
+        pointerId
+      );
+
+      const starRect =
+        star.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        starRect.left;
+
+      offsetY =
+        event.clientY -
+        starRect.top;
+
+      holding = true;
+      dragging = false;
+
+      star.classList.add(
+        'is-held'
+      );
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      prompt.textContent =
+        '2. KEEP HOLDING — MOVE WITH RIGHT HAND';
+
+      playLessonClickSound();
+    }
+  );
+
+  star.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        star.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        star.offsetHeight;
+
+      const clampedX =
+        Math.max(
+          0,
+          Math.min(
+            maxX,
+            x
+          )
+        );
+
+      const clampedY =
+        Math.max(
+          0,
+          Math.min(
+            maxY,
+            y
+          )
+        );
+
+      star.style.left =
+        `${clampedX}px`;
+
+      star.style.top =
+        `${clampedY}px`;
+
+      star.style.transform =
+        'none';
+
+      if (!dragging) {
+        dragging = true;
+
+        startLessonSlideSound();
+      }
+
+      if (
+        starIsInsideTarget()
+      ) {
+        target.classList.add(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          '3. NOW RELEASE!';
+      } else {
+        target.classList.remove(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'KEEP HOLDING — KEEP MOVING';
+      }
+    }
+  );
+
+  function finishPointer(
+    event
+  ) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    const correctRelease =
+      starIsInsideTarget();
+
+    if (!correctRelease) {
+      /*
+       * The student lifted the LEFT finger
+       * before completing the drag.
+       */
+      playLessonLetGoSound();
+
+      prompt.textContent =
+        'PRESS AND HOLD AGAIN';
+
+      /*
+       * Make the important lesson extremely
+       * obvious when the LEFT finger lifts.
+       */
+      indicator.textContent =
+        '✋ DON\'T LET GO!';
+
+      indicator.classList.remove(
+        'is-visible'
+      );
+
+      indicator.classList.add(
+        'is-let-go-warning'
+      );
+
+      void indicator.offsetWidth;
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      window.setTimeout(
+        () => {
+          indicator.classList.remove(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+        },
+        1400
+      );
+
+      /*
+       * Releasing too early sends the star
+       * back to its starting position.
+       */
+      const round =
+        rounds[roundIndex];
+
+      star.style.left =
+        `${round.starX}%`;
+
+      star.style.top =
+        `${round.starY}%`;
+
+      star.style.transform =
+        'translate(-50%, -50%)';
+
+      target.classList.remove(
+        'is-ready-release'
+      );
+
+      window.setTimeout(
+        () => {
+          if (!finished) {
+            prompt.textContent =
+              'PRESS AND HOLD AGAIN';
+          }
+        },
+        900
+      );
+
+      return;
+    }
+
+    roundIndex += 1;
+
+    count.textContent =
+      `${roundIndex} / 3`;
+
+    prompt.textContent =
+      'GREAT HOLD!';
+
+    playLessonSuccessSound();
+
+    if (
+      roundIndex >=
+      rounds.length
+    ) {
+      finished = true;
+
+      window.setTimeout(
+        () => {
+          star.hidden = true;
+          target.hidden = true;
+          prompt.hidden = true;
+
+          success.textContent =
+            'GREAT JOB! ⭐';
+
+          success.classList.add(
+            'is-visible',
+            'is-complete'
+          );
+        },
+        700
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      positionRound,
+      900
+    );
+  }
+
+  star.addEventListener(
+    'pointerup',
+    finishPointer
+  );
+
+  star.addEventListener(
+    'pointercancel',
+    finishPointer
+  );
+
+  count.textContent =
+    '0 / 5';
+
+  positionRound();
+}
+
+/* ----------------------------------------
+   Released-too-early sound
+----------------------------------------- */
+
+const lessonLetGoSound =
+  new Audio(
+    'sounds/letgo.mp3'
+  );
+
+lessonLetGoSound.preload =
+  'auto';
+
+lessonLetGoSound.volume =
+  0.8;
+
+function playLessonLetGoSound() {
+  try {
+    lessonLetGoSound.pause();
+
+    lessonLetGoSound.currentTime =
+      0;
+
+    void lessonLetGoSound.play();
+  } catch {
+    // Keep lesson usable if audio is blocked.
+  }
 }

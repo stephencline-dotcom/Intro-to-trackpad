@@ -5835,3 +5835,1388 @@ body[data-lesson-view="student"] #teacherSyncPanel {
       scale(1);
   }
 }
+
+/* ========================================
+   WEEK 5 — TWO HANDS, TWO JOBS
+======================================== */
+
+.week5-two-hands-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week5-two-hands-step h2 {
+  margin: 8px 0 0;
+
+  color: #0b2b55;
+
+  font-size:
+    clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-big-badge {
+  width: fit-content;
+
+  margin: 0 auto 10px;
+  padding: 8px 18px;
+
+  border-radius: 999px;
+
+  background: #fff3b8;
+  color: #7a5200;
+
+  font-size: 0.85rem;
+  font-weight: 1000;
+  letter-spacing: 0.1em;
+}
+
+.week5-hand-jobs {
+  width: min(760px, 95%);
+
+  margin: 28px auto 0;
+
+  display: grid;
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items: center;
+  gap: 24px;
+}
+
+.week5-hand-job {
+  min-height: 285px;
+
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 5px solid #8ecdf4;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef9ff,
+      #ffffff
+    );
+
+  box-shadow:
+    0 10px 24px
+    rgba(15, 23, 42, 0.1);
+}
+
+.week5-hand-job:last-child {
+  border-color: #f4c55c;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff8d9,
+      #ffffff
+    );
+}
+
+.week5-hand-label {
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  background: #dff3ff;
+  color: #075985;
+
+  font-size: 0.9rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.week5-hand-job:last-child
+.week5-hand-label {
+  background: #fff0b8;
+  color: #7a5200;
+}
+
+.week5-hand-icon {
+  margin: 12px 0 5px;
+
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.week5-job-word {
+  color: #0b2b55;
+
+  font-size: 2rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.week5-hand-job p {
+  margin: 8px 0 0;
+
+  color: #536b80;
+
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.week5-team-plus {
+  color: #22a7e8;
+
+  font-size: 3.5rem;
+  font-weight: 1000;
+}
+
+@media (max-width: 760px) {
+  .week5-hand-jobs {
+    grid-template-columns: 1fr;
+  }
+
+  .week5-team-plus {
+    transform: rotate(90deg);
+  }
+}
+
+/* Week 5 — custom left/right hand images */
+
+.week5-hand-image-wrap {
+  width: 150px;
+  height: 150px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 10px auto 4px;
+}
+
+.week5-hand-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.week5-left-hand-icon {
+  transform: none;
+}
+
+/* Week 5 Step 2 — match hand visual sizes */
+
+/* RIGHT HAND / MOVE image */
+.week5-hand-job:first-child .week5-hand-image {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+}
+
+/* LEFT HAND / CLICK image */
+.week5-hand-job:last-child .week5-hand-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Week 5 Step 2 — final hand size match */
+.week5-hand-job:first-child .week5-hand-image {
+  width: 90%;
+  height: 90%;
+}
+
+/* Week 5 Step 2 — nudge MOVE hand up slightly */
+.week5-hand-job:first-child .week5-hand-image {
+  transform: translateY(-10px);
+}
+
+/* ========================================
+   WEEK 5 — STEP 3: GET YOUR HANDS READY
+======================================== */
+
+.week5-position-step {
+  width: min(850px, 100%);
+  text-align: center;
+}
+
+.week5-position-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-position-demo {
+  width: min(700px, 95%);
+  margin: 24px auto 0;
+}
+
+.week5-position-trackpad {
+  position: relative;
+
+  width: min(620px, 95%);
+  height: 330px;
+
+  margin: 0 auto;
+
+  border: 9px solid #65717b;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #3d4650,
+      #252c33
+    );
+
+  box-shadow:
+    inset 0 0 0 3px #4f5b65,
+    0 14px 28px rgba(15, 23, 42, 0.2);
+
+  overflow: hidden;
+}
+
+.week5-right-zone {
+  position: absolute;
+
+  left: 31%;
+  top: 18%;
+
+  width: 46%;
+  height: 64%;
+
+  border: 4px dashed rgba(56, 189, 248, 0.75);
+  border-radius: 24px;
+
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.week5-left-zone {
+  position: absolute;
+
+  left: 5%;
+  bottom: 7%;
+
+  width: 22%;
+  height: 31%;
+
+  border: 4px dashed rgba(250, 204, 21, 0.8);
+  border-radius: 18px;
+
+  background: rgba(250, 204, 21, 0.09);
+}
+
+.week5-position-right-hand {
+  position: absolute;
+  z-index: 5;
+
+  left: 53%;
+  top: 49%;
+
+  width: 150px;
+  height: 150px;
+
+  object-fit: contain;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+.week5-position-left-hand {
+  position: absolute;
+  z-index: 5;
+
+  left: 16%;
+  bottom: -2%;
+
+  width: 118px;
+  height: 118px;
+
+  object-fit: contain;
+}
+
+.week5-position-label {
+  position: absolute;
+  z-index: 7;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.week5-position-label-right {
+  right: 9%;
+  top: 7%;
+
+  background: #dff3ff;
+  color: #075985;
+}
+
+.week5-position-label-left {
+  left: 4%;
+  bottom: 41%;
+
+  background: #fff0b8;
+  color: #7a5200;
+}
+
+.week5-position-reminder {
+  width: fit-content;
+
+  margin: 20px auto 0;
+  padding: 10px 20px;
+
+  border-radius: 999px;
+
+  background: #eef6fb;
+  color: #18344f;
+
+  font-weight: 1000;
+}
+
+/* Week 5 — final matched hand images */
+
+.week5-hand-job:first-child .week5-hand-image,
+.week5-hand-job:last-child .week5-hand-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  transform: none;
+}
+
+.week5-position-right-hand,
+.week5-position-left-hand {
+  object-fit: contain;
+  transform: none;
+}
+
+/* Week 5 Step 3 — both hands share one blue trackpad zone */
+
+.week5-right-zone {
+  left: 16%;
+  top: 12%;
+
+  width: 68%;
+  height: 76%;
+}
+
+/* Remove the old separate yellow zone completely */
+.week5-left-zone {
+  display: none !important;
+}
+
+/* RIGHT hand sits in the middle for movement */
+.week5-position-right-hand {
+  left: 50%;
+  top: 48%;
+
+  width: 145px;
+  height: 145px;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+/* LEFT hand waits at the bottom-right of the same blue zone */
+.week5-position-left-hand {
+  left: auto;
+  right: 16%;
+  bottom: 3%;
+
+  width: 125px;
+  height: 125px;
+
+  transform: none;
+}
+
+/* Move the LEFT CLICK label with the hand */
+.week5-position-label-left {
+  left: auto;
+  right: 5%;
+  bottom: 40%;
+}
+
+/* Week 5 Step 3 — LEFT hand belongs on bottom-left */
+
+.week5-position-left-hand {
+  left: 16%;
+  right: auto;
+  bottom: 3%;
+
+  width: 125px;
+  height: 125px;
+
+  transform: none;
+}
+
+.week5-position-label-left {
+  left: 5%;
+  right: auto;
+  bottom: 40%;
+}
+
+/* ========================================
+   WEEK 5 — STEP 4: RIGHT MOVES, LEFT CLICKS
+======================================== */
+
+.week5-team-demo-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week5-team-demo-step h2 {
+  margin: 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-team-demo {
+  width: min(780px, 95%);
+  margin: 28px auto 0;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 26px;
+}
+
+.week5-team-screen {
+  position: relative;
+
+  height: 270px;
+
+  overflow: hidden;
+
+  border: 10px solid #39444e;
+  border-bottom-width: 14px;
+  border-radius: 18px 18px 10px 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #dff5ff,
+      #ffffff
+    );
+}
+
+.week5-team-target {
+  position: absolute;
+
+  left: 70%;
+  top: 45%;
+
+  transform:
+    translate(-50%, -50%);
+
+  width: 88px;
+  height: 88px;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px solid #f4b400;
+  border-radius: 50%;
+
+  background: #fff2a8;
+
+  font-size: 3.5rem;
+}
+
+.week5-team-target.is-clicked {
+  border-color: #16a34a;
+  background: #86efac;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1.08);
+}
+
+.week5-team-cursor {
+  position: absolute;
+
+  left: 18%;
+  top: 62%;
+
+  width: 24px;
+  height: 34px;
+
+  background: #111827;
+
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    8px 78%,
+    13px 100%,
+    19px 97%,
+    14px 75%,
+    24px 75%
+  );
+
+  transform: rotate(-12deg);
+
+  transition:
+    left 1100ms ease,
+    top 1100ms ease;
+}
+
+.week5-demo-pad {
+  position: relative;
+
+  width: 280px;
+  height: 220px;
+
+  border: 8px solid #65717b;
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #3d4650,
+      #252c33
+    );
+}
+
+.week5-demo-right,
+.week5-demo-left {
+  position: absolute;
+  z-index: 5;
+}
+
+.week5-demo-right {
+  left: 34%;
+  top: 38%;
+
+  width: 120px;
+  height: 120px;
+
+  background:
+    url("images/backrighthand.png")
+    center / contain
+    no-repeat;
+
+  font-size: 0;
+
+  transition:
+    left 1100ms ease,
+    top 1100ms ease;
+}
+
+.week5-demo-right.is-moving {
+  left: 56%;
+}
+
+.week5-demo-left {
+  left: 4%;
+  bottom: 2%;
+
+  width: 105px;
+  height: 105px;
+
+  background:
+    url("images/backlefthand.png")
+    center / contain
+    no-repeat;
+
+  font-size: 0;
+
+  transition:
+    bottom 250ms ease,
+    transform 250ms ease;
+}
+
+.week5-demo-left.is-clicking {
+  bottom: -6%;
+
+  transform:
+    scaleY(0.92);
+}
+
+.week5-team-words {
+  width: fit-content;
+
+  margin: 22px auto 0;
+  padding: 10px 22px;
+
+  border: 3px solid #38bdf8;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-weight: 1000;
+}
+
+/* Week 5 Step 3 — natural two-hand trackpad angle */
+
+/* LEFT hand: slight inward tilt */
+.week5-position-left-hand {
+  transform:
+    rotate(10deg);
+  transform-origin:
+    center bottom;
+}
+
+/* RIGHT hand: slight inward tilt and shift right */
+.week5-position-right-hand {
+  left: 56%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-10deg);
+
+  transform-origin:
+    center bottom;
+}
+
+/* Week 5 Step 3 — final hand placement adjustment */
+
+/* LEFT: more inward tilt and closer to bottom-left corner */
+.week5-position-left-hand {
+  left: 10%;
+  bottom: 0%;
+
+  transform:
+    rotate(16deg);
+
+  transform-origin:
+    center bottom;
+}
+
+/* RIGHT: more inward tilt while keeping fingertip centered */
+.week5-position-right-hand {
+  left: 57%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-16deg);
+
+  transform-origin:
+    center bottom;
+}
+
+/* Week 5 Step 4 — match Get Your Hands Ready hand placement */
+
+/* RIGHT hand — middle/right with inward tilt */
+.week5-demo-right {
+  left: 42%;
+  top: 38%;
+
+  width: 120px;
+  height: 120px;
+
+  transform:
+    rotate(-16deg);
+
+  transform-origin:
+    center bottom;
+}
+
+/* RIGHT hand slides while keeping its natural angle */
+.week5-demo-right.is-moving {
+  left: 60%;
+
+  transform:
+    rotate(-16deg);
+}
+
+/* LEFT hand — tucked into bottom-left */
+.week5-demo-left {
+  left: 2%;
+  bottom: 0%;
+
+  width: 105px;
+  height: 105px;
+
+  transform:
+    rotate(16deg);
+
+  transform-origin:
+    center bottom;
+}
+
+/* LEFT hand presses while keeping the same angle */
+.week5-demo-left.is-clicking {
+  bottom: -6%;
+
+  transform:
+    rotate(16deg)
+    scaleY(0.92);
+}
+
+/* Week 5 Step 4 — tuck LEFT click hand into corner */
+
+.week5-demo-left {
+  left: -12%;
+  bottom: -2%;
+
+  transform:
+    rotate(16deg);
+
+  transform-origin:
+    center bottom;
+}
+
+.week5-demo-left.is-clicking {
+  left: -12%;
+  bottom: -8%;
+
+  transform:
+    rotate(16deg)
+    scaleY(0.92);
+}
+
+/* Week 5 Step 4 — lower LEFT click hand */
+
+.week5-demo-left {
+  bottom: -10%;
+}
+
+.week5-demo-left.is-clicking {
+  bottom: -16%;
+}
+
+/* Week 5 Step 4 — LEFT finger press + hold indicator */
+
+.week5-left-press-hold {
+  position: absolute;
+  z-index: 4;
+
+  left: 9%;
+  bottom: 23%;
+
+  width: 22px;
+  height: 22px;
+
+  border: 4px solid #f4b400;
+  border-radius: 50%;
+
+  background:
+    rgba(250, 204, 21, 0.18);
+
+  opacity: 0;
+
+  transform:
+    translate(-50%, 50%)
+    scale(0.4);
+
+  pointer-events: none;
+}
+
+.week5-left-press-hold.is-holding {
+  opacity: 1;
+
+  animation:
+    week5PressHoldPulse 700ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes week5PressHoldPulse {
+  0% {
+    opacity: 0.95;
+
+    transform:
+      translate(-50%, 50%)
+      scale(0.65);
+
+    box-shadow:
+      0 0 0 0
+      rgba(244, 180, 0, 0.6);
+  }
+
+  60% {
+    opacity: 0.75;
+
+    transform:
+      translate(-50%, 50%)
+      scale(1);
+
+    box-shadow:
+      0 0 0 13px
+      rgba(244, 180, 0, 0);
+  }
+
+  100% {
+    opacity: 0.95;
+
+    transform:
+      translate(-50%, 50%)
+      scale(0.65);
+
+    box-shadow:
+      0 0 0 0
+      rgba(244, 180, 0, 0);
+  }
+}
+
+/* Week 5 Step 4 — align HOLD animation with left fingertip */
+
+.week5-left-press-hold {
+  left: 22%;
+  bottom: 23%;
+
+  width: 38px;
+  height: 38px;
+
+  border-width: 5px;
+}
+
+.week5-left-press-hold.is-holding {
+  animation:
+    week5PressHoldPulseLarge 700ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes week5PressHoldPulseLarge {
+  0% {
+    opacity: 0.95;
+
+    transform:
+      translate(-50%, 50%)
+      scale(0.7);
+
+    box-shadow:
+      0 0 0 0
+      rgba(244, 180, 0, 0.65);
+  }
+
+  60% {
+    opacity: 0.8;
+
+    transform:
+      translate(-50%, 50%)
+      scale(1.15);
+
+    box-shadow:
+      0 0 0 20px
+      rgba(244, 180, 0, 0);
+  }
+
+  100% {
+    opacity: 0.95;
+
+    transform:
+      translate(-50%, 50%)
+      scale(0.7);
+
+    box-shadow:
+      0 0 0 0
+      rgba(244, 180, 0, 0.65);
+  }
+}
+
+/* Week 5 Step 4 — star moves during two-hand drag */
+
+.week5-team-target {
+  transition:
+    left 1200ms ease-in-out,
+    top 1200ms ease-in-out,
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.week5-team-target.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34, 197, 94, 0.18);
+}
+EOFcat >> lesson-shell.css <<'EOF'
+
+/* Week 5 Step 4 — star moves during two-hand drag */
+
+.week5-team-target {
+  transition:
+    left 1200ms ease-in-out,
+    top 1200ms ease-in-out,
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.week5-team-target.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34, 197, 94, 0.18);
+}
+
+/* Week 5 Step 4 — right hand mirrors cursor direction */
+
+.week5-demo-right {
+  left: 35%;
+  top: 50%;
+
+  transition:
+    left 1100ms ease-in-out,
+    top 1100ms ease-in-out,
+    transform 1100ms ease-in-out;
+}
+
+/* Move up/right toward the star */
+.week5-demo-right.is-moving-to-star {
+  left: 58%;
+  top: 32%;
+
+  transform:
+    rotate(-16deg);
+}
+
+/* While LEFT holds, drag down/left */
+.week5-demo-right.is-dragging-star {
+  left: 30%;
+  top: 60%;
+
+  transform:
+    rotate(-16deg);
+}
+
+/* ========================================
+   WEEK 5 — QUICK REVIEW
+======================================== */
+
+.week5-review-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week5-review-step h2 {
+  margin: 6px 0 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-review-row {
+  width: min(820px, 96%);
+  margin: 30px auto 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.week5-review-card {
+  min-height: 180px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border: 4px solid #d7e5ef;
+  border-radius: 24px;
+
+  background: #f8fcff;
+  color: #34516a;
+
+  opacity: 0.4;
+  transform: scale(0.95);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.week5-review-card span {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.week5-review-card strong {
+  font-size: 1rem;
+  font-weight: 1000;
+  letter-spacing: 0.06em;
+}
+
+.week5-review-card.is-active {
+  opacity: 1;
+
+  transform: scale(1.05);
+
+  border-color: #f4b400;
+  background: #fff8cf;
+}
+
+.week5-review-card.is-ready {
+  opacity: 1;
+
+  transform: scale(1);
+
+  border-color: #22c55e;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week5-review-ready {
+  width: fit-content;
+
+  margin: 24px auto 0;
+  padding: 12px 24px;
+
+  border: 4px solid #16a34a;
+  border-radius: 999px;
+
+  background: #22c55e;
+  color: #ffffff;
+
+  font-size: 1.2rem;
+  font-weight: 1000;
+
+  opacity: 0;
+  transform: scale(0.9);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.week5-review-ready.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========================================
+   WEEK 5 — STEP 5: HOLD AND MOVE PRACTICE
+======================================== */
+
+.week5-target-step {
+  width: min(880px, 100%);
+  text-align: center;
+}
+
+.week5-target-step h2 {
+  margin: 4px 0 0;
+
+  color: #0b2b55;
+
+  font-size:
+    clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-hold-practice-area {
+  position: relative;
+
+  height: 400px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e8f8ff,
+      #ffffff
+    );
+}
+
+.week5-hold-prompt {
+  position: absolute;
+  z-index: 10;
+
+  left: 50%;
+  top: 14px;
+
+  transform:
+    translateX(-50%);
+
+  padding: 9px 20px;
+
+  border: 3px solid #38bdf8;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-size: 0.95rem;
+  font-weight: 1000;
+
+  white-space: nowrap;
+}
+
+/* STAR THE STUDENT WILL HOLD */
+.week5-hold-star {
+  position: absolute;
+  z-index: 8;
+
+  left: 18%;
+  top: 55%;
+
+  width: 110px;
+  height: 110px;
+
+  display: grid;
+  place-items: center;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 5px solid #d99b31;
+  border-radius: 50%;
+
+  background: #fff4bd;
+
+  font-size: 4.7rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 8px 0 #bd7d18,
+    0 12px 24px
+    rgba(15, 23, 42, 0.15);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week5-hold-star:active {
+  cursor: grabbing;
+}
+
+.week5-hold-star.is-held {
+  border-color: #16a34a;
+
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 9px
+      rgba(34, 197, 94, 0.18),
+    0 8px 0 #15803d;
+}
+
+/* LARGE DROP DESTINATION */
+.week5-hold-target {
+  position: absolute;
+
+  right: 8%;
+  top: 55%;
+
+  width: 210px;
+  height: 210px;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border: 7px dashed #38bdf8;
+  border-radius: 32px;
+
+  background:
+    rgba(224, 242, 254, 0.72);
+
+  color: #075985;
+
+  font-weight: 1000;
+
+  animation:
+    week5DropTargetPulse 1.3s
+    ease-in-out
+    infinite;
+}
+
+.week5-hold-target span {
+  font-size: 4rem;
+}
+
+.week5-hold-target strong {
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+}
+
+.week5-hold-target.is-ready-release {
+  border-color: #16a34a;
+
+  background:
+    rgba(220, 252, 231, 0.92);
+
+  color: #166534;
+
+  animation: none;
+}
+
+/* ONLY SHOW WHILE STUDENT IS HOLDING */
+.week5-hold-indicator {
+  position: absolute;
+  z-index: 20;
+
+  left: 50%;
+  bottom: 18px;
+
+  transform:
+    translateX(-50%);
+
+  padding: 11px 22px;
+
+  border: 4px solid #f4b400;
+  border-radius: 999px;
+
+  background: #fff4bf;
+  color: #6b4700;
+
+  font-size: 1.05rem;
+  font-weight: 1000;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.week5-hold-indicator.is-visible {
+  opacity: 1;
+
+  animation:
+    week5KeepHoldingPulse 850ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes week5DropTargetPulse {
+  0% {
+    transform:
+      translateY(-50%)
+      scale(1);
+  }
+
+  55% {
+    transform:
+      translateY(-50%)
+      scale(1.04);
+  }
+
+  100% {
+    transform:
+      translateY(-50%)
+      scale(1);
+  }
+}
+
+@keyframes week5KeepHoldingPulse {
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      scale(1.06);
+  }
+}
+
+/* Week 5 Step 5 — stable drop target while dragging */
+
+.week5-hold-target {
+  animation:
+    week5StableTargetPulse 1.3s
+    ease-in-out
+    infinite;
+}
+
+/* When the star reaches the target,
+   keep the box completely still. */
+.week5-hold-target.is-ready-release {
+  transform:
+    translate(-50%, -50%);
+
+  animation: none;
+
+  box-shadow:
+    0 0 0 10px
+    rgba(34, 197, 94, 0.22);
+}
+
+@keyframes week5StableTargetPulse {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%);
+
+    box-shadow:
+      0 0 0 0
+      rgba(56, 189, 248, 0.35);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%);
+
+    box-shadow:
+      0 0 0 12px
+      rgba(56, 189, 248, 0);
+  }
+}
+
+/* Week 5 Step 5 — obvious early-release warning */
+
+.week5-hold-indicator.is-let-go-warning {
+  z-index: 40;
+
+  left: 50%;
+  bottom: auto;
+  top: 50%;
+
+  width: min(430px, 75%);
+  padding: 20px 28px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 5px solid #eab308;
+  border-radius: 22px;
+
+  background: #fef3c7;
+  color: #854d0e;
+
+  font-size: 1.8rem;
+  font-weight: 1000;
+  text-align: center;
+
+  box-shadow:
+    0 14px 32px
+    rgba(15, 23, 42, 0.25);
+}
+
+.week5-hold-indicator.is-let-go-warning.is-visible {
+  animation:
+    week5LetGoWarning 300ms
+    ease-out;
+}
+
+@keyframes week5LetGoWarning {
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.8);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.08);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
