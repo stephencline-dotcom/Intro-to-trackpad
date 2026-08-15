@@ -230,6 +230,27 @@ function renderLessonStep() {
 
   if (
     step.activityType ===
+    'week5HoldPath'
+  ) {
+    initializeWeek5HoldPath();
+  }
+
+  if (
+    step.activityType ===
+    'week5DragSort'
+  ) {
+    initializeWeek5DragSort();
+  }
+
+  if (
+    step.activityType ===
+    'week5Puzzle'
+  ) {
+    initializeWeek5Puzzle();
+  }
+
+  if (
+    step.activityType ===
     'clickWaitTeaching'
   ) {
     initializeClickWaitTeaching();
@@ -6416,4 +6437,1310 @@ function playLessonLetGoSound() {
   } catch {
     // Keep lesson usable if audio is blocked.
   }
+}
+
+function initializeWeek5HoldPath() {
+  const area =
+    document.getElementById(
+      'week5HoldPathArea'
+    );
+
+  const star =
+    document.getElementById(
+      'week5PathStar'
+    );
+
+  const finish =
+    document.getElementById(
+      'week5PathFinish'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week5PathPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week5PathHoldIndicator'
+    );
+
+  const success =
+    document.getElementById(
+      'week5PathSuccess'
+    );
+
+  const path =
+    area?.querySelector(
+      '.week5-hold-path-main'
+    );
+
+  const svg =
+    area?.querySelector(
+      '.week5-hold-path-road'
+    );
+
+  if (
+    !area ||
+    !star ||
+    !finish ||
+    !prompt ||
+    !indicator ||
+    !success ||
+    !path ||
+    !svg
+  ) {
+    return;
+  }
+
+  let holding = false;
+  let finished = false;
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function resetStar(message) {
+    stopLessonSlideSound();
+
+    holding = false;
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    finish.classList.remove(
+      'is-ready-release'
+    );
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    star.style.left = '7%';
+    star.style.bottom = '6%';
+    star.style.top = 'auto';
+    star.style.transform = 'none';
+
+    prompt.textContent =
+      message ||
+      'PRESS AND HOLD THE STAR';
+  }
+
+  function pointIsNearPath(
+    clientX,
+    clientY
+  ) {
+    const svgRect =
+      svg.getBoundingClientRect();
+
+    const svgPoint =
+      svg.createSVGPoint();
+
+    svgPoint.x =
+      (
+        (clientX - svgRect.left) /
+        svgRect.width
+      ) * 760;
+
+    svgPoint.y =
+      (
+        (clientY - svgRect.top) /
+        svgRect.height
+      ) * 390;
+
+    const totalLength =
+      path.getTotalLength();
+
+    let closestDistance =
+      Infinity;
+
+    for (
+      let distance = 0;
+      distance <= totalLength;
+      distance += 8
+    ) {
+      const point =
+        path.getPointAtLength(
+          distance
+        );
+
+      const dx =
+        svgPoint.x - point.x;
+
+      const dy =
+        svgPoint.y - point.y;
+
+      const currentDistance =
+        Math.hypot(
+          dx,
+          dy
+        );
+
+      if (
+        currentDistance <
+        closestDistance
+      ) {
+        closestDistance =
+          currentDistance;
+      }
+    }
+
+    /*
+     * Road is roughly 66px wide.
+     * Give students some forgiveness.
+     */
+    return closestDistance <= 48;
+  }
+
+  function starIsInsideFinish() {
+    const starRect =
+      star.getBoundingClientRect();
+
+    const finishRect =
+      finish.getBoundingClientRect();
+
+    const centerX =
+      starRect.left +
+      starRect.width / 2;
+
+    const centerY =
+      starRect.top +
+      starRect.height / 2;
+
+    return (
+      centerX >= finishRect.left &&
+      centerX <= finishRect.right &&
+      centerY >= finishRect.top &&
+      centerY <= finishRect.bottom
+    );
+  }
+
+  star.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (finished) {
+        return;
+      }
+
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      star.setPointerCapture(
+        pointerId
+      );
+
+      const starRect =
+        star.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        starRect.left;
+
+      offsetY =
+        event.clientY -
+        starRect.top;
+
+      holding = true;
+
+      star.classList.add(
+        'is-held'
+      );
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — FOLLOW THE PATH';
+
+      playLessonClickSound();
+    }
+  );
+
+  star.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId ||
+        finished
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        star.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        star.offsetHeight;
+
+      const clampedX =
+        Math.max(
+          0,
+          Math.min(
+            maxX,
+            x
+          )
+        );
+
+      const clampedY =
+        Math.max(
+          0,
+          Math.min(
+            maxY,
+            y
+          )
+        );
+
+      star.style.left =
+        `${clampedX}px`;
+
+      star.style.top =
+        `${clampedY}px`;
+
+      star.style.bottom =
+        'auto';
+
+      star.style.transform =
+        'none';
+
+      startLessonSlideSound();
+
+      const starRect =
+        star.getBoundingClientRect();
+
+      const centerX =
+        starRect.left +
+        starRect.width / 2;
+
+      const centerY =
+        starRect.top +
+        starRect.height / 2;
+
+      /*
+       * Leave the road = immediate reset.
+       */
+      if (
+        !pointIsNearPath(
+          centerX,
+          centerY
+        )
+      ) {
+        playLessonLetGoSound();
+
+        prompt.textContent =
+          'STAY ON THE PATH!';
+
+        resetStar(
+          'PRESS AND HOLD — TRY AGAIN'
+        );
+
+        return;
+      }
+
+      if (
+        starIsInsideFinish()
+      ) {
+        finish.classList.add(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'NOW RELEASE!';
+      } else {
+        finish.classList.remove(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'KEEP HOLDING — FOLLOW THE PATH';
+      }
+    }
+  );
+
+  function finishPointer(
+    event
+  ) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId ||
+      finished
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    if (
+      !starIsInsideFinish()
+    ) {
+      playLessonLetGoSound();
+
+      resetStar(
+        'DON\'T LET GO — TRY AGAIN'
+      );
+
+      return;
+    }
+
+    finished = true;
+
+    finish.classList.add(
+      'is-ready-release'
+    );
+
+    prompt.textContent =
+      'GREAT HOLD!';
+
+    playLessonSuccessSound();
+
+    window.setTimeout(
+      () => {
+        star.hidden = true;
+
+        success.textContent =
+          'GREAT JOB! ⭐';
+
+        success.classList.add(
+          'is-visible',
+          'is-complete'
+        );
+      },
+      600
+    );
+  }
+
+  star.addEventListener(
+    'pointerup',
+    finishPointer
+  );
+
+  star.addEventListener(
+    'pointercancel',
+    finishPointer
+  );
+
+  resetStar();
+}
+
+function initializeWeek5DragSort() {
+  const area =
+    document.getElementById(
+      'week5SortArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week5SortPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week5SortHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week5SortCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week5SortSuccess'
+    );
+
+  const objects =
+    Array.from(
+      document.querySelectorAll(
+        '.week5-sort-object'
+      )
+    );
+
+  const targets =
+    Array.from(
+      document.querySelectorAll(
+        '.week5-sort-target'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    objects.length !== 5 ||
+    targets.length !== 5
+  ) {
+    return;
+  }
+
+  let completed = 0;
+
+  objects.forEach(
+    (object) => {
+      const startLeft =
+        object.style.left;
+
+      const startTop =
+        object.style.top;
+
+      let holding = false;
+      let pointerId = null;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      const key =
+        object.dataset.sort;
+
+      const target =
+        targets.find(
+          (item) =>
+            item.dataset.sortTarget ===
+            key
+        );
+
+      if (!target) {
+        return;
+      }
+
+      function resetObject() {
+        stopLessonSlideSound();
+
+        holding = false;
+
+        object.classList.remove(
+          'is-held'
+        );
+
+        target.classList.remove(
+          'is-ready-release'
+        );
+
+        /*
+         * Leave the shared warning alone here.
+         * Early-release feedback may still
+         * need to stay visible while the
+         * object snaps back to its start.
+         */
+
+        /*
+         * Remove inline drag coordinates so
+         * CSS puts it back in its own row.
+         */
+        object.style.left =
+          startLeft;
+
+        object.style.top =
+          startTop;
+
+        object.style.transform =
+          'translate(-50%, -50%)';
+      }
+
+      function isInsideTarget() {
+        const objectRect =
+          object.getBoundingClientRect();
+
+        const targetRect =
+          target.getBoundingClientRect();
+
+        const centerX =
+          objectRect.left +
+          objectRect.width / 2;
+
+        const centerY =
+          objectRect.top +
+          objectRect.height / 2;
+
+        return (
+          centerX >= targetRect.left &&
+          centerX <= targetRect.right &&
+          centerY >= targetRect.top &&
+          centerY <= targetRect.bottom
+        );
+      }
+
+      object.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (
+            object.classList.contains(
+              'is-complete'
+            )
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          pointerId =
+            event.pointerId;
+
+          object.setPointerCapture(
+            pointerId
+          );
+
+          const rect =
+            object.getBoundingClientRect();
+
+          offsetX =
+            event.clientX -
+            rect.left;
+
+          offsetY =
+            event.clientY -
+            rect.top;
+
+          holding = true;
+
+          object.classList.add(
+            'is-held'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+
+          indicator.classList.add(
+            'is-visible'
+          );
+
+          prompt.textContent =
+            'KEEP HOLDING — MOVE TO THE MATCH';
+
+          playLessonClickSound();
+        }
+      );
+
+      object.addEventListener(
+        'pointermove',
+        (event) => {
+          if (
+            !holding ||
+            event.pointerId !==
+              pointerId
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            areaRect.left -
+            offsetX;
+
+          const y =
+            event.clientY -
+            areaRect.top -
+            offsetY;
+
+          const maxX =
+            areaRect.width -
+            object.offsetWidth;
+
+          const maxY =
+            areaRect.height -
+            object.offsetHeight;
+
+          object.style.left =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxX,
+                  x
+                )
+              )
+            }px`;
+
+          object.style.top =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxY,
+                  y
+                )
+              )
+            }px`;
+
+          object.style.transform =
+            'none';
+
+          startLessonSlideSound();
+
+          if (isInsideTarget()) {
+            target.classList.add(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'NOW RELEASE!';
+          } else {
+            target.classList.remove(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'KEEP HOLDING — FIND THE MATCH';
+          }
+        }
+      );
+
+      function finishDrag(event) {
+        if (
+          !holding ||
+          event.pointerId !==
+            pointerId
+        ) {
+          return;
+        }
+
+        holding = false;
+
+        stopLessonSlideSound();
+
+        indicator.classList.remove(
+          'is-visible'
+        );
+
+        object.classList.remove(
+          'is-held'
+        );
+
+        if (!isInsideTarget()) {
+          playLessonLetGoSound();
+
+          indicator.textContent =
+            "✋ DON'T LET GO!";
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          resetObject();
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+            },
+            1200
+          );
+
+          prompt.textContent =
+            'PRESS AND HOLD AGAIN';
+
+          return;
+        }
+
+        object.classList.add(
+          'is-complete'
+        );
+
+        target.classList.remove(
+          'is-ready-release'
+        );
+
+        target.classList.add(
+          'is-complete'
+        );
+
+        object.hidden = true;
+
+        completed += 1;
+
+        count.textContent =
+          `${completed} / 5`;
+
+        prompt.textContent =
+          'GREAT HOLD!';
+
+        playLessonSuccessSound();
+
+        if (completed >= 5) {
+          prompt.hidden = true;
+
+          success.textContent =
+            'GREAT JOB! ⭐';
+
+          success.classList.add(
+            'is-visible',
+            'is-complete'
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          () => {
+            prompt.textContent =
+              'PRESS AND HOLD AN OBJECT';
+          },
+          750
+        );
+      }
+
+      object.addEventListener(
+        'pointerup',
+        finishDrag
+      );
+
+      object.addEventListener(
+        'pointercancel',
+        finishDrag
+      );
+    }
+  );
+
+  count.textContent = '0 / 5';
+}
+
+function initializeWeek5Puzzle() {
+  const area =
+    document.getElementById(
+      'week5PuzzleArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week5PuzzlePrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week5PuzzleHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week5PuzzleCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week5PuzzleSuccess'
+    );
+
+  const pieces =
+    Array.from(
+      document.querySelectorAll(
+        '.week5-puzzle-piece'
+      )
+    );
+
+  const slots =
+    Array.from(
+      document.querySelectorAll(
+        '.week5-puzzle-slot'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    pieces.length !== 6 ||
+    slots.length !== 6
+  ) {
+    return;
+  }
+
+  let completed = 0;
+
+  pieces.forEach(
+    (piece) => {
+      const pieceNumber =
+        piece.dataset.piece;
+
+      const slot =
+        slots.find(
+          (item) =>
+            item.dataset.slot ===
+            pieceNumber
+        );
+
+      if (!slot) {
+        return;
+      }
+
+      /*
+       * Save the CSS-defined starting
+       * position before dragging begins.
+       */
+      const startingLeft =
+        getComputedStyle(piece).left;
+
+      const startingTop =
+        getComputedStyle(piece).top;
+
+      let holding = false;
+      let pointerId = null;
+
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function getSlotOverlap(testSlot) {
+        const pieceRect =
+          piece.getBoundingClientRect();
+
+        const slotRect =
+          testSlot.getBoundingClientRect();
+
+        const overlapLeft =
+          Math.max(
+            pieceRect.left,
+            slotRect.left
+          );
+
+        const overlapTop =
+          Math.max(
+            pieceRect.top,
+            slotRect.top
+          );
+
+        const overlapRight =
+          Math.min(
+            pieceRect.right,
+            slotRect.right
+          );
+
+        const overlapBottom =
+          Math.min(
+            pieceRect.bottom,
+            slotRect.bottom
+          );
+
+        const overlapWidth =
+          Math.max(
+            0,
+            overlapRight -
+            overlapLeft
+          );
+
+        const overlapHeight =
+          Math.max(
+            0,
+            overlapBottom -
+            overlapTop
+          );
+
+        return (
+          overlapWidth *
+          overlapHeight
+        );
+      }
+
+      function getSlotUnderPiece() {
+        let bestSlot = null;
+        let bestOverlap = 0;
+
+        slots.forEach(
+          (testSlot) => {
+            const overlap =
+              getSlotOverlap(
+                testSlot
+              );
+
+            if (
+              overlap >
+              bestOverlap
+            ) {
+              bestOverlap =
+                overlap;
+
+              bestSlot =
+                testSlot;
+            }
+          }
+        );
+
+        /*
+         * Require a little real overlap so
+         * merely brushing the board edge
+         * does not count as choosing a slot.
+         */
+        const pieceArea =
+          piece.offsetWidth *
+          piece.offsetHeight;
+
+        if (
+          bestOverlap <
+          pieceArea * 0.18
+        ) {
+          return null;
+        }
+
+        return bestSlot;
+      }
+
+      function pieceIsInsideSlot() {
+        return (
+          getSlotUnderPiece() ===
+          slot
+        );
+      }
+
+      function resetPiece() {
+        stopLessonSlideSound();
+
+        holding = false;
+
+        piece.classList.remove(
+          'is-held'
+        );
+
+        slot.classList.remove(
+          'is-ready-release'
+        );
+
+        piece.style.left =
+          startingLeft;
+
+        piece.style.top =
+          startingTop;
+
+        piece.style.transform =
+          'none';
+      }
+
+      piece.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (
+            piece.classList.contains(
+              'is-complete'
+            )
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          pointerId =
+            event.pointerId;
+
+          piece.setPointerCapture(
+            pointerId
+          );
+
+          const pieceRect =
+            piece.getBoundingClientRect();
+
+          offsetX =
+            event.clientX -
+            pieceRect.left;
+
+          offsetY =
+            event.clientY -
+            pieceRect.top;
+
+          holding = true;
+
+          piece.classList.add(
+            'is-held'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+
+          indicator.classList.remove(
+            'is-let-go-warning'
+          );
+
+          indicator.classList.add(
+            'is-visible'
+          );
+
+          prompt.textContent =
+            'KEEP HOLDING — FIND ITS SPOT';
+
+          playLessonClickSound();
+        }
+      );
+
+      piece.addEventListener(
+        'pointermove',
+        (event) => {
+          if (
+            !holding ||
+            event.pointerId !==
+              pointerId
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            areaRect.left -
+            offsetX;
+
+          const y =
+            event.clientY -
+            areaRect.top -
+            offsetY;
+
+          const maxX =
+            areaRect.width -
+            piece.offsetWidth;
+
+          const maxY =
+            areaRect.height -
+            piece.offsetHeight;
+
+          piece.style.left =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxX,
+                  x
+                )
+              )
+            }px`;
+
+          piece.style.top =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxY,
+                  y
+                )
+              )
+            }px`;
+
+          piece.style.transform =
+            'none';
+
+          startLessonSlideSound();
+
+          if (pieceIsInsideSlot()) {
+            slot.classList.add(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'NOW RELEASE!';
+          } else {
+            slot.classList.remove(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'KEEP HOLDING — FIND ITS SPOT';
+          }
+        }
+      );
+
+      function finishPiece(event) {
+        if (
+          !holding ||
+          event.pointerId !==
+            pointerId
+        ) {
+          return;
+        }
+
+        holding = false;
+
+        stopLessonSlideSound();
+
+        piece.classList.remove(
+          'is-held'
+        );
+
+        indicator.classList.remove(
+          'is-visible'
+        );
+
+        if (!pieceIsInsideSlot()) {
+          const releasedSlot =
+            getSlotUnderPiece();
+
+          resetPiece();
+
+          if (
+            releasedSlot &&
+            releasedSlot !== slot
+          ) {
+            playLessonWrongSound();
+
+            indicator.textContent =
+              '❌ WRONG SPOT!';
+
+            prompt.textContent =
+              'TRY A DIFFERENT SPOT';
+          } else {
+            playLessonLetGoSound();
+
+            indicator.textContent =
+              "✋ DON'T LET GO!";
+
+            prompt.textContent =
+              'PRESS AND HOLD AGAIN';
+          }
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+            },
+            1400
+          );
+
+          return;
+        }
+
+        /*
+         * Correct release:
+         * lock this image section directly
+         * into its matching puzzle slot.
+         */
+        slot.style.backgroundImage =
+          'url("images/lego.png")';
+
+        slot.style.backgroundSize =
+          '330px 240px';
+
+        const positions = [
+          '0 0',
+          '-110px 0',
+          '-220px 0',
+          '0 -120px',
+          '-110px -120px',
+          '-220px -120px',
+        ];
+
+        slot.style.backgroundPosition =
+          positions[
+            Number(pieceNumber)
+          ];
+
+        slot.classList.remove(
+          'is-ready-release'
+        );
+
+        slot.classList.add(
+          'is-complete'
+        );
+
+        piece.classList.add(
+          'is-complete'
+        );
+
+        piece.hidden = true;
+
+        completed += 1;
+
+        count.textContent =
+          `${completed} / 6`;
+
+        prompt.textContent =
+          'GREAT HOLD!';
+
+        playLessonSuccessSound();
+
+        if (completed >= 6) {
+          prompt.textContent =
+            'PICTURE COMPLETE!';
+
+          window.setTimeout(
+            () => {
+              success.textContent =
+                'GREAT JOB! ⭐';
+
+              success.classList.add(
+                'is-visible',
+                'is-complete'
+              );
+            },
+            500
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          () => {
+            prompt.textContent =
+              'PRESS AND HOLD ANOTHER PIECE';
+          },
+          700
+        );
+      }
+
+      piece.addEventListener(
+        'pointerup',
+        finishPiece
+      );
+
+      piece.addEventListener(
+        'pointercancel',
+        finishPiece
+      );
+    }
+  );
+
+  count.textContent =
+    '0 / 6';
 }

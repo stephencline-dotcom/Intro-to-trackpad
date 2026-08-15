@@ -7220,3 +7220,652 @@ EOFcat >> lesson-shell.css <<'EOF'
       scale(1);
   }
 }
+
+/* ========================================
+   WEEK 5 — STEP 6: HOLD THROUGH THE PATH
+======================================== */
+
+.week5-path-step {
+  width: min(880px, 100%);
+  text-align: center;
+}
+
+.week5-path-step h2 {
+  margin: 4px 0 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-hold-path-area {
+  position: relative;
+  height: 410px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e8f8ff,
+      #ffffff
+    );
+}
+
+/* ROAD */
+
+.week5-hold-path-road {
+  position: absolute;
+  z-index: 1;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.week5-hold-path-outline,
+.week5-hold-path-main,
+.week5-hold-path-center {
+  fill: none !important;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.week5-hold-path-outline {
+  stroke: #7fc8ee !important;
+  stroke-width: 82;
+}
+
+.week5-hold-path-main {
+  stroke: #dff5ff !important;
+  stroke-width: 66;
+}
+
+.week5-hold-path-center {
+  stroke: #38bdf8 !important;
+  stroke-width: 4;
+  stroke-dasharray: 10 12;
+}
+
+/* START */
+
+.week5-path-start {
+  position: absolute;
+  z-index: 5;
+
+  left: 3%;
+  bottom: 7%;
+
+  padding: 7px 12px;
+
+  border: 3px solid #16a34a;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.85rem;
+  font-weight: 1000;
+}
+
+/* FINISH */
+
+.week5-path-finish {
+  position: absolute;
+  z-index: 5;
+
+  right: 3%;
+  top: 8%;
+
+  padding: 10px 14px;
+
+  border: 4px solid #f4b400;
+  border-radius: 18px;
+
+  background: #fff4bd;
+  color: #7a5200;
+
+  font-size: 0.9rem;
+  font-weight: 1000;
+
+  animation:
+    week5PathFinishPulse 1.2s
+    ease-in-out
+    infinite;
+}
+
+/* STAR */
+
+.week5-path-star {
+  position: absolute;
+  z-index: 10;
+
+  left: 7%;
+  bottom: 6%;
+
+  width: 76px;
+  height: 76px;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px solid #d99b31;
+  border-radius: 50%;
+
+  background: #fff4bd;
+
+  font-size: 3.2rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 7px 0 #bd7d18,
+    0 10px 20px rgba(15,23,42,0.15);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week5-path-star.is-held {
+  cursor: grabbing;
+
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 9px rgba(34,197,94,0.18),
+    0 7px 0 #15803d;
+}
+
+.week5-path-finish.is-ready-release {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+
+  animation: none;
+
+  box-shadow:
+    0 0 0 10px rgba(34,197,94,0.2);
+}
+
+@keyframes week5PathFinishPulse {
+  0%,
+  100% {
+    transform: scale(1);
+
+    box-shadow:
+      0 0 0 0 rgba(244,180,0,0.35);
+  }
+
+  50% {
+    transform: scale(1.04);
+
+    box-shadow:
+      0 0 0 10px rgba(244,180,0,0);
+  }
+}
+
+/* ========================================
+   WEEK 5 — STEP 7: DRAG AND SORT
+======================================== */
+
+.week5-sort-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week5-sort-step h2 {
+  margin: 4px 0 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-sort-area {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(224, 242, 254, 0.7) 0 28%,
+      #ffffff 28% 72%,
+      rgba(254, 243, 199, 0.65) 72% 100%
+    );
+}
+
+/* DRAGGABLE OBJECTS */
+
+.week5-sort-object {
+  position: absolute;
+  z-index: 10;
+
+  left: 12%;
+
+  width: 70px;
+  height: 70px;
+
+  display: grid;
+  place-items: center;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 4px solid #38bdf8;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  font-size: 2.8rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 5px 12px
+    rgba(15, 23, 42, 0.14);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week5-sort-object:nth-of-type(1) {
+  top: 22%;
+}
+
+.week5-sort-object:nth-of-type(2) {
+  top: 37%;
+}
+
+.week5-sort-object:nth-of-type(3) {
+  top: 52%;
+}
+
+.week5-sort-object:nth-of-type(4) {
+  top: 67%;
+}
+
+.week5-sort-object:nth-of-type(5) {
+  top: 82%;
+}
+
+.week5-sort-object.is-held {
+  cursor: grabbing;
+
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 8px
+      rgba(34, 197, 94, 0.18);
+}
+
+/* MATCHING DESTINATIONS */
+
+.week5-sort-target {
+  position: absolute;
+  z-index: 5;
+
+  right: 5%;
+
+  width: 135px;
+  height: 62px;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 4px dashed #f4b400;
+  border-radius: 18px;
+
+  background:
+    rgba(255, 248, 207, 0.92);
+
+  color: #6b4700;
+
+  font-weight: 1000;
+}
+
+.week5-sort-target:nth-of-type(6) {
+  top: 22%;
+}
+
+.week5-sort-target:nth-of-type(7) {
+  top: 37%;
+}
+
+.week5-sort-target:nth-of-type(8) {
+  top: 52%;
+}
+
+.week5-sort-target:nth-of-type(9) {
+  top: 67%;
+}
+
+.week5-sort-target:nth-of-type(10) {
+  top: 82%;
+}
+
+.week5-sort-target span {
+  font-size: 2rem;
+}
+
+.week5-sort-target strong {
+  font-size: 0.8rem;
+}
+
+.week5-sort-target.is-ready-release {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+
+  box-shadow:
+    0 0 0 8px
+      rgba(34, 197, 94, 0.18);
+}
+
+.week5-sort-target.is-complete {
+  border-style: solid;
+  border-color: #16a34a;
+
+  background: #dcfce7;
+
+  opacity: 0.65;
+}
+
+/* Week 5 Step 7 — fit all 5 drag/sort rows cleanly */
+
+.week5-sort-area {
+  height: 430px;
+}
+
+/* Smaller draggable cards */
+.week5-sort-object {
+  width: 64px;
+  height: 64px;
+
+  font-size: 2.5rem;
+}
+
+/* Reposition all five draggable objects */
+.week5-sort-object:nth-of-type(1) {
+  top: 20%;
+}
+
+.week5-sort-object:nth-of-type(2) {
+  top: 35%;
+}
+
+.week5-sort-object:nth-of-type(3) {
+  top: 50%;
+}
+
+.week5-sort-object:nth-of-type(4) {
+  top: 65%;
+}
+
+.week5-sort-object:nth-of-type(5) {
+  top: 80%;
+}
+
+/* Slightly smaller destination boxes */
+.week5-sort-target {
+  width: 132px;
+  height: 58px;
+}
+
+/* Reposition all five destinations */
+.week5-sort-target:nth-of-type(6) {
+  top: 20%;
+}
+
+.week5-sort-target:nth-of-type(7) {
+  top: 35%;
+}
+
+.week5-sort-target:nth-of-type(8) {
+  top: 50%;
+}
+
+.week5-sort-target:nth-of-type(9) {
+  top: 65%;
+}
+
+.week5-sort-target:nth-of-type(10) {
+  top: 80%;
+}
+
+/* Week 5 Step 7 — explicit 5-row positioning */
+
+/* LEFT OBJECTS */
+.week5-sort-object[data-sort="apple"] {
+  left: 12%;
+  top: 20%;
+}
+
+.week5-sort-object[data-sort="trash"] {
+  left: 12%;
+  top: 35%;
+}
+
+.week5-sort-object[data-sort="banana"] {
+  left: 12%;
+  top: 50%;
+}
+
+.week5-sort-object[data-sort="ball"] {
+  left: 12%;
+  top: 65%;
+}
+
+.week5-sort-object[data-sort="mail"] {
+  left: 12%;
+  top: 80%;
+}
+
+/* RIGHT TARGETS */
+.week5-sort-target[data-sort-target="apple"] {
+  top: 20%;
+}
+
+.week5-sort-target[data-sort-target="trash"] {
+  top: 35%;
+}
+
+.week5-sort-target[data-sort-target="banana"] {
+  top: 50%;
+}
+
+.week5-sort-target[data-sort-target="ball"] {
+  top: 65%;
+}
+
+.week5-sort-target[data-sort-target="mail"] {
+  top: 80%;
+}
+
+.week5-sort-object {
+  width: 64px;
+  height: 64px;
+  font-size: 2.4rem;
+}
+
+.week5-sort-target {
+  width: 132px;
+  height: 56px;
+}
+
+/* ========================================
+   WEEK 5 — STEP 8: BUILD THE PICTURE
+======================================== */
+
+.week5-puzzle-step {
+  width: min(920px, 100%);
+  text-align: center;
+}
+
+.week5-puzzle-step h2 {
+  margin: 4px 0 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week5-puzzle-area {
+  position: relative;
+  height: 460px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef9ff,
+      #ffffff
+    );
+}
+
+/* Finished puzzle board */
+
+.week5-puzzle-board {
+  position: absolute;
+
+  right: 5%;
+  top: 50%;
+
+  width: 330px;
+  height: 240px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
+  border: 6px solid #38bdf8;
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  background: #dff5ff;
+
+  box-shadow:
+    0 10px 24px
+    rgba(15, 23, 42, 0.15);
+}
+
+.week5-puzzle-slot {
+  position: relative;
+
+  border: 2px dashed
+    rgba(7, 89, 133, 0.35);
+
+  background:
+    rgba(255,255,255,0.7);
+}
+
+.week5-puzzle-slot.is-ready-release {
+  background:
+    rgba(220,252,231,0.9);
+
+  box-shadow:
+    inset 0 0 0 4px #22c55e;
+}
+
+.week5-puzzle-slot.is-complete {
+  border-style: solid;
+  border-color:
+    rgba(255,255,255,0.25);
+}
+
+/* Draggable image pieces */
+
+.week5-puzzle-piece {
+  position: absolute;
+  z-index: 10;
+
+  width: 110px;
+  height: 120px;
+
+  border: 4px solid #ffffff;
+  border-radius: 12px;
+
+  background-image:
+    url("images/lego.png");
+
+  background-size:
+    330px 240px;
+
+  box-shadow:
+    0 6px 15px
+    rgba(15, 23, 42, 0.22);
+
+  cursor: grab;
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week5-puzzle-piece.is-held {
+  cursor: grabbing;
+
+  outline:
+    5px solid #22c55e;
+
+  box-shadow:
+    0 0 0 9px
+      rgba(34,197,94,0.18);
+}
+
+/* Each piece shows a different sixth of lego.png */
+
+.piece-0 {
+  background-position:
+    0 0;
+
+  left: 5%;
+  top: 18%;
+}
+
+.piece-1 {
+  background-position:
+    -110px 0;
+
+  left: 22%;
+  top: 12%;
+}
+
+.piece-2 {
+  background-position:
+    -220px 0;
+
+  left: 10%;
+  top: 48%;
+}
+
+.piece-3 {
+  background-position:
+    0 -120px;
+
+  left: 28%;
+  top: 42%;
+}
+
+.piece-4 {
+  background-position:
+    -110px -120px;
+
+  left: 6%;
+  top: 72%;
+}
+
+.piece-5 {
+  background-position:
+    -220px -120px;
+
+  left: 25%;
+  top: 70%;
+}
