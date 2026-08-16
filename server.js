@@ -14,6 +14,9 @@ app.use(
 
 let lessonState = {
   syncEnabled: false,
+  freezeEnabled: false,
+  unlockVersion: 0,
+  practiceReleased: false,
   lesson: 1,
   step: 0,
   updatedAt: Date.now(),
@@ -31,6 +34,9 @@ app.post(
   (req, res) => {
     const {
       syncEnabled,
+      freezeEnabled,
+      unlockVersion,
+      practiceReleased,
       lesson,
       step,
     } = req.body || {};
@@ -41,6 +47,34 @@ app.post(
     ) {
       lessonState.syncEnabled =
         syncEnabled;
+    }
+
+    if (
+      typeof freezeEnabled ===
+      'boolean'
+    ) {
+      lessonState.freezeEnabled =
+        freezeEnabled;
+    }
+
+    if (
+      Number.isInteger(
+        unlockVersion
+      )
+    ) {
+      lessonState.unlockVersion =
+        Math.max(
+          0,
+          unlockVersion
+        );
+    }
+
+    if (
+      typeof practiceReleased ===
+      'boolean'
+    ) {
+      lessonState.practiceReleased =
+        practiceReleased;
     }
 
     if (

@@ -15,7 +15,7 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  [1, 2, 3, 4, 5].includes(
+  [1, 2, 3, 4, 5, 6].includes(
     requestedLessonNumber
   )
     ? requestedLessonNumber
@@ -251,6 +251,13 @@ function renderLessonStep() {
 
   if (
     step.activityType ===
+    'week6Review'
+  ) {
+    initializeWeek6Review();
+  }
+
+  if (
+    step.activityType ===
     'clickWaitTeaching'
   ) {
     initializeClickWaitTeaching();
@@ -318,6 +325,10 @@ previousStepButton.addEventListener(
       return;
     }
 
+    if (lessonView === 'teacher') {
+      resetTeacherPracticeRelease();
+    }
+
     currentStepIndex -= 1;
 
     renderLessonStep();
@@ -343,6 +354,10 @@ nextStepButton.addEventListener(
         'index.html';
 
       return;
+    }
+
+    if (lessonView === 'teacher') {
+      resetTeacherPracticeRelease();
     }
 
     currentStepIndex += 1;
@@ -378,6 +393,178 @@ const teacherSyncStatus =
 
 const TEACHER_SYNC_KEY =
   'introTrackpadTeacherSync';
+
+/* ----------------------------------------
+   Teacher Freeze Screens controls
+----------------------------------------- */
+
+const teacherFreezeToggle =
+  document.getElementById(
+    'teacherFreezeToggle'
+  );
+
+const teacherFreezeStatus =
+  document.getElementById(
+    'teacherFreezeStatus'
+  );
+
+const teacherUnlockButton =
+  document.getElementById(
+    'teacherUnlockButton'
+  );
+
+const teacherPracticeReleaseButton =
+  document.getElementById(
+    'teacherPracticeReleaseButton'
+  );
+
+const TEACHER_FREEZE_KEY =
+  'introTrackpadTeacherFreeze';
+
+let teacherUnlockVersion = 0;
+let teacherPracticeReleased = false;
+
+function updateTeacherFreezeDisplay() {
+  if (
+    lessonView !== 'teacher' ||
+    !teacherFreezeToggle ||
+    !teacherFreezeStatus
+  ) {
+    return;
+  }
+
+  const frozen =
+    teacherFreezeToggle.checked;
+
+  teacherFreezeStatus.textContent =
+    frozen
+      ? 'Freeze is armed'
+      : 'Trackpads are active';
+
+  if (teacherUnlockButton) {
+    teacherUnlockButton.disabled =
+      !frozen;
+  }
+}
+
+function updateTeacherPracticeReleaseDisplay() {
+  if (
+    lessonView !== 'teacher' ||
+    !teacherPracticeReleaseButton
+  ) {
+    return;
+  }
+
+  const freezeArmed =
+    Boolean(
+      teacherFreezeToggle &&
+      teacherFreezeToggle.checked
+    );
+
+  teacherPracticeReleaseButton.disabled =
+    !freezeArmed;
+
+  teacherPracticeReleaseButton.textContent =
+    teacherPracticeReleased
+      ? '🟢 Unlocked Students Released'
+      : '🔓 Release Unlocked Students';
+
+  teacherPracticeReleaseButton.classList.toggle(
+    'is-released',
+    teacherPracticeReleased
+  );
+}
+
+function resetTeacherPracticeRelease() {
+  if (!teacherPracticeReleased) {
+    return;
+  }
+
+  teacherPracticeReleased = false;
+
+  updateTeacherPracticeReleaseDisplay();
+}
+
+if (
+  lessonView === 'teacher' &&
+  teacherFreezeToggle
+) {
+  const savedFreeze =
+    localStorage.getItem(
+      TEACHER_FREEZE_KEY
+    );
+
+  teacherFreezeToggle.checked =
+    savedFreeze === 'true';
+
+  updateTeacherFreezeDisplay();
+  updateTeacherPracticeReleaseDisplay();
+
+  teacherFreezeToggle.addEventListener(
+    'change',
+    () => {
+      localStorage.setItem(
+        TEACHER_FREEZE_KEY,
+        String(
+          teacherFreezeToggle.checked
+        )
+      );
+
+      /*
+       * Turning Freeze OFF also broadcasts
+       * an unlock to every student device.
+       */
+      if (!teacherFreezeToggle.checked) {
+        teacherUnlockVersion += 1;
+        teacherPracticeReleased = false;
+      }
+
+      updateTeacherFreezeDisplay();
+      updateTeacherPracticeReleaseDisplay();
+
+      void saveSharedLessonState();
+    }
+  );
+
+  if (teacherPracticeReleaseButton) {
+    teacherPracticeReleaseButton.addEventListener(
+      'click',
+      () => {
+        if (
+          !teacherFreezeToggle.checked
+        ) {
+          return;
+        }
+
+        teacherPracticeReleased =
+          !teacherPracticeReleased;
+
+        updateTeacherPracticeReleaseDisplay();
+
+        void saveSharedLessonState();
+      }
+    );
+  }
+
+  if (teacherUnlockButton) {
+    teacherUnlockButton.addEventListener(
+      'click',
+      () => {
+        teacherUnlockVersion += 1;
+
+        void saveSharedLessonState();
+
+        teacherFreezeStatus.textContent =
+          'Students unlocked';
+
+        window.setTimeout(
+          updateTeacherFreezeDisplay,
+          1200
+        );
+      }
+    );
+  }
+}
 
 function updateTeacherSyncDisplay() {
   if (
@@ -1227,6 +1414,18 @@ async function saveSharedLessonState() {
               teacherSyncToggle.checked
             ),
 
+          freezeEnabled:
+            Boolean(
+              teacherFreezeToggle &&
+              teacherFreezeToggle.checked
+            ),
+
+          unlockVersion:
+            teacherUnlockVersion,
+
+          practiceReleased:
+            teacherPracticeReleased,
+
           lesson:
             currentLessonNumber,
 
@@ -1337,6 +1536,7 @@ async function pollTeacherLessonState() {
     await getSharedLessonState();
 
   applyStudentSyncState(state);
+  applyStudentFreezeState(state);
 }
 
 if (lessonView === 'teacher') {
@@ -1369,7 +1569,7 @@ if (lessonView === 'student') {
   lessonSyncPollTimer =
     window.setInterval(
       pollTeacherLessonState,
-      500
+      100
     );
 }
 
@@ -7743,4 +7943,300 @@ function initializeWeek5Puzzle() {
 
   count.textContent =
     '0 / 6';
+}
+
+/* ----------------------------------------
+   Student local Freeze Screen behavior
+----------------------------------------- */
+
+const studentFreezeOverlay =
+  document.getElementById(
+    'studentFreezeOverlay'
+  );
+
+let studentFreezeArmed = false;
+let studentLocked = false;
+let studentPracticeReleased = false;
+let studentFreezeArmedAt = 0;
+let lastStudentUnlockVersion = null;
+
+function lockThisStudentScreen() {
+  if (
+    lessonView !== 'student' ||
+    !studentFreezeOverlay ||
+    studentLocked
+  ) {
+    return;
+  }
+
+  studentLocked = true;
+  studentFreezeOverlay.hidden = false;
+
+  document.body.classList.add(
+    'student-screen-locked'
+  );
+}
+
+function unlockThisStudentScreen() {
+  if (
+    lessonView !== 'student' ||
+    !studentFreezeOverlay
+  ) {
+    return;
+  }
+
+  studentLocked = false;
+  studentFreezeOverlay.hidden = true;
+
+  document.body.classList.remove(
+    'student-screen-locked'
+  );
+}
+
+function applyStudentFreezeState(state) {
+  if (
+    lessonView !== 'student' ||
+    !state
+  ) {
+    return;
+  }
+
+  const nextFreezeArmed =
+    state.freezeEnabled === true;
+
+  const nextPracticeReleased =
+    state.practiceReleased === true;
+
+  const nextUnlockVersion =
+    Number.isInteger(
+      state.unlockVersion
+    )
+      ? state.unlockVersion
+      : 0;
+
+  /*
+   * First poll establishes the baseline.
+   * Do not treat it as a new unlock.
+   */
+  if (
+    lastStudentUnlockVersion === null
+  ) {
+    lastStudentUnlockVersion =
+      nextUnlockVersion;
+  } else if (
+    nextUnlockVersion !==
+    lastStudentUnlockVersion
+  ) {
+    lastStudentUnlockVersion =
+      nextUnlockVersion;
+
+    unlockThisStudentScreen();
+  }
+
+  /*
+   * Freeze just became armed.
+   * Give the trackpad a short grace period
+   * so residual movement does not lock a child.
+   */
+  if (
+    nextFreezeArmed &&
+    !studentFreezeArmed
+  ) {
+    studentFreezeArmedAt =
+      performance.now();
+  }
+
+  studentFreezeArmed =
+    nextFreezeArmed;
+
+  /*
+   * Practice Release does NOT unlock
+   * students who are already frozen.
+   * It only prevents currently-unlocked
+   * students from becoming newly frozen.
+   */
+  studentPracticeReleased =
+    nextPracticeReleased;
+
+  /*
+   * Turning Freeze OFF always clears
+   * any local lock.
+   */
+  if (!studentFreezeArmed) {
+    unlockThisStudentScreen();
+  }
+}
+
+function studentTrackpadActivity() {
+  if (
+    lessonView !== 'student' ||
+    !studentFreezeArmed ||
+    studentLocked ||
+    studentPracticeReleased
+  ) {
+    return;
+  }
+
+  /*
+   * Ignore the first 650ms after Freeze
+   * becomes armed.
+   */
+  if (
+    performance.now() -
+      studentFreezeArmedAt <
+    650
+  ) {
+    return;
+  }
+
+  lockThisStudentScreen();
+}
+
+if (lessonView === 'student') {
+  /*
+   * Local-only detection.
+   * These events NEVER publish to the server.
+   */
+  window.addEventListener(
+    'pointerdown',
+    studentTrackpadActivity,
+    {
+      capture: true,
+    }
+  );
+
+  window.addEventListener(
+    'pointermove',
+    studentTrackpadActivity,
+    {
+      capture: true,
+    }
+  );
+
+  window.addEventListener(
+    'click',
+    studentTrackpadActivity,
+    {
+      capture: true,
+    }
+  );
+}
+
+function initializeWeek6Review() {
+  const row =
+    document.getElementById(
+      'week6ReviewRow'
+    );
+
+  const ready =
+    document.getElementById(
+      'week6ReviewReady'
+    );
+
+  if (!row || !ready) {
+    return;
+  }
+
+  const cards =
+    Array.from(
+      row.querySelectorAll(
+        '.week6-review-card'
+      )
+    );
+
+  let stopped = false;
+
+  function wait(ms) {
+    return new Promise(
+      (resolve) =>
+        window.setTimeout(
+          resolve,
+          ms
+        )
+    );
+  }
+
+  async function run() {
+    while (!stopped) {
+      if (
+        !document.body.contains(
+          row
+        )
+      ) {
+        stopped = true;
+        return;
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active',
+            'is-hold-focus',
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.remove(
+        'is-visible'
+      );
+
+      for (
+        let index = 0;
+        index < cards.length;
+        index += 1
+      ) {
+        cards.forEach(
+          (card) => {
+            card.classList.remove(
+              'is-active',
+              'is-hold-focus'
+            );
+          }
+        );
+
+        cards[index].classList.add(
+          'is-active'
+        );
+
+        /*
+         * HOLD stays highlighted longer.
+         */
+        if (index === 1) {
+          cards[index].classList.add(
+            'is-hold-focus'
+          );
+
+          await wait(2000);
+        } else {
+          await wait(1400);
+        }
+
+        if (stopped) {
+          return;
+        }
+      }
+
+      cards.forEach(
+        (card) => {
+          card.classList.remove(
+            'is-active',
+            'is-hold-focus'
+          );
+
+          card.classList.add(
+            'is-ready'
+          );
+        }
+      );
+
+      ready.classList.add(
+        'is-visible'
+      );
+
+      await wait(2400);
+    }
+  }
+
+  void run();
 }

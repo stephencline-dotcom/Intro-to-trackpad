@@ -103,6 +103,38 @@
 
         <span class="teacher-sync-switch"></span>
       </label>
+
+      <div class="teacher-freeze-divider"></div>
+
+      <div class="teacher-freeze-copy">
+        <p class="teacher-sync-label">
+          Freeze Screens
+        </p>
+
+        <p
+          id="teacherFreezeStatus"
+          class="teacher-sync-status"
+        >
+          Trackpads are active
+        </p>
+      </div>
+
+      <label class="teacher-sync-toggle">
+        <input
+          id="teacherFreezeToggle"
+          type="checkbox"
+        />
+
+        <span class="teacher-sync-switch"></span>
+      </label>
+
+      <button
+        id="teacherUnlockButton"
+        class="teacher-unlock-button"
+        type="button"
+      >
+        🔓 Unlock Students
+      </button>
     </section>
 
     <footer class="lesson-controls">
@@ -122,6 +154,14 @@
       >
         Lesson Home
       </a>
+
+      <button
+        id="teacherPracticeReleaseButton"
+        class="lesson-nav-button teacher-practice-release-button"
+        type="button"
+      >
+        🔓 Release Unlocked Students
+      </button>
 
       <button
         id="nextStepButton"
@@ -148,7 +188,7 @@
       );
 
     const lessonFileNumber =
-      [1, 2, 3, 4, 5].includes(
+      [1, 2, 3, 4, 5, 6].includes(
         requestedLesson
       )
         ? requestedLesson
@@ -160,6 +200,31 @@
       '.js"><\/script>'
     );
   </script>
+
+  <div
+    id="studentFreezeOverlay"
+    class="student-freeze-overlay"
+    hidden
+    aria-live="assertive"
+  >
+    <div class="student-freeze-card">
+      <div class="student-freeze-icon">
+        🔒
+      </div>
+
+      <h2>
+        Trackpad Frozen
+      </h2>
+
+      <p>
+        Hands off your trackpad.
+      </p>
+
+      <p class="student-freeze-small">
+        Your teacher will unlock it when it is time to work.
+      </p>
+    </div>
+  </div>
 
   <script src="lesson-shell.js"></script>
 
