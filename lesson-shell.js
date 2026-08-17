@@ -12250,3 +12250,85 @@ function initializeWeek6Final() {
       animateFinalObstacle
     );
 }
+
+/* ----------------------------------------
+   Block touchscreen input
+   This app teaches trackpad skills.
+----------------------------------------- */
+
+function blockLessonTouchscreen(event) {
+  /*
+   * Pointer Events identify direct
+   * touchscreen contact as "touch".
+   *
+   * Mouse/trackpad input remains allowed.
+   */
+  if (event.pointerType !== 'touch') {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+}
+
+document.addEventListener(
+  'pointerdown',
+  blockLessonTouchscreen,
+  true
+);
+
+document.addEventListener(
+  'pointermove',
+  blockLessonTouchscreen,
+  true
+);
+
+document.addEventListener(
+  'pointerup',
+  blockLessonTouchscreen,
+  true
+);
+
+document.addEventListener(
+  'pointercancel',
+  blockLessonTouchscreen,
+  true
+);
+
+/*
+ * Also block browser-native touch gestures
+ * such as touch scrolling and pinch gestures.
+ */
+document.addEventListener(
+  'touchstart',
+  (event) => {
+    event.preventDefault();
+  },
+  {
+    passive: false,
+    capture: true,
+  }
+);
+
+document.addEventListener(
+  'touchmove',
+  (event) => {
+    event.preventDefault();
+  },
+  {
+    passive: false,
+    capture: true,
+  }
+);
+
+document.addEventListener(
+  'touchend',
+  (event) => {
+    event.preventDefault();
+  },
+  {
+    passive: false,
+    capture: true,
+  }
+);

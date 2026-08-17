@@ -11782,3 +11782,14 @@ body[data-lesson-view="teacher"]
   }
 }
 
+
+/* ========================================
+   TRACKPAD-ONLY INPUT
+   Prevent browser touch gestures
+======================================== */
+
+html,
+body {
+  touch-action: none;
+}
+
