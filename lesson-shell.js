@@ -15,7 +15,7 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  [1, 2, 3, 4, 5, 6].includes(
+  [1, 2, 3, 4, 5, 6, 7].includes(
     requestedLessonNumber
   )
     ? requestedLessonNumber
@@ -69,6 +69,17 @@ const nextStepButton =
 let currentStepIndex = 0;
 
 function renderLessonStep() {
+  /*
+   * Stop any Week 7 Bunny Ears demo
+   * before changing lesson screens.
+   */
+  if (
+    typeof stopWeek7BunnySlideDemo ===
+    'function'
+  ) {
+    stopWeek7BunnySlideDemo();
+  }
+
   if (
     !lesson ||
     !Array.isArray(lesson.steps) ||
@@ -94,6 +105,13 @@ function renderLessonStep() {
 
   lessonActivity.innerHTML =
     step.activityHtml;
+
+  if (
+    step.activityType ===
+    'week7BunnySlide'
+  ) {
+    initializeWeek7BunnySlide();
+  }
 
   if (
     step.activityType ===
@@ -400,9 +418,23 @@ nextStepButton.addEventListener(
       lesson.steps.length - 1
     ) {
       if (lessonView === 'student') {
+        if (
+          typeof stopWeek7BunnySlideDemo ===
+          'function'
+        ) {
+          stopWeek7BunnySlideDemo();
+        }
+
         showStudentLessonComplete();
 
         return;
+      }
+
+      if (
+        typeof stopWeek7BunnySlideDemo ===
+        'function'
+      ) {
+        stopWeek7BunnySlideDemo();
       }
 
       window.location.href =
@@ -430,6 +462,24 @@ nextStepButton.addEventListener(
 );
 
 renderLessonStep();
+
+/*
+ * Final safety cleanup:
+ * stop the Bunny Ears demo if the lesson
+ * page is hidden, closed, refreshed, or
+ * navigated away from.
+ */
+window.addEventListener(
+  'pagehide',
+  () => {
+    if (
+      typeof stopWeek7BunnySlideDemo ===
+      'function'
+    ) {
+      stopWeek7BunnySlideDemo();
+    }
+  }
+);
 
 const teacherSyncPanel =
   document.getElementById(
@@ -12332,3 +12382,185 @@ document.addEventListener(
     capture: true,
   }
 );
+
+/* ----------------------------------------
+   WEEK 7 — BUNNY EARS SLIDE DEMO
+----------------------------------------- */
+
+var week7BunnySlideSound =
+  new Audio(
+    'sounds/bunnysound.mp3'
+  );
+
+week7BunnySlideSound.preload =
+  'auto';
+
+week7BunnySlideSound.loop =
+  true;
+
+week7BunnySlideSound.volume =
+  0.55;
+
+var week7BunnyDemoTimers = [];
+
+function stopWeek7BunnySlideDemo() {
+  /*
+   * renderLessonStep can run before the
+   * Week 7 sound system has initialized.
+   */
+  if (
+    !week7BunnySlideSound ||
+    !Array.isArray(
+      week7BunnyDemoTimers
+    )
+  ) {
+    return;
+  }
+
+  week7BunnyDemoTimers.forEach(
+    (timer) => {
+      window.clearTimeout(timer);
+    }
+  );
+
+  week7BunnyDemoTimers = [];
+
+  week7BunnySlideSound.pause();
+
+  try {
+    week7BunnySlideSound.currentTime =
+      0;
+  } catch {
+    // Reset is optional.
+  }
+}
+
+function initializeWeek7BunnySlide() {
+  stopWeek7BunnySlideDemo();
+
+  const hand =
+    document.getElementById(
+      'week7BunnySlideHand'
+    );
+
+  const spots =
+    document.getElementById(
+      'week7BunnySlideSpots'
+    );
+
+  if (!hand || !spots) {
+    return;
+  }
+
+  function runDemo() {
+    /*
+     * 1. Reset:
+     * hand is above the trackpad,
+     * blue finger spots are visible.
+     */
+    hand.classList.remove(
+      'is-placed',
+      'is-sliding'
+    );
+
+    spots.classList.remove(
+      'is-hidden'
+    );
+
+    week7BunnySlideSound.pause();
+
+    try {
+      week7BunnySlideSound.currentTime =
+        0;
+    } catch {
+      // Reset is optional.
+    }
+
+    /*
+     * 2. Bunny Ears move down
+     * onto the blue finger spots.
+     */
+    week7BunnyDemoTimers.push(
+      window.setTimeout(
+        () => {
+          hand.classList.add(
+            'is-placed'
+          );
+        },
+        850
+      )
+    );
+
+    /*
+     * 3. Once the fingers arrive,
+     * the blue placement targets fade.
+     */
+    week7BunnyDemoTimers.push(
+      window.setTimeout(
+        () => {
+          spots.classList.add(
+            'is-hidden'
+          );
+        },
+        1750
+      )
+    );
+
+    /*
+     * 4. Begin scrolling motion
+     * and its matching sound.
+     */
+    week7BunnyDemoTimers.push(
+      window.setTimeout(
+        () => {
+          hand.classList.remove(
+            'is-placed'
+          );
+
+          hand.classList.add(
+            'is-sliding'
+          );
+
+          try {
+            void week7BunnySlideSound.play();
+          } catch {
+            // Keep lesson usable if audio is blocked.
+          }
+        },
+        2150
+      )
+    );
+
+    /*
+     * 5. Stop the sound before reset.
+     */
+    week7BunnyDemoTimers.push(
+      window.setTimeout(
+        () => {
+          week7BunnySlideSound.pause();
+
+          try {
+            week7BunnySlideSound.currentTime =
+              0;
+          } catch {
+            // Reset is optional.
+          }
+        },
+        5350
+      )
+    );
+
+    /*
+     * 6. Repeat the complete model.
+     */
+    week7BunnyDemoTimers.push(
+      window.setTimeout(
+        runDemo,
+        6100
+      )
+    );
+  }
+
+  runDemo();
+}
+

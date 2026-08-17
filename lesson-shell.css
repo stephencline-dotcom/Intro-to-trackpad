@@ -11793,3 +11793,972 @@ body {
   touch-action: none;
 }
 
+
+/* ========================================
+   WEEK 7 — STEP 1
+   SUPER-FAST SKILLS REVIEW
+======================================== */
+
+.week7-review-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week7-review-step h2 {
+  margin: 4px 0;
+}
+
+.week7-review-step .lesson-kid-prompt {
+  margin: 3px 0 8px;
+}
+
+.week7-review-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 9px;
+
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.week7-review-card {
+  min-height: 105px;
+
+  padding: 10px 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 5px 14px
+    rgba(0, 0, 0, 0.1);
+}
+
+.week7-review-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.week7-review-card strong {
+  font-size: 1rem;
+}
+
+.week7-review-card span {
+  font-size: 0.82rem;
+}
+
+.week7-review-ready {
+  width: fit-content;
+
+  margin: 8px auto 0;
+
+  padding: 7px 15px;
+
+  border-radius: 999px;
+
+  font-weight: 900;
+
+  background: #fff3b0;
+}
+
+/* Chromebook student fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-review-step {
+    width: min(850px, 97%);
+  }
+
+  body[data-lesson-view="student"]
+  .week7-review-card {
+    min-height: 88px;
+    padding: 7px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-review-icon {
+    font-size: 1.65rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-review-ready {
+    margin-top: 5px;
+    padding: 5px 13px;
+  }
+}
+
+
+/* ========================================
+   WEEK 7 — STEP 1 VISUAL POLISH
+======================================== */
+
+/* Make the intro sentence readable */
+.week7-review-step .lesson-kid-prompt {
+  color: #d7ebff !important;
+  font-weight: 800;
+}
+
+/* Stronger flash-card appearance */
+.week7-review-card {
+  position: relative;
+
+  border: 3px solid
+    rgba(255, 255, 255, 0.7);
+
+  box-shadow:
+    0 7px 0 rgba(0, 0, 0, 0.14),
+    0 10px 20px rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+/* Six different soft review colors */
+.week7-review-card:nth-child(1) {
+  background: #dff4ff;
+}
+
+.week7-review-card:nth-child(2) {
+  background: #ffe2ec;
+}
+
+.week7-review-card:nth-child(3) {
+  background: #fff0c9;
+}
+
+.week7-review-card:nth-child(4) {
+  background: #e3e5ff;
+}
+
+.week7-review-card:nth-child(5) {
+  background: #f3e1cf;
+}
+
+.week7-review-card:nth-child(6) {
+  background: #fff5b8;
+}
+
+/* Bigger skill icon */
+.week7-review-icon {
+  font-size: 2.35rem;
+  margin-bottom: 2px;
+}
+
+/* Strong readable labels */
+.week7-review-card strong {
+  color: #0b3158;
+
+  font-size: 1.05rem;
+  font-weight: 950;
+
+  letter-spacing: 0.03em;
+}
+
+/* Readable descriptions */
+.week7-review-card span {
+  color: #48647d;
+
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
+/* Number the six skills */
+.week7-review-card::before {
+  position: absolute;
+
+  top: 7px;
+  left: 9px;
+
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #29b6f6;
+  color: #07365c;
+
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.week7-review-card:nth-child(1)::before {
+  content: "1";
+}
+
+.week7-review-card:nth-child(2)::before {
+  content: "2";
+}
+
+.week7-review-card:nth-child(3)::before {
+  content: "3";
+}
+
+.week7-review-card:nth-child(4)::before {
+  content: "4";
+}
+
+.week7-review-card:nth-child(5)::before {
+  content: "5";
+}
+
+.week7-review-card:nth-child(6)::before {
+  content: "6";
+}
+
+/* New-skill teaser */
+.week7-review-ready {
+  color: #6d4b00;
+
+  border: 3px solid #f4c430;
+
+  box-shadow:
+    0 5px 0 rgba(168, 116, 0, 0.2);
+
+  animation:
+    week7BunnyReadyPulse
+    1.7s ease-in-out infinite;
+}
+
+@keyframes week7BunnyReadyPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+/* Preserve compact Chromebook fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-review-icon {
+    font-size: 1.9rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-review-card strong {
+    font-size: 0.95rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-review-card span {
+    font-size: 0.76rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 7 — STEP 2
+   MEET BUNNY EARS
+======================================== */
+
+.week7-bunny-intro-step {
+  width: min(920px, 96%);
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.week7-bunny-badge {
+  width: fit-content;
+
+  margin: 0 auto 5px;
+  padding: 6px 16px;
+
+  border-radius: 999px;
+
+  background: #fff0ad;
+  color: #765000;
+
+  font-size: 0.82rem;
+  font-weight: 950;
+
+  letter-spacing: 0.08em;
+}
+
+.week7-bunny-intro-step h2 {
+  margin: 3px 0;
+
+  color: #0b3158;
+
+  font-size: clamp(
+    2rem,
+    4vw,
+    2.8rem
+  );
+}
+
+.week7-bunny-intro-step
+.lesson-kid-prompt {
+  margin: 2px 0 9px;
+
+  color: #48647d;
+
+  font-weight: 850;
+}
+
+.week7-bunny-demo {
+  width: min(800px, 100%);
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    60px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.week7-bunny-hand-side,
+.week7-bunny-trackpad-side {
+  min-height: 285px;
+
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 4px solid #79c8f2;
+  border-radius: 28px;
+
+  background: #eef9ff;
+
+  box-shadow:
+    0 7px 0
+    rgba(38, 130, 184, 0.15);
+}
+
+.week7-bunny-label {
+  margin-bottom: 8px;
+
+  padding: 6px 13px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #07547d;
+
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.week7-bunny-hand {
+  display: block;
+
+  width: min(220px, 80%);
+  max-height: 210px;
+
+  object-fit: contain;
+}
+
+.week7-bunny-arrow {
+  font-size: 2.8rem;
+
+  animation:
+    week7BunnyArrow
+    1.3s ease-in-out infinite;
+}
+
+@keyframes week7BunnyArrow {
+  0%,
+  100% {
+    transform:
+      translateX(-4px);
+  }
+
+  50% {
+    transform:
+      translateX(5px);
+  }
+}
+
+.week7-bunny-trackpad {
+  position: relative;
+
+  width: min(260px, 90%);
+  aspect-ratio: 1.55 / 1;
+
+  border: 5px solid #64798c;
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f9fcfe,
+      #dce7ee
+    );
+
+  box-shadow:
+    inset 0 0 0 3px
+    rgba(255, 255, 255, 0.7);
+}
+
+.week7-bunny-touch-zone {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+  gap: 12px;
+
+  padding: 16px 20px;
+
+  border: 3px dashed #29b6f6;
+  border-radius: 20px;
+
+  background:
+    rgba(41, 182, 246, 0.12);
+}
+
+.week7-bunny-finger-dot {
+  width: 30px;
+  height: 45px;
+
+  border-radius: 999px;
+
+  background: #29b6f6;
+
+  box-shadow:
+    0 3px 0
+    rgba(5, 91, 134, 0.22);
+}
+
+.week7-bunny-rule {
+  width: fit-content;
+
+  margin: 10px auto 0;
+  padding: 8px 18px;
+
+  border: 3px solid #f4c430;
+  border-radius: 999px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 4px 0
+    rgba(168, 116, 0, 0.18);
+}
+
+
+/* Chromebook fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-bunny-hand-side,
+
+  body[data-lesson-view="student"]
+  .week7-bunny-trackpad-side {
+    min-height: 225px;
+    padding: 9px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-bunny-hand {
+    width: min(175px, 75%);
+    max-height: 165px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-bunny-trackpad {
+    width: min(215px, 88%);
+  }
+
+  body[data-lesson-view="student"]
+  .week7-bunny-rule {
+    margin-top: 6px;
+    padding: 6px 15px;
+  }
+}
+
+
+/* ========================================
+   WEEK 7 — STEP 3
+   BUNNY EARS SLIDE
+======================================== */
+
+.week7-bunny-slide-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week7-bunny-slide-step h2 {
+  margin: 3px 0;
+
+  color: #0b3158;
+
+  font-size: clamp(
+    2rem,
+    4vw,
+    2.7rem
+  );
+}
+
+.week7-bunny-slide-step
+.lesson-kid-prompt {
+  margin: 2px 0 7px;
+
+  color: #48647d;
+
+  font-weight: 850;
+}
+
+.week7-slide-demo {
+  width: min(500px, 95%);
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 3px;
+}
+
+.week7-slide-direction {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #07547d;
+
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.week7-slide-arrow {
+  color: #29b6f6;
+
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.week7-slide-trackpad {
+  position: relative;
+
+  width: min(410px, 90%);
+  height: 265px;
+
+  overflow: hidden;
+
+  border: 6px solid #64798c;
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f9fcfe,
+      #dce7ee
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255, 255, 255, 0.72),
+    0 7px 0
+      rgba(48, 81, 105, 0.16);
+}
+
+/* Vertical path showing where Bunny Ears travel */
+.week7-slide-path {
+  position: absolute;
+
+  left: 50%;
+  top: 25px;
+  bottom: 25px;
+
+  width: 90px;
+
+  transform:
+    translateX(-50%);
+
+  border: 3px dashed
+    rgba(41, 182, 246, 0.7);
+
+  border-radius: 999px;
+
+  background:
+    rgba(41, 182, 246, 0.08);
+}
+
+/* Actual Bunny Ears hand */
+.week7-slide-hand {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 150px;
+  height: 150px;
+
+  object-fit: contain;
+
+  transform:
+    translate(-50%, -50%);
+
+  animation:
+    week7BunnySlide
+    2.4s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+@keyframes week7BunnySlide {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(42px);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-42px);
+  }
+}
+
+.week7-slide-rule {
+  width: fit-content;
+
+  margin: 7px auto 0;
+  padding: 7px 17px;
+
+  border: 3px solid #f4c430;
+  border-radius: 999px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 4px 0
+    rgba(168, 116, 0, 0.18);
+}
+
+
+/* Chromebook student fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-trackpad {
+    width: min(370px, 88%);
+    height: 220px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand {
+    width: 125px;
+    height: 125px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-slide-rule {
+    margin-top: 5px;
+    padding: 5px 14px;
+  }
+
+  @keyframes week7BunnySlide {
+
+    0%,
+    100% {
+      transform:
+        translate(-50%, -50%)
+        translateY(32px);
+    }
+
+    50% {
+      transform:
+        translate(-50%, -50%)
+        translateY(-32px);
+    }
+  }
+}
+
+
+/* ========================================
+   WEEK 7 — STEP 3 SEQUENCE
+   Spots -> place fingers -> slide
+======================================== */
+
+.week7-slide-trackpad {
+  overflow: hidden;
+}
+
+/* Hide the old dashed travel lane */
+.week7-slide-path {
+  display: none !important;
+}
+
+/* Same blue finger targets introduced in Step 2 */
+.week7-slide-spots {
+  position: absolute;
+
+  left: 50%;
+  top: 52%;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+  gap: 12px;
+
+  padding: 16px 20px;
+
+  border: 3px dashed #29b6f6;
+  border-radius: 20px;
+
+  background:
+    rgba(41, 182, 246, 0.12);
+
+  z-index: 1;
+
+  opacity: 1;
+
+  transition:
+    opacity 260ms ease;
+}
+
+.week7-slide-finger-spot {
+  width: 30px;
+  height: 45px;
+
+  border-radius: 999px;
+
+  background: #29b6f6;
+
+  box-shadow:
+    0 3px 0
+    rgba(5, 91, 134, 0.22);
+}
+
+/*
+ * Hand begins ABOVE the finger spots.
+ * JS adds sequence classes as the
+ * demonstration progresses.
+ */
+.week7-slide-hand {
+  left: 50%;
+  top: 50%;
+
+  width: 150px;
+  height: 150px;
+
+  animation: none !important;
+
+  transform:
+    translate(-50%, -50%)
+    translateY(-145px);
+
+  z-index: 2;
+
+  transition:
+    transform 850ms
+    cubic-bezier(
+      0.22,
+      0.75,
+      0.28,
+      1
+    );
+}
+
+/* Bunny Ears land directly on the blue spots */
+.week7-slide-hand.is-placed {
+  transform:
+    translate(-50%, -50%)
+    translateY(12px);
+}
+
+/* Targets disappear once the fingers arrive */
+.week7-slide-spots.is-hidden {
+  opacity: 0;
+}
+
+/* Then the actual scrolling motion begins */
+.week7-slide-hand.is-sliding {
+  animation:
+    week7BunnyScrollMotion
+    1.35s ease-in-out
+    infinite !important;
+}
+
+@keyframes week7BunnyScrollMotion {
+
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(48px);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-48px);
+  }
+}
+
+
+/* Chromebook student fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand {
+    width: 125px;
+    height: 125px;
+  }
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand:not(.is-placed):not(.is-sliding) {
+    transform:
+      translate(-50%, -50%)
+      translateY(-120px);
+  }
+
+  @keyframes week7BunnyScrollMotion {
+
+    0%,
+    100% {
+      transform:
+        translate(-50%, -50%)
+        translateY(36px);
+    }
+
+    50% {
+      transform:
+        translate(-50%, -50%)
+        translateY(-36px);
+    }
+  }
+}
+
+
+/* ========================================
+   WEEK 7 — STEP 3
+   Align Bunny Ears fingertips to blue spots
+======================================== */
+
+.week7-slide-hand.is-placed {
+  width: 165px;
+  height: 165px;
+
+  transform:
+    translate(-50%, -50%)
+    translateY(38px);
+}
+
+/* Keep the two blue targets centered
+   where the actual fingertips land */
+.week7-slide-spots {
+  top: 39%;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand.is-placed {
+    width: 138px;
+    height: 138px;
+
+    transform:
+      translate(-50%, -50%)
+      translateY(30px);
+  }
+
+  body[data-lesson-view="student"]
+  .week7-slide-spots {
+    top: 40%;
+  }
+}
+
+
+/* Week 7 Step 3 — fine-tune fingertip alignment */
+
+.week7-slide-hand.is-placed {
+  transform:
+    translate(-50%, -50%)
+    translateY(18px);
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand.is-placed {
+    transform:
+      translate(-50%, -50%)
+      translateY(14px);
+  }
+}
+
+
+/* Week 7 Step 3 — final fingertip alignment */
+
+.week7-slide-hand.is-placed {
+  transform:
+    translate(calc(-50% - 8px), -50%)
+    translateY(18px);
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand.is-placed {
+    transform:
+      translate(calc(-50% - 7px), -50%)
+      translateY(14px);
+  }
+}
+
+
+/* Week 7 Step 3 — correct fingertip horizontal alignment */
+
+.week7-slide-hand.is-placed {
+  transform:
+    translate(calc(-50% + 12px), -50%)
+    translateY(18px);
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week7-slide-hand.is-placed {
+    transform:
+      translate(calc(-50% + 10px), -50%)
+      translateY(14px);
+  }
+}
+
