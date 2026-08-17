@@ -8104,3 +8104,3681 @@ EOFcat >> lesson-shell.css <<'EOF'
     transform: scale(1.09);
   }
 }
+
+/* ========================================
+   WEEK 6 — STEP 2: DRAG THE ANIMALS HOME
+======================================== */
+
+.week6-animal-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week6-animal-step h2 {
+  margin: 4px 0 0;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.week6-animal-area {
+  position: relative;
+  height: 430px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(224,242,254,0.72) 0 28%,
+      #ffffff 28% 72%,
+      rgba(254,243,199,0.7) 72% 100%
+    );
+}
+
+/* ANIMALS */
+
+.week6-animal-object {
+  position: absolute;
+  z-index: 10;
+
+  left: 12%;
+
+  width: 68px;
+  height: 68px;
+
+  display: grid;
+  place-items: center;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 4px solid #38bdf8;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  font-size: 2.7rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 5px 12px
+    rgba(15,23,42,0.14);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week6-animal-object[data-animal="bee"] {
+  top: 20%;
+}
+
+.week6-animal-object[data-animal="bird"] {
+  top: 35%;
+}
+
+.week6-animal-object[data-animal="frog"] {
+  top: 50%;
+}
+
+.week6-animal-object[data-animal="dog"] {
+  top: 65%;
+}
+
+.week6-animal-object[data-animal="fish"] {
+  top: 80%;
+}
+
+.week6-animal-object.is-held {
+  cursor: grabbing;
+
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34,197,94,0.18);
+}
+
+/* HOMES */
+
+.week6-animal-home {
+  position: absolute;
+  z-index: 5;
+
+  right: 5%;
+
+  width: 138px;
+  height: 58px;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 4px dashed #f4b400;
+  border-radius: 18px;
+
+  background:
+    rgba(255,248,207,0.94);
+
+  color: #6b4700;
+
+  font-weight: 1000;
+}
+
+.week6-animal-home[data-home="bee"] {
+  top: 20%;
+}
+
+.week6-animal-home[data-home="bird"] {
+  top: 35%;
+}
+
+.week6-animal-home[data-home="frog"] {
+  top: 50%;
+}
+
+.week6-animal-home[data-home="dog"] {
+  top: 65%;
+}
+
+.week6-animal-home[data-home="fish"] {
+  top: 80%;
+}
+
+.week6-animal-home span {
+  font-size: 2rem;
+}
+
+.week6-animal-home strong {
+  font-size: 0.78rem;
+}
+
+.week6-animal-home.is-ready-release {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34,197,94,0.18);
+}
+
+.week6-animal-home.is-complete {
+  border-style: solid;
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  opacity: 0.65;
+}
+
+/* Week 6 Step 2 — Feed the Animals positions */
+
+.week6-animal-object[data-animal="dog"],
+.week6-animal-home[data-home="dog"] {
+  top: 20%;
+}
+
+.week6-animal-object[data-animal="bunny"],
+.week6-animal-home[data-home="bunny"] {
+  top: 35%;
+}
+
+.week6-animal-object[data-animal="mouse"],
+.week6-animal-home[data-home="mouse"] {
+  top: 50%;
+}
+
+.week6-animal-object[data-animal="squirrel"],
+.week6-animal-home[data-home="squirrel"] {
+  top: 65%;
+}
+
+.week6-animal-object[data-animal="bear"],
+.week6-animal-home[data-home="bear"] {
+  top: 80%;
+}
+
+.week6-animal-home span {
+  font-size: 2.7rem;
+}
+
+/* ========================================
+   WEEK 6 — STEP 3: OBSTACLE DRAG
+======================================== */
+
+.week6-obstacle-step {
+  width: min(900px, 100%);
+  text-align: center;
+}
+
+.week6-obstacle-step h2 {
+  margin: 4px 0 0;
+
+  color: #0b2b55;
+
+  font-size:
+    clamp(2rem, 5vw, 3.4rem);
+}
+
+.week6-obstacle-area {
+  position: relative;
+
+  height: 430px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e7f8e8,
+      #f8fff5
+    );
+}
+
+/* START */
+
+.week6-obstacle-start {
+  position: absolute;
+  z-index: 4;
+
+  left: 4%;
+  bottom: 7%;
+
+  padding: 7px 12px;
+
+  border: 3px solid #16a34a;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.8rem;
+  font-weight: 1000;
+}
+
+/* CAR */
+
+.week6-obstacle-object {
+  position: absolute;
+  z-index: 15;
+
+  left: 8%;
+  bottom: 14%;
+
+  width: 76px;
+  height: 76px;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #38bdf8;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  font-size: 3rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 6px 14px
+    rgba(15, 23, 42, 0.16);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week6-obstacle-object.is-held {
+  cursor: grabbing;
+
+  border-color: #16a34a;
+
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34, 197, 94, 0.18);
+}
+
+/* OBSTACLES */
+
+.week6-obstacle {
+  position: absolute;
+  z-index: 8;
+
+  width: 105px;
+  height: 105px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,0.7);
+
+  font-size: 4.5rem;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+.week6-obstacle.obstacle-a {
+  left: 30%;
+  top: 45%;
+}
+
+.week6-obstacle.obstacle-b {
+  left: 52%;
+  top: 18%;
+}
+
+.week6-obstacle.obstacle-c {
+  left: 65%;
+  top: 60%;
+}
+
+/* FINISH */
+
+.week6-obstacle-target {
+  position: absolute;
+  z-index: 6;
+
+  right: 5%;
+  top: 18%;
+
+  width: 120px;
+  height: 120px;
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #f4b400;
+  border-radius: 26px;
+
+  background: #fff4bd;
+
+  font-size: 4rem;
+
+  animation:
+    week6ObstacleFinishPulse 1.2s
+    ease-in-out
+    infinite;
+}
+
+.week6-obstacle-target.is-ready-release {
+  border-color: #16a34a;
+
+  background: #dcfce7;
+
+  animation: none;
+
+  box-shadow:
+    0 0 0 10px
+    rgba(34,197,94,0.2);
+}
+
+@keyframes week6ObstacleFinishPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0
+      rgba(244,180,0,0.35);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 12px
+      rgba(244,180,0,0);
+  }
+}
+
+/* Week 6 Step 3 — instructions stay outside gameplay */
+
+.week6-obstacle-prompt {
+  width: fit-content;
+
+  margin: 14px auto 12px;
+  padding: 9px 20px;
+
+  border: 3px solid #38bdf8;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-size: 0.95rem;
+  font-weight: 1000;
+  letter-spacing: 0.03em;
+}
+
+/* Make the actual destination visually unmistakable */
+
+.week6-obstacle-target {
+  overflow: hidden;
+
+  border: 6px solid #111827;
+
+  background:
+    repeating-conic-gradient(
+      #ffffff 0 25%,
+      #d1d5db 0 50%
+    )
+    0 / 28px 28px;
+}
+
+.week6-obstacle-target::after {
+  content: "FINISH";
+
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+
+  transform: translateX(-50%);
+
+  padding: 3px 8px;
+
+  border-radius: 999px;
+
+  background: #111827;
+  color: #ffffff;
+
+  font-size: 0.65rem;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+}
+
+.week6-obstacle-target.is-ready-release {
+  border-color: #16a34a;
+
+  background:
+    repeating-conic-gradient(
+      #dcfce7 0 25%,
+      #86efac 0 50%
+    )
+    0 / 28px 28px;
+}
+
+/* ========================================
+   STUDENT LESSON VIEWPORT — FOUNDATION
+======================================== */
+
+body[data-lesson-view="student"] {
+  margin: 0;
+
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+}
+
+/* Teacher-only controls must never appear
+   on a student device. */
+body[data-lesson-view="student"]
+#teacherSyncPanel,
+
+body[data-lesson-view="student"]
+#teacherPracticeReleaseButton,
+
+body[data-lesson-view="student"]
+#teacherUnlockButton {
+  display: none !important;
+}
+
+/* Student does not need teacher directions. */
+body[data-lesson-view="student"]
+.lesson-teacher-panel {
+  display: none !important;
+}
+
+/*
+ * Three-row student screen:
+ *
+ * HEADER
+ * ACTIVITY
+ * NAVIGATION
+ */
+body[data-lesson-view="student"]
+.lesson-shell {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
+
+  padding:
+    10px 18px 10px;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  grid-template-rows:
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  gap: 8px;
+
+  overflow: hidden;
+}
+
+/* Compact header */
+
+body[data-lesson-view="student"]
+.lesson-header {
+  min-height: 0;
+
+  padding:
+    4px 12px 6px;
+
+  margin: 0;
+}
+
+body[data-lesson-view="student"]
+.lesson-eyebrow {
+  margin-bottom: 3px;
+}
+
+body[data-lesson-view="student"]
+.lesson-title {
+  margin: 0;
+
+  font-size:
+    clamp(
+      1.45rem,
+      2.7vw,
+      2.25rem
+    );
+}
+
+/* Activity owns the middle of the screen */
+
+body[data-lesson-view="student"]
+.lesson-content {
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+}
+
+body[data-lesson-view="student"]
+.lesson-activity {
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  padding: 8px 12px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/* Navigation gets its own row.
+   It must NEVER sit over an activity. */
+
+body[data-lesson-view="student"]
+.lesson-controls {
+  position: static !important;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  box-sizing: border-box;
+}
+
+body[data-lesson-view="student"]
+.lesson-nav-button,
+
+body[data-lesson-view="student"]
+.lesson-home-button {
+  min-height: 42px;
+
+  padding:
+    8px 18px;
+
+  font-size: 0.9rem;
+}
+
+/*
+ * Activities should fit inside the available
+ * middle region rather than forcing page scroll.
+ */
+body[data-lesson-view="student"]
+.lesson-activity > * {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Chromebook-height adjustments */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-kid-prompt {
+    margin:
+      4px 0 7px;
+  }
+
+  body[data-lesson-view="student"]
+  .week5-big-badge,
+
+  body[data-lesson-view="student"]
+  .quick-review-badge {
+    margin-bottom: 4px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-controls {
+    min-height: 44px;
+  }
+}
+
+/* Student lessons do not need Lesson Home */
+body[data-lesson-view="student"]
+#lessonHomeButton {
+  display: none !important;
+}
+
+body[data-lesson-view="student"]
+.lesson-controls {
+  justify-content: space-between;
+}
+
+/* ========================================
+   WEEK 1 — STUDENT FIT FIX
+   Steps 6 and 7 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step {
+    width: min(860px, 100%);
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step h2 {
+    margin:
+      0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.6rem);
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .lesson-kid-prompt {
+    margin:
+      0 0 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .picture-target-prompt {
+    margin:
+      0 0 6px;
+
+    padding:
+      6px 14px;
+  }
+
+  /* Step 6 */
+  body[data-lesson-view="student"]
+  .picture-practice-area {
+    height: 300px;
+    margin-top: 4px;
+  }
+
+  /* Step 7 */
+  body[data-lesson-view="student"]
+  .reveal-practice-area {
+    height: 300px;
+    margin-top: 4px;
+  }
+
+  /* Keep reminders visible underneath */
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .star-step-reminder,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .star-step-reminder {
+    margin:
+      7px auto 0;
+
+    padding:
+      6px 14px;
+
+    font-size: 0.9rem;
+  }
+}
+EOFcat >> lesson-shell.css <<'EOF'
+
+/* ========================================
+   WEEK 1 — STUDENT FIT FIX
+   Steps 6 and 7 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step {
+    width: min(860px, 100%);
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step h2 {
+    margin:
+      0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.6rem);
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .lesson-kid-prompt {
+    margin:
+      0 0 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .picture-target-prompt {
+    margin:
+      0 0 6px;
+
+    padding:
+      6px 14px;
+  }
+
+  /* Step 6 */
+  body[data-lesson-view="student"]
+  .picture-practice-area {
+    height: 300px;
+    margin-top: 4px;
+  }
+
+  /* Step 7 */
+  body[data-lesson-view="student"]
+  .reveal-practice-area {
+    height: 300px;
+    margin-top: 4px;
+  }
+
+  /* Keep reminders visible underneath */
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .star-step-reminder,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .star-step-reminder {
+    margin:
+      7px auto 0;
+
+    padding:
+      6px 14px;
+
+    font-size: 0.9rem;
+  }
+}
+
+/* Week 1 Step 7 — use the student screen more fully */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step {
+    width: min(980px, 96%);
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step h2 {
+    margin: 0 0 4px;
+
+    font-size:
+      clamp(2rem, 4vw, 3rem);
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .lesson-kid-prompt {
+    margin: 0 0 8px;
+  }
+
+  body[data-lesson-view="student"]
+  .reveal-practice-area {
+    width: min(900px, 96%);
+
+    height:
+      min(
+        390px,
+        calc(100dvh - 275px)
+      );
+
+    min-height: 340px;
+
+    margin: 4px auto 0;
+  }
+
+  /*
+   * Show the complete source image.
+   * Do not crop Bluey to fill the box.
+   */
+  body[data-lesson-view="student"]
+  .hidden-picture-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    background: #dff5ff;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .star-step-reminder {
+    margin: 8px auto 0;
+
+    padding: 7px 16px;
+
+    font-size: 0.95rem;
+  }
+}
+
+/* Week 1 Step 7 — restore natural image fill and keep reminder visible */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step {
+    justify-content: flex-start;
+  }
+
+  body[data-lesson-view="student"]
+  .reveal-practice-area {
+    width: min(820px, 92%);
+
+    height: 330px;
+    min-height: 330px;
+
+    margin: 6px auto 0;
+  }
+
+  body[data-lesson-view="student"]
+  .hidden-picture-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    background: transparent;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .star-step-reminder {
+    display: block;
+
+    margin: 8px auto 0;
+    padding: 7px 16px;
+
+    flex: 0 0 auto;
+  }
+}
+
+/* Week 1 Step 7 — show more of the bottom of Bluey */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .hidden-picture-image {
+    object-fit: cover;
+
+    /*
+     * Bias the crop downward so more of
+     * the bottom of the picture stays visible.
+     */
+    object-position: center 68%;
+  }
+}
+
+/* ========================================
+   WEEK 5 — STUDENT FIT FIX
+   Steps 4–8
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Shared Week 5 activity wrappers */
+  body[data-lesson-view="student"]
+  .week5-team-step,
+
+  body[data-lesson-view="student"]
+  .week5-hold-step,
+
+  body[data-lesson-view="student"]
+  .week5-path-step,
+
+  body[data-lesson-view="student"]
+  .week5-sort-step,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step {
+    width: min(900px, 96%);
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+  }
+
+  /* Tighten headings */
+  body[data-lesson-view="student"]
+  .week5-team-step h2,
+
+  body[data-lesson-view="student"]
+  .week5-hold-step h2,
+
+  body[data-lesson-view="student"]
+  .week5-path-step h2,
+
+  body[data-lesson-view="student"]
+  .week5-sort-step h2,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step h2 {
+    margin: 0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week5-team-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week5-hold-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week5-path-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week5-sort-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step
+  .lesson-kid-prompt {
+    margin:
+      2px 0 6px;
+  }
+
+  /* Compact badges */
+  body[data-lesson-view="student"]
+  .week5-big-badge {
+    margin:
+      0 auto 4px;
+
+    padding:
+      5px 14px;
+  }
+
+  /* Step 4 */
+  body[data-lesson-view="student"]
+  .week5-team-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+
+  /* Step 5 */
+  body[data-lesson-view="student"]
+  .week5-hold-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+
+  /* Step 6 */
+  body[data-lesson-view="student"]
+  .week5-hold-path-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+
+  /* Step 7 */
+  body[data-lesson-view="student"]
+  .week5-sort-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+
+  /* Step 8 */
+  body[data-lesson-view="student"]
+  .week5-puzzle-area {
+    height: 325px;
+    margin-top: 6px;
+  }
+
+  /* Keep prompts/feedback from being pushed below screen */
+  body[data-lesson-view="student"]
+  .week5-hold-prompt {
+    padding:
+      6px 14px;
+
+    font-size: 0.9rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week5-hold-indicator {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========================================
+   WEEK 5 — STEPS 7 & 8
+   Use more student-screen vertical space
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Move these activities upward into
+     unused white space. */
+
+  body[data-lesson-view="student"]
+  .week5-sort-step,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step {
+    height: 100%;
+    max-height: 100%;
+
+    justify-content: flex-start;
+  }
+
+  body[data-lesson-view="student"]
+  .week5-sort-step
+  .week5-big-badge,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step
+  .week5-big-badge {
+    margin:
+      0 auto 2px;
+
+    padding:
+      4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week5-sort-step h2,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step h2 {
+    margin:
+      1px 0 2px;
+  }
+
+  body[data-lesson-view="student"]
+  .week5-sort-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-step
+  .lesson-kid-prompt {
+    margin:
+      1px 0 4px;
+  }
+
+  /* Step 7 — restore breathing room
+     between all five rows. */
+
+  body[data-lesson-view="student"]
+  .week5-sort-area {
+    width: min(820px, 96%);
+
+    height: 375px;
+    min-height: 375px;
+
+    margin:
+      4px auto 0;
+  }
+
+  /* Step 8 — give the six puzzle pieces
+     room to spread back out. */
+
+  body[data-lesson-view="student"]
+  .week5-puzzle-area {
+    width: min(860px, 96%);
+
+    height: 385px;
+    min-height: 385px;
+
+    margin:
+      4px auto 0;
+  }
+}
+
+/* ========================================
+   WEEK 2 — STUDENT FIT FIX
+   Steps 1–6 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Pull Week 2 content upward and use
+     the available student activity space. */
+
+  body[data-lesson-view="student"]
+  .week2-review-step,
+
+  body[data-lesson-view="student"]
+  .week2-follow-step,
+
+  body[data-lesson-view="student"]
+  .week2-butterfly-step,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step,
+
+  body[data-lesson-view="student"]
+  .week2-dots-step,
+
+  body[data-lesson-view="student"]
+  .week2-search-step {
+    width: min(900px, 96%);
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  /* Tighten headings and prompts */
+
+  body[data-lesson-view="student"]
+  .week2-review-step h2,
+
+  body[data-lesson-view="student"]
+  .week2-follow-step h2,
+
+  body[data-lesson-view="student"]
+  .week2-butterfly-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step h2,
+
+  body[data-lesson-view="student"]
+  .week2-dots-step h2,
+
+  body[data-lesson-view="student"]
+  .week2-search-step h2 {
+    margin: 0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week2-follow-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week2-butterfly-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week2-dots-step
+  .lesson-kid-prompt {
+    margin:
+      2px 0 6px;
+  }
+
+  /* Step 1 review */
+  body[data-lesson-view="student"]
+  .week2-review-grid {
+    margin-top: 8px;
+  }
+
+  /* Step 2 */
+  body[data-lesson-view="student"]
+  .follow-leader-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 3 */
+  body[data-lesson-view="student"]
+  .butterfly-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 4 */
+  body[data-lesson-view="student"]
+  .path-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 5 */
+  body[data-lesson-view="student"]
+  .dot-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 6 */
+  body[data-lesson-view="student"]
+  .scene-search-area {
+    height: 350px;
+    margin-top: 6px;
+  }
+}
+
+/* ========================================
+   WEEK 3 — STUDENT FIT FIX
+   Steps 5–8 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week3-big-button-step,
+
+  body[data-lesson-view="student"]
+  .week3-picture-step,
+
+  body[data-lesson-view="student"]
+  .week3-bubble-step,
+
+  body[data-lesson-view="student"]
+  .week3-treasure-step {
+    width: min(900px, 96%);
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week3-big-button-step h2,
+
+  body[data-lesson-view="student"]
+  .week3-picture-step h2,
+
+  body[data-lesson-view="student"]
+  .week3-bubble-step h2,
+
+  body[data-lesson-view="student"]
+  .week3-treasure-step h2 {
+    margin: 0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week3-big-button-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week3-picture-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week3-bubble-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week3-treasure-step
+  .lesson-kid-prompt {
+    margin:
+      2px 0 6px;
+  }
+
+  /* Step 5 */
+  body[data-lesson-view="student"]
+  .big-button-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 6 */
+  body[data-lesson-view="student"]
+  .week3-picture-step
+  .picture-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 7 */
+  body[data-lesson-view="student"]
+  .bubble-practice-area {
+    height: 340px;
+    margin-top: 8px;
+  }
+
+  /* Step 8 */
+  body[data-lesson-view="student"]
+  .treasure-practice-area {
+    height: 350px;
+    margin-top: 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .week3-practice-count {
+    bottom: 8px;
+  }
+}
+
+/* ========================================
+   WEEK 4 — STUDENT FIT FIX
+   Steps 2–7 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week4-follow-click-step,
+
+  body[data-lesson-view="student"]
+  .week4-moving-search-step,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step,
+
+  body[data-lesson-view="student"]
+  .week4-reveal-step {
+    width: min(900px, 96%);
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week4-follow-click-step h2,
+
+  body[data-lesson-view="student"]
+  .week4-moving-search-step h2,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step h2,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step h2,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step h2,
+
+  body[data-lesson-view="student"]
+  .week4-reveal-step h2 {
+    margin: 0 0 4px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week4-follow-click-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week4-reveal-step
+  .lesson-kid-prompt {
+    margin:
+      2px 0 6px;
+  }
+
+  /* Steps 2–6 */
+  body[data-lesson-view="student"]
+  .week4-follow-click-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-moving-search-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step
+  .week4-activity-area {
+    height: 345px;
+    margin-top: 7px;
+  }
+
+  /* Step 7 */
+  body[data-lesson-view="student"]
+  .week4-reveal-step
+  .reveal-practice-area {
+    height: 330px;
+    margin-top: 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .week4-reveal-choices {
+    margin-top: 6px;
+  }
+}
+
+/* ========================================
+   TEACHER CLASSROOM CONTROLS — POLISH
+   Visual only. Do not change control logic.
+======================================== */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-panel {
+  width: min(900px, calc(100% - 32px));
+
+  margin: 14px auto 10px;
+  padding: 14px 18px;
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 1fr)
+    auto
+    minmax(180px, 1fr)
+    auto
+    auto;
+
+  align-items: center;
+  gap: 14px;
+
+  border: 1px solid #34485c;
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #162638,
+      #122131
+    );
+
+  box-shadow:
+    0 8px 22px
+    rgba(0, 0, 0, 0.14);
+}
+
+/* Sync / Freeze information */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-panel > div {
+  min-width: 0;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-sync-label {
+  margin: 0 0 2px;
+
+  color: #ffffff;
+
+  font-size: 0.78rem;
+  font-weight: 1000;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-sync-status {
+  margin: 0;
+
+  color: #9fc5e8;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Compact switches */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-toggle {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+/* Emergency unlock is secondary */
+
+body[data-lesson-view="teacher"]
+.teacher-unlock-button {
+  min-height: 40px;
+
+  padding: 8px 14px;
+
+  border: 1px solid #496178;
+  border-radius: 11px;
+
+  background: #203449;
+  color: #dbeafe;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 120ms ease,
+    background 120ms ease,
+    opacity 120ms ease;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-unlock-button:hover:not(:disabled) {
+  background: #29445f;
+  transform: translateY(-1px);
+}
+
+body[data-lesson-view="teacher"]
+.teacher-unlock-button:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+/* ========================================
+   TEACHER NAVIGATION BAR
+======================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-controls {
+  width: min(900px, calc(100% - 32px));
+
+  margin: 0 auto 18px;
+  padding: 8px;
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns:
+    1fr
+    auto
+    auto
+    1fr;
+
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid #293d50;
+  border-radius: 16px;
+
+  background: #101d2b;
+}
+
+/* Previous */
+
+body[data-lesson-view="teacher"]
+#previousStepButton {
+  justify-self: start;
+}
+
+/* Home */
+
+body[data-lesson-view="teacher"]
+#lessonHomeButton {
+  justify-self: center;
+}
+
+/* Practice release */
+
+body[data-lesson-view="teacher"]
+#teacherPracticeReleaseButton {
+  justify-self: center;
+
+  min-width: 205px;
+
+  border-color: #496178;
+
+  background: #203449;
+  color: #dbeafe;
+
+  font-size: 0.78rem;
+}
+
+body[data-lesson-view="teacher"]
+#teacherPracticeReleaseButton:not(:disabled):hover {
+  background: #29445f;
+}
+
+body[data-lesson-view="teacher"]
+#teacherPracticeReleaseButton.is-released {
+  border-color: #22c55e;
+
+  background: #14532d;
+  color: #dcfce7;
+}
+
+/* Next remains the primary action */
+
+body[data-lesson-view="teacher"]
+#nextStepButton {
+  justify-self: end;
+
+  min-width: 120px;
+}
+
+/* Make all navigation controls consistent */
+
+body[data-lesson-view="teacher"]
+.lesson-controls
+.lesson-nav-button,
+
+body[data-lesson-view="teacher"]
+.lesson-controls
+.lesson-home-button {
+  min-height: 42px;
+
+  padding: 8px 16px;
+
+  border-radius: 11px;
+
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+/* Keep primary Next visually dominant */
+
+body[data-lesson-view="teacher"]
+#nextStepButton {
+  box-shadow:
+    0 5px 12px
+    rgba(56, 189, 248, 0.18);
+}
+
+/* Smaller teacher screens */
+
+@media (max-width: 900px) {
+
+  body[data-lesson-view="teacher"]
+  .teacher-sync-panel {
+    grid-template-columns:
+      1fr auto
+      1fr auto;
+
+    gap: 10px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .teacher-unlock-button {
+    grid-column: 1 / -1;
+
+    justify-self: end;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-controls {
+    grid-template-columns:
+      auto
+      auto
+      1fr;
+
+    gap: 8px;
+  }
+
+  body[data-lesson-view="teacher"]
+  #teacherPracticeReleaseButton {
+    grid-column: 1 / -1;
+    grid-row: 1;
+
+    justify-self: stretch;
+  }
+}
+
+/* ========================================
+   STUDENT LESSON COMPLETE
+======================================== */
+
+.student-lesson-complete {
+  width: min(700px, 92%);
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.student-complete-stars {
+  margin-bottom: 10px;
+
+  font-size: 3.2rem;
+
+  animation:
+    studentCompleteBounce
+    1.4s ease-in-out infinite;
+}
+
+.student-lesson-complete h2 {
+  margin: 0;
+
+  color: #0b2b55;
+
+  font-size:
+    clamp(3rem, 7vw, 5rem);
+
+  font-weight: 1000;
+}
+
+.student-complete-message {
+  margin: 8px 0 22px;
+
+  color: #365675;
+
+  font-size:
+    clamp(1.3rem, 3vw, 1.8rem);
+
+  font-weight: 900;
+}
+
+.student-complete-wait {
+  padding: 16px 28px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  border: 4px solid #38bdf8;
+  border-radius: 22px;
+
+  background: #e0f2fe;
+
+  color: #075985;
+
+  font-size:
+    clamp(1.15rem, 2.5vw, 1.5rem);
+
+  box-shadow:
+    0 8px 20px
+    rgba(15, 23, 42, 0.1);
+}
+
+.student-complete-wait span {
+  font-size: 2rem;
+}
+
+.student-complete-stars-bottom {
+  margin-top: 22px;
+
+  font-size: 2rem;
+}
+
+@keyframes studentCompleteBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* ========================================
+   WEEK 6 — STEP 4: MOVING DELIVERY
+======================================== */
+
+.week6-delivery-step {
+  width: min(900px, 96%);
+  text-align: center;
+}
+
+.week6-delivery-step h2 {
+  margin: 2px 0 3px;
+
+  color: #0b2b55;
+
+  font-size:
+    clamp(2rem, 5vw, 3.2rem);
+}
+
+.week6-delivery-prompt {
+  width: fit-content;
+
+  margin: 7px auto 8px;
+  padding: 7px 18px;
+
+  border: 3px solid #38bdf8;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-size: 0.9rem;
+  font-weight: 1000;
+}
+
+.week6-delivery-area {
+  position: relative;
+
+  height: 350px;
+
+  margin-top: 6px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #dff5ff 0 68%,
+      #d1d5db 68% 73%,
+      #64748b 73% 100%
+    );
+}
+
+/* PACKAGE */
+
+.week6-delivery-object {
+  position: absolute;
+  z-index: 15;
+
+  left: 10%;
+  top: 50%;
+
+  width: 76px;
+  height: 76px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #38bdf8;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  font-size: 3rem;
+
+  cursor: grab;
+
+  box-shadow:
+    0 6px 14px
+    rgba(15,23,42,0.16);
+
+  touch-action: none;
+  user-select: none;
+}
+
+.week6-delivery-object.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  cursor: grabbing;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34,197,94,0.18);
+}
+
+/* MOVING TRUCK */
+
+.week6-delivery-target {
+  position: absolute;
+  z-index: 8;
+
+  right: 8%;
+  top: 50%;
+
+  width: 125px;
+  height: 95px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 5px dashed #f4b400;
+  border-radius: 24px;
+
+  background: #fff4bd;
+
+  font-size: 4rem;
+
+  box-shadow:
+    0 6px 14px
+    rgba(15,23,42,0.12);
+}
+
+.week6-delivery-target.is-ready-release {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 9px
+    rgba(34,197,94,0.18);
+}
+
+/* Student Chromebook fit */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-delivery-step {
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-delivery-step
+  .week5-big-badge {
+    margin: 0 auto 2px;
+    padding: 4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-delivery-step h2 {
+    margin: 1px 0 2px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-delivery-step
+  .lesson-kid-prompt {
+    margin: 1px 0 3px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-delivery-prompt {
+    margin: 3px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-delivery-area {
+    width: min(820px, 96%);
+
+    height: 350px;
+    min-height: 350px;
+
+    margin: 3px auto 0;
+  }
+}
+
+/* Week 6 Step 4 — turn truck so package enters the back */
+
+.week6-delivery-target {
+  transform:
+    translateY(-50%)
+    scaleX(-1);
+}
+
+/* Keep the ready state using the same orientation */
+.week6-delivery-target.is-ready-release {
+  transform:
+    translateY(-50%)
+    scaleX(-1);
+}
+
+/* ========================================
+   WEEK 6 — STEP 5: CLEAN UP THE ROOM
+======================================== */
+
+.week6-clean-step {
+  width: min(900px, 96%);
+  text-align: center;
+}
+
+.week6-clean-step h2 {
+  margin: 2px 0 3px;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.week6-clean-prompt {
+  width: fit-content;
+  margin: 6px auto;
+  padding: 6px 16px;
+
+  border: 3px solid #38bdf8;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-size: 0.88rem;
+  font-weight: 1000;
+}
+
+.week6-clean-area {
+  position: relative;
+
+  height: 350px;
+  margin-top: 5px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e0f2fe 0 63%,
+      #f1d5a5 63% 100%
+    );
+}
+
+.week6-clean-floor {
+  position: absolute;
+  inset: 63% 0 0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 75, 35, 0.08) 0 3px,
+      transparent 3px 80px
+    );
+
+  pointer-events: none;
+}
+
+/* Messy objects */
+
+.week6-clean-object {
+  position: absolute;
+  z-index: 15;
+
+  width: 62px;
+  height: 62px;
+
+  display: grid;
+  place-items: center;
+
+  border: 3px solid #38bdf8;
+  border-radius: 17px;
+
+  background: #ffffff;
+
+  font-size: 2.6rem;
+
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+
+  box-shadow:
+    0 5px 12px
+    rgba(15,23,42,0.15);
+}
+
+.week6-clean-object.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  cursor: grabbing;
+
+  box-shadow:
+    0 0 0 7px
+    rgba(34,197,94,0.18);
+}
+
+.clean-book {
+  left: 8%;
+  top: 18%;
+}
+
+.clean-pencil {
+  left: 30%;
+  top: 47%;
+  transform: rotate(12deg);
+}
+
+.clean-toy {
+  left: 13%;
+  top: 69%;
+}
+
+.clean-paper {
+  left: 47%;
+  top: 20%;
+  transform: rotate(-8deg);
+}
+
+.clean-ball {
+  left: 44%;
+  top: 72%;
+}
+
+/* Storage destinations */
+
+.week6-clean-target {
+  position: absolute;
+  z-index: 5;
+
+  right: 4%;
+
+  width: 130px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border: 3px dashed #f4b400;
+  border-radius: 16px;
+
+  background:
+    rgba(255,248,207,0.96);
+
+  color: #6b4700;
+
+  font-weight: 1000;
+}
+
+.week6-clean-target span {
+  font-size: 1.8rem;
+}
+
+.week6-clean-target strong {
+  font-size: 0.72rem;
+}
+
+.clean-books {
+  top: 5%;
+}
+
+.clean-pencils {
+  top: 24%;
+}
+
+.clean-toys {
+  top: 43%;
+}
+
+.clean-trash {
+  top: 62%;
+}
+
+.clean-balls {
+  top: 81%;
+}
+
+.week6-clean-target.is-ready-release {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+
+  box-shadow:
+    0 0 0 7px
+    rgba(34,197,94,0.17);
+}
+
+.week6-clean-target.is-complete {
+  border-style: solid;
+  border-color: #16a34a;
+
+  background: #dcfce7;
+
+  opacity: 0.62;
+}
+
+/* Student fit is part of the initial design */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-clean-step {
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-clean-step
+  .week5-big-badge {
+    margin: 0 auto 2px;
+    padding: 4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-clean-step h2 {
+    margin: 1px 0 2px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-clean-step
+  .lesson-kid-prompt {
+    margin: 1px 0 3px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-clean-prompt {
+    margin: 3px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-clean-area {
+    width: min(820px, 96%);
+
+    height: 350px;
+    min-height: 350px;
+
+    margin: 3px auto 0;
+  }
+}
+
+/* ========================================
+   WEEK 6 STEP 5 — BIG CLEAN-UP BOX
+======================================== */
+
+.week6-clean-box {
+  position: absolute;
+  z-index: 6;
+
+  right: 6%;
+  top: 50%;
+
+  width: 220px;
+  height: 205px;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 7px solid #9a6a32;
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #d9a85f,
+      #bb7d39
+    );
+
+  box-shadow:
+    inset 0 0 0 5px
+      rgba(255,255,255,0.2),
+    0 10px 20px
+      rgba(15,23,42,0.18);
+}
+
+.week6-clean-box::before {
+  content: "";
+
+  position: absolute;
+
+  left: 7%;
+  right: 7%;
+  top: -20px;
+
+  height: 35px;
+
+  border: 6px solid #9a6a32;
+  border-radius: 16px 16px 5px 5px;
+
+  background: #e0b16b;
+}
+
+.week6-clean-box-label {
+  position: relative;
+  z-index: 2;
+
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.86);
+
+  color: #6b3f16;
+
+  font-size: 0.75rem;
+  font-weight: 1000;
+}
+
+.week6-clean-box-target {
+  position: relative;
+  z-index: 2;
+
+  width: 100px;
+  height: 100px;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px dashed #ffffff;
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.22);
+
+  font-size: 4.3rem;
+
+  animation:
+    week6CleanTargetFlash
+    900ms ease-in-out
+    infinite;
+}
+
+.week6-clean-box.is-ready-release {
+  border-color: #16a34a;
+
+  background:
+    linear-gradient(
+      180deg,
+      #bbf7d0,
+      #86efac
+    );
+
+  box-shadow:
+    0 0 0 9px
+      rgba(34,197,94,0.2);
+}
+
+@keyframes week6CleanTargetFlash {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: scale(1.13);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   WEEK 6 STEP 5 — MAKE BOX LOOK LIKE A BOX
+======================================== */
+
+.week6-clean-box {
+  position: absolute;
+  z-index: 6;
+
+  right: 5%;
+  top: 55%;
+
+  width: 250px;
+  height: 165px;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-bottom: 16px;
+
+  box-sizing: border-box;
+
+  border: 6px solid #8b5a2b;
+  border-radius: 12px 12px 20px 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #c98a47,
+      #a96830
+    );
+
+  box-shadow:
+    inset 0 -10px 0
+      rgba(90, 45, 15, 0.12),
+    0 10px 20px
+      rgba(15,23,42,0.18);
+}
+
+/* dark opening inside the box */
+
+.week6-clean-box::before {
+  content: "";
+
+  position: absolute;
+
+  left: 18px;
+  right: 18px;
+  top: 18px;
+
+  height: 78px;
+
+  border: 5px solid #7a4a23;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #4b2d17,
+      #6b3f1d
+    );
+
+  box-shadow:
+    inset 0 8px 14px
+      rgba(0,0,0,0.28);
+}
+
+/* left lid flap */
+
+.week6-clean-box::after {
+  content: "";
+
+  position: absolute;
+
+  left: 4px;
+  top: -28px;
+
+  width: 112px;
+  height: 42px;
+
+  border: 5px solid #8b5a2b;
+  border-radius: 8px 8px 2px 2px;
+
+  background: #d49a56;
+
+  transform:
+    rotate(-10deg);
+
+  transform-origin:
+    bottom right;
+}
+
+/* second lid flap using the label */
+
+.week6-clean-box-label {
+  position: absolute;
+  z-index: 1;
+
+  right: 4px;
+  top: -28px;
+
+  width: 112px;
+  height: 42px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  box-sizing: border-box;
+
+  border: 5px solid #8b5a2b;
+  border-radius: 8px 8px 2px 2px;
+
+  background: #d49a56;
+
+  color: #5b361a;
+
+  font-size: 0.68rem;
+  font-weight: 1000;
+
+  transform:
+    rotate(10deg);
+
+  transform-origin:
+    bottom left;
+}
+
+/* requested item sits inside the box opening */
+
+.week6-clean-box-target {
+  position: absolute;
+  z-index: 3;
+
+  left: 50%;
+  top: 55px;
+
+  width: 82px;
+  height: 72px;
+
+  transform:
+    translateX(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 3px dashed
+    rgba(255,255,255,0.8);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.12);
+
+  font-size: 3.5rem;
+
+  animation:
+    week6CleanTargetFlash
+    900ms ease-in-out
+    infinite;
+}
+
+/* Week 6 Step 5 — wrong object feedback */
+
+.week6-clean-object.is-wrong {
+  animation:
+    week6WrongObjectShake
+    320ms ease-in-out
+    2;
+
+  border-color: #ef4444;
+  background: #fee2e2;
+}
+
+@keyframes week6WrongObjectShake {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  25% {
+    translate: -7px 0;
+  }
+
+  75% {
+    translate: 7px 0;
+  }
+}
+
+/* Week 6 Step 5 — completed clean-up objects disappear */
+
+.week6-clean-object.is-complete {
+  display: none !important;
+}
+
+/* Week 6 Step 5 — center requested item in dark box opening */
+
+.week6-clean-box-target {
+  left: 50%;
+  top: 42%;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+
+/* ========================================
+   WEEK 6 — STEP 6: DON'T DROP IT
+======================================== */
+
+.week6-long-hold-step {
+  width: min(900px, 96%);
+  text-align: center;
+}
+
+.week6-long-hold-step h2 {
+  margin: 2px 0 3px;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.week6-long-hold-area {
+  position: relative;
+
+  height: 350px;
+  margin-top: 5px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e7f7ff 0 70%,
+      #d9efc0 70% 100%
+    );
+}
+
+/* START */
+
+.week6-long-hold-start {
+  position: absolute;
+  left: 4%;
+  bottom: 7%;
+
+  padding: 6px 11px;
+
+  border: 3px solid #16a34a;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.72rem;
+  font-weight: 1000;
+}
+
+/* ICE CREAM */
+
+.week6-long-hold-object {
+  position: absolute;
+  z-index: 15;
+
+  left: 10%;
+  top: 76%;
+
+  width: 70px;
+  height: 70px;
+
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #38bdf8;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  font-size: 3rem;
+
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+
+  box-shadow:
+    0 6px 14px
+    rgba(15, 23, 42, 0.15);
+}
+
+.week6-long-hold-object.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  cursor: grabbing;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34, 197, 94, 0.18);
+}
+
+/* CHECKPOINTS */
+
+.week6-long-checkpoint {
+  position: absolute;
+  z-index: 8;
+
+  width: 74px;
+  height: 74px;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px dashed #f4b400;
+  border-radius: 50%;
+
+  background: #fff4bd;
+  color: #7c5200;
+
+  font-size: 1.5rem;
+  font-weight: 1000;
+
+  opacity: 0.52;
+
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.week6-long-checkpoint.is-next {
+  opacity: 1;
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 0 8px
+    rgba(244, 180, 0, 0.14);
+}
+
+.week6-long-checkpoint.is-complete {
+  opacity: 1;
+
+  border-style: solid;
+  border-color: #16a34a;
+
+  background: #dcfce7;
+  color: #166534;
+}
+
+.checkpoint-one {
+  left: 30%;
+  top: 28%;
+}
+
+.checkpoint-two {
+  left: 52%;
+  top: 68%;
+}
+
+.checkpoint-three {
+  left: 70%;
+  top: 30%;
+}
+
+/* FINISH CHILD */
+
+.week6-long-hold-target {
+  position: absolute;
+  z-index: 8;
+
+  right: 4%;
+  top: 70%;
+
+  width: 100px;
+  height: 100px;
+
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 5px dashed #f4b400;
+  border-radius: 24px;
+
+  background: #fff4bd;
+
+  font-size: 4rem;
+
+  opacity: 0.55;
+
+  transition:
+    opacity 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.week6-long-hold-target.is-ready {
+  opacity: 1;
+
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 9px
+    rgba(34, 197, 94, 0.18);
+}
+
+/* Student fit */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-long-hold-step {
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-long-hold-step
+  .week5-big-badge {
+    margin: 0 auto 2px;
+    padding: 4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-long-hold-step h2 {
+    margin: 1px 0 2px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-long-hold-step
+  .lesson-kid-prompt {
+    margin: 1px 0 3px;
+  }
+
+  body[data-lesson-view="student"]
+  #week6LongHoldPrompt {
+    margin: 3px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-long-hold-area {
+    width: min(820px, 96%);
+
+    height: 350px;
+    min-height: 350px;
+
+    margin: 3px auto 0;
+  }
+}
+
+/* ========================================
+   WEEK 6 — STEP 7: NEMO PUZZLE
+======================================== */
+
+.week6-puzzle-step {
+  width: min(900px, 96%);
+  text-align: center;
+}
+
+.week6-puzzle-step h2 {
+  margin: 2px 0 3px;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.week6-puzzle-area {
+  position: relative;
+
+  width: min(850px, 96%);
+  height: 385px;
+
+  margin: 4px auto 0;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      #e0f2fe 0 42%,
+      #ffffff 42% 100%
+    );
+}
+
+/* LEFT SIDE — 9 LOOSE PIECES */
+
+.week6-puzzle-pieces {
+  position: absolute;
+
+  left: 3%;
+  top: 7%;
+
+  width: 35%;
+  height: 86%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  grid-template-rows:
+    repeat(3, 1fr);
+
+  gap: 7px;
+}
+
+.week6-puzzle-piece {
+  position: relative;
+
+  min-width: 0;
+  min-height: 0;
+
+  border: 3px solid #38bdf8;
+  border-radius: 10px;
+
+  background-image:
+    url("images/nemo.png");
+
+  background-size:
+    300% 300%;
+
+  background-repeat:
+    no-repeat;
+
+  cursor: grab;
+
+  touch-action: none;
+  user-select: none;
+
+  box-shadow:
+    0 4px 9px
+    rgba(15,23,42,0.14);
+}
+
+.week6-puzzle-piece.is-held {
+  z-index: 30;
+
+  border-color: #16a34a;
+
+  cursor: grabbing;
+
+  box-shadow:
+    0 0 0 7px
+    rgba(34,197,94,0.18);
+}
+
+/* NEMO IMAGE SECTIONS */
+
+.week6-puzzle-piece[data-piece="0"] {
+  background-position: 0% 0%;
+}
+
+.week6-puzzle-piece[data-piece="1"] {
+  background-position: 50% 0%;
+}
+
+.week6-puzzle-piece[data-piece="2"] {
+  background-position: 100% 0%;
+}
+
+.week6-puzzle-piece[data-piece="3"] {
+  background-position: 0% 50%;
+}
+
+.week6-puzzle-piece[data-piece="4"] {
+  background-position: 50% 50%;
+}
+
+.week6-puzzle-piece[data-piece="5"] {
+  background-position: 100% 50%;
+}
+
+.week6-puzzle-piece[data-piece="6"] {
+  background-position: 0% 100%;
+}
+
+.week6-puzzle-piece[data-piece="7"] {
+  background-position: 50% 100%;
+}
+
+.week6-puzzle-piece[data-piece="8"] {
+  background-position: 100% 100%;
+}
+
+/* RIGHT SIDE — 3x3 PUZZLE BOARD */
+
+.week6-puzzle-board {
+  position: absolute;
+
+  right: 5%;
+  top: 50%;
+
+  width: 330px;
+  height: 270px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  grid-template-rows:
+    repeat(3, 1fr);
+
+  border: 6px solid #38bdf8;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: #dff5ff;
+
+  box-shadow:
+    0 9px 20px
+    rgba(15,23,42,0.14);
+}
+
+.week6-puzzle-slot {
+  border: 2px dashed
+    rgba(7,89,133,0.35);
+
+  background:
+    rgba(255,255,255,0.72);
+}
+
+.week6-puzzle-slot.is-ready-release {
+  background: #dcfce7;
+
+  box-shadow:
+    inset 0 0 0 4px
+    rgba(34,197,94,0.45);
+}
+
+.week6-puzzle-slot.is-complete {
+  border-style: solid;
+
+  border-color:
+    rgba(255,255,255,0.35);
+}
+
+/* STUDENT CHROMEBOOK FIT */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-puzzle-step {
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-puzzle-step
+  .week5-big-badge {
+    margin: 0 auto 2px;
+    padding: 4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-puzzle-step h2 {
+    margin: 1px 0 2px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-puzzle-step
+  .lesson-kid-prompt {
+    margin: 1px 0 3px;
+  }
+
+  body[data-lesson-view="student"]
+  #week6PuzzlePrompt {
+    margin: 3px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-puzzle-area {
+    width: min(850px, 96%);
+
+    height: 385px;
+    min-height: 385px;
+
+    margin: 3px auto 0;
+  }
+}
+
+
+/* ========================================
+   WEEK 6 STEP 7 — SCRAMBLED NEMO PIECES
+======================================== */
+
+/*
+ * Turn the left-side piece holder into
+ * a free-positioned scramble area instead
+ * of a completed 3x3 picture.
+ */
+
+.week6-puzzle-pieces {
+  display: block;
+}
+
+/*
+ * Each piece keeps roughly the same
+ * dimensions but gets its own position.
+ */
+
+.week6-puzzle-pieces
+.week6-puzzle-piece {
+  position: absolute;
+
+  width: 82px;
+  height: 72px;
+
+  transform-origin: center;
+}
+
+/* Scrambled positions */
+
+.week6-puzzle-piece[data-piece="0"] {
+  left: 4%;
+  top: 5%;
+  transform: rotate(-7deg);
+}
+
+.week6-puzzle-piece[data-piece="1"] {
+  left: 37%;
+  top: 11%;
+  transform: rotate(6deg);
+}
+
+.week6-puzzle-piece[data-piece="2"] {
+  left: 68%;
+  top: 2%;
+  transform: rotate(-4deg);
+}
+
+.week6-puzzle-piece[data-piece="3"] {
+  left: 13%;
+  top: 36%;
+  transform: rotate(5deg);
+}
+
+.week6-puzzle-piece[data-piece="4"] {
+  left: 61%;
+  top: 34%;
+  transform: rotate(-6deg);
+}
+
+.week6-puzzle-piece[data-piece="5"] {
+  left: 34%;
+  top: 45%;
+  transform: rotate(8deg);
+}
+
+.week6-puzzle-piece[data-piece="6"] {
+  left: 3%;
+  top: 70%;
+  transform: rotate(6deg);
+}
+
+.week6-puzzle-piece[data-piece="7"] {
+  left: 39%;
+  top: 72%;
+  transform: rotate(-5deg);
+}
+
+.week6-puzzle-piece[data-piece="8"] {
+  left: 69%;
+  top: 66%;
+  transform: rotate(7deg);
+}
+
+/*
+ * Remove the rotation while dragging.
+ * This keeps placement predictable.
+ */
+
+.week6-puzzle-piece.is-held {
+  transform: none !important;
+}
+
+/* ========================================
+   WEEK 6 — STEP 8: FINAL DRAG ADVENTURE
+======================================== */
+
+.week6-final-step {
+  width: min(900px, 96%);
+  text-align: center;
+}
+
+.week6-final-step h2 {
+  margin: 2px 0 3px;
+  color: #0b2b55;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.week6-final-area {
+  position: relative;
+
+  height: 350px;
+  margin-top: 5px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #dff5ff 0 68%,
+      #c9e9a8 68% 100%
+    );
+}
+
+/* START */
+
+.week6-final-start {
+  position: absolute;
+  left: 3%;
+  bottom: 5%;
+
+  padding: 6px 11px;
+
+  border: 3px solid #16a34a;
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.72rem;
+  font-weight: 1000;
+}
+
+/* STAR */
+
+.week6-final-object {
+  position: absolute;
+  z-index: 20;
+
+  left: 10%;
+  top: 76%;
+
+  width: 70px;
+  height: 70px;
+
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #38bdf8;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  font-size: 3rem;
+
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+
+  box-shadow:
+    0 6px 14px
+    rgba(15,23,42,0.15);
+}
+
+.week6-final-object.is-held {
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  cursor: grabbing;
+
+  box-shadow:
+    0 0 0 8px
+    rgba(34,197,94,0.18);
+}
+
+/* CHECKPOINTS */
+
+.week6-final-checkpoint {
+  position: absolute;
+  z-index: 10;
+
+  width: 68px;
+  height: 68px;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px dashed #f4b400;
+  border-radius: 50%;
+
+  background: #fff4bd;
+  color: #7c5200;
+
+  font-size: 1.4rem;
+  font-weight: 1000;
+
+  opacity: 0.48;
+}
+
+.week6-final-checkpoint.is-next {
+  opacity: 1;
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 0 8px
+    rgba(244,180,0,0.15);
+}
+
+.week6-final-checkpoint.is-complete {
+  opacity: 1;
+
+  border-style: solid;
+  border-color: #16a34a;
+
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week6-final-checkpoint.checkpoint-one {
+  left: 28%;
+  top: 24%;
+}
+
+.week6-final-checkpoint.checkpoint-two {
+  left: 51%;
+  top: 68%;
+}
+
+.week6-final-checkpoint.checkpoint-three {
+  left: 69%;
+  top: 28%;
+}
+
+/* OBSTACLES */
+
+.week6-final-obstacle {
+  position: absolute;
+  z-index: 8;
+
+  width: 86px;
+  height: 86px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 4rem;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.final-obstacle-one {
+  left: 38%;
+  top: 36%;
+}
+
+.final-obstacle-two {
+  left: 59%;
+  top: 8%;
+}
+
+/* TROPHY */
+
+.week6-final-target {
+  position: absolute;
+  z-index: 8;
+
+  right: 4%;
+  top: 68%;
+
+  width: 102px;
+  height: 102px;
+
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #f4b400;
+  border-radius: 24px;
+
+  background: #fff4bd;
+
+  font-size: 4rem;
+
+  opacity: 0.55;
+}
+
+.week6-final-target.is-ready {
+  opacity: 1;
+
+  border-color: #16a34a;
+  background: #dcfce7;
+
+  box-shadow:
+    0 0 0 9px
+    rgba(34,197,94,0.18);
+}
+
+/* STUDENT FIT */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-final-step {
+    height: 100%;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: hidden;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step
+  .week5-big-badge {
+    margin: 0 auto 2px;
+    padding: 4px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step h2 {
+    margin: 1px 0 2px;
+
+    font-size:
+      clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step
+  .lesson-kid-prompt {
+    margin: 1px 0 3px;
+  }
+
+  body[data-lesson-view="student"]
+  #week6FinalPrompt {
+    margin: 3px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-area {
+    width: min(820px, 96%);
+
+    height: 350px;
+    min-height: 350px;
+
+    margin: 3px auto 0;
+  }
+}
+
+
+/* Week 6 Final — make the starting star obvious */
+
+.week6-final-object:not(.is-held) {
+  animation:
+    week6FinalStarPulse
+    900ms ease-in-out
+    infinite;
+}
+
+.week6-final-object.is-held {
+  animation: none;
+}
+
+@keyframes week6FinalStarPulse {
+  0%,
+  100% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.12;
+
+    box-shadow:
+      0 0 0 10px
+      rgba(244, 180, 0, 0.2);
+  }
+}
+
+/* Week 6 Final — hold feedback stays outside gameplay */
+
+.week6-final-hold-indicator {
+  position: static !important;
+
+  width: fit-content;
+
+  margin: 3px auto 5px;
+
+  transform: none !important;
+}
+
+
+/* ========================================
+   WEEK 6 FINAL — LAYOUT REFINEMENT
+======================================== */
+
+/* Pull the whole gameplay area upward */
+.week6-final-area {
+  margin-top: 0 !important;
+}
+
+/* Keep both status messages grouped above gameplay */
+.week6-final-hold-indicator {
+  position: static !important;
+
+  width: fit-content;
+
+  margin:
+    0 auto 3px;
+
+  transform: none !important;
+}
+
+/* Main instruction sits just below KEEP HOLDING */
+#week6FinalPrompt {
+  margin:
+    0 auto 6px !important;
+}
+
+/* Give student gameplay more vertical room */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week6-final-step {
+    justify-content: flex-start;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step
+  .week5-big-badge {
+    margin-bottom: 1px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step h2 {
+    margin:
+      0 0 1px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-step
+  .lesson-kid-prompt {
+    margin:
+      0 0 2px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-hold-indicator {
+    margin:
+      0 auto 2px;
+  }
+
+  body[data-lesson-view="student"]
+  #week6FinalPrompt {
+    margin:
+      0 auto 5px !important;
+
+    padding:
+      5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-final-area {
+    height: 385px;
+    min-height: 385px;
+
+    margin:
+      0 auto !important;
+  }
+}
+

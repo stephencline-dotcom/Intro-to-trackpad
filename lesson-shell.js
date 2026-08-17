@@ -258,6 +258,55 @@ function renderLessonStep() {
 
   if (
     step.activityType ===
+    'week6Animals'
+  ) {
+    initializeWeek6Animals();
+  }
+
+  if (
+    step.activityType ===
+    'week6Obstacle'
+  ) {
+    initializeWeek6Obstacle();
+  }
+
+  if (
+    step.activityType ===
+    'week6MovingDelivery'
+  ) {
+    initializeWeek6MovingDelivery();
+  }
+
+  if (
+    step.activityType ===
+    'week6CleanRoom'
+  ) {
+    initializeWeek6CleanRoom();
+  }
+
+  if (
+    step.activityType ===
+    'week6DontDrop'
+  ) {
+    initializeWeek6DontDrop();
+  }
+
+  if (
+    step.activityType ===
+    'week6Puzzle'
+  ) {
+    initializeWeek6Puzzle();
+  }
+
+  if (
+    step.activityType ===
+    'week6Final'
+  ) {
+    initializeWeek6Final();
+  }
+
+  if (
+    step.activityType ===
     'clickWaitTeaching'
   ) {
     initializeClickWaitTeaching();
@@ -350,6 +399,12 @@ nextStepButton.addEventListener(
       currentStepIndex >=
       lesson.steps.length - 1
     ) {
+      if (lessonView === 'student') {
+        showStudentLessonComplete();
+
+        return;
+      }
+
       window.location.href =
         'index.html';
 
@@ -6556,7 +6611,7 @@ function initializeWeek5TargetPractice() {
     roundIndex += 1;
 
     count.textContent =
-      `${roundIndex} / 3`;
+      `${roundIndex} / 4`;
 
     prompt.textContent =
       'GREAT HOLD!';
@@ -8239,4 +8294,3959 @@ function initializeWeek6Review() {
   }
 
   void run();
+}
+
+function initializeWeek6Animals() {
+  const area =
+    document.getElementById(
+      'week6AnimalArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6AnimalPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6AnimalHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6AnimalCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6AnimalSuccess'
+    );
+
+  const animals =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-animal-object'
+      )
+    );
+
+  const foods =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-animal-home'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    animals.length !== 5 ||
+    foods.length !== 5
+  ) {
+    return;
+  }
+
+  let completed = 0;
+
+  animals.forEach(
+    (animal) => {
+      const key =
+        animal.dataset.animal;
+
+      const food =
+        foods.find(
+          (item) =>
+            item.dataset.home === key
+        );
+
+      if (!food) {
+        return;
+      }
+
+      const startingLeft =
+        getComputedStyle(animal).left;
+
+      const startingTop =
+        getComputedStyle(animal).top;
+
+      let holding = false;
+      let pointerId = null;
+
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function getFoodUnderAnimal() {
+        const animalRect =
+          animal.getBoundingClientRect();
+
+        const centerX =
+          animalRect.left +
+          animalRect.width / 2;
+
+        const centerY =
+          animalRect.top +
+          animalRect.height / 2;
+
+        return (
+          foods.find(
+            (testFood) => {
+              const rect =
+                testFood.getBoundingClientRect();
+
+              return (
+                centerX >= rect.left &&
+                centerX <= rect.right &&
+                centerY >= rect.top &&
+                centerY <= rect.bottom
+              );
+            }
+          ) || null
+        );
+      }
+
+      function resetAnimal() {
+        stopLessonSlideSound();
+
+        holding = false;
+
+        animal.classList.remove(
+          'is-held'
+        );
+
+        food.classList.remove(
+          'is-ready-release'
+        );
+
+        animal.style.left =
+          startingLeft;
+
+        animal.style.top =
+          startingTop;
+
+        animal.style.transform =
+          'translate(-50%, -50%)';
+      }
+
+      animal.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (
+            animal.classList.contains(
+              'is-complete'
+            )
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          pointerId =
+            event.pointerId;
+
+          animal.setPointerCapture(
+            pointerId
+          );
+
+          const rect =
+            animal.getBoundingClientRect();
+
+          offsetX =
+            event.clientX -
+            rect.left;
+
+          offsetY =
+            event.clientY -
+            rect.top;
+
+          holding = true;
+
+          animal.classList.add(
+            'is-held'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+
+          indicator.classList.remove(
+            'is-let-go-warning'
+          );
+
+          indicator.classList.add(
+            'is-visible'
+          );
+
+          prompt.textContent =
+            'KEEP HOLDING — FIND ITS FOOD';
+
+          playLessonClickSound();
+        }
+      );
+
+      animal.addEventListener(
+        'pointermove',
+        (event) => {
+          if (
+            !holding ||
+            event.pointerId !==
+              pointerId
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            areaRect.left -
+            offsetX;
+
+          const y =
+            event.clientY -
+            areaRect.top -
+            offsetY;
+
+          const maxX =
+            areaRect.width -
+            animal.offsetWidth;
+
+          const maxY =
+            areaRect.height -
+            animal.offsetHeight;
+
+          animal.style.left =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxX,
+                  x
+                )
+              )
+            }px`;
+
+          animal.style.top =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxY,
+                  y
+                )
+              )
+            }px`;
+
+          animal.style.transform =
+            'none';
+
+          startLessonSlideSound();
+
+          const releasedFood =
+            getFoodUnderAnimal();
+
+          if (releasedFood === food) {
+            food.classList.add(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'NOW RELEASE!';
+          } else {
+            food.classList.remove(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'KEEP HOLDING — FIND ITS FOOD';
+          }
+        }
+      );
+
+      function finishAnimal(event) {
+        if (
+          !holding ||
+          event.pointerId !==
+            pointerId
+        ) {
+          return;
+        }
+
+        holding = false;
+
+        stopLessonSlideSound();
+
+        animal.classList.remove(
+          'is-held'
+        );
+
+        indicator.classList.remove(
+          'is-visible'
+        );
+
+        const releasedFood =
+          getFoodUnderAnimal();
+
+        if (releasedFood !== food) {
+          resetAnimal();
+
+          if (releasedFood) {
+            playLessonWrongSound();
+
+            indicator.textContent =
+              '❌ WRONG FOOD!';
+
+            prompt.textContent =
+              'TRY A DIFFERENT FOOD';
+          } else {
+            playLessonLetGoSound();
+
+            indicator.textContent =
+              "✋ DON'T LET GO!";
+
+            prompt.textContent =
+              'PRESS AND HOLD AGAIN';
+          }
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+            },
+            1400
+          );
+
+          return;
+        }
+
+        food.classList.remove(
+          'is-ready-release'
+        );
+
+        food.classList.add(
+          'is-complete'
+        );
+
+        animal.classList.add(
+          'is-complete'
+        );
+
+        animal.hidden = true;
+
+        completed += 1;
+
+        count.textContent =
+          `${completed} / 5`;
+
+        prompt.textContent =
+          'YUM! GREAT HOLD!';
+
+        playLessonSuccessSound();
+
+        if (completed >= 5) {
+          prompt.hidden = true;
+
+          success.textContent =
+            'GREAT JOB! ⭐';
+
+          success.classList.add(
+            'is-visible',
+            'is-complete'
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          () => {
+            prompt.textContent =
+              'PRESS AND HOLD ANOTHER ANIMAL';
+          },
+          750
+        );
+      }
+
+      animal.addEventListener(
+        'pointerup',
+        finishAnimal
+      );
+
+      animal.addEventListener(
+        'pointercancel',
+        finishAnimal
+      );
+    }
+  );
+
+  count.textContent =
+    '0 / 5';
+}
+
+function initializeWeek6Obstacle() {
+  const area =
+    document.getElementById(
+      'week6ObstacleArea'
+    );
+
+  const car =
+    document.getElementById(
+      'week6ObstacleObject'
+    );
+
+  const target =
+    document.getElementById(
+      'week6ObstacleTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6ObstaclePrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6ObstacleHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6ObstacleCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6ObstacleSuccess'
+    );
+
+  const obstacles =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-obstacle'
+      )
+    );
+
+  if (
+    !area ||
+    !car ||
+    !target ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    obstacles.length !== 3
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      carX: 8,
+      carY: 72,
+      targetX: 82,
+      targetY: 18,
+      obstaclePositions: [
+        [30, 45],
+        [52, 18],
+        [65, 60],
+      ],
+    },
+    {
+      carX: 10,
+      carY: 20,
+      targetX: 82,
+      targetY: 72,
+      obstaclePositions: [
+        [30, 22],
+        [48, 58],
+        [68, 34],
+      ],
+    },
+    {
+      carX: 12,
+      carY: 72,
+      targetX: 80,
+      targetY: 24,
+      obstaclePositions: [
+        [28, 62],
+        [48, 34],
+        [67, 58],
+      ],
+    },
+    {
+      carX: 10,
+      carY: 26,
+      targetX: 82,
+      targetY: 68,
+      obstaclePositions: [
+        [29, 42],
+        [50, 70],
+        [69, 30],
+      ],
+    },
+    {
+      carX: 10,
+      carY: 72,
+      targetX: 82,
+      targetY: 20,
+      obstaclePositions: [
+        [30, 28],
+        [48, 55],
+        [67, 34],
+      ],
+    },
+  ];
+
+  let roundIndex = 0;
+  let holding = false;
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function applyRound() {
+    const round =
+      rounds[roundIndex];
+
+    car.style.left =
+      `${round.carX}%`;
+
+    car.style.top =
+      `${round.carY}%`;
+
+    car.style.bottom =
+      'auto';
+
+    car.style.transform =
+      'translate(-50%, -50%)';
+
+    target.style.left =
+      `${round.targetX}%`;
+
+    target.style.top =
+      `${round.targetY}%`;
+
+    target.style.right =
+      'auto';
+
+    target.style.transform =
+      'translate(-50%, -50%)';
+
+    obstacles.forEach(
+      (obstacle, index) => {
+        const [
+          x,
+          y,
+        ] =
+          round.obstaclePositions[
+            index
+          ];
+
+        obstacle.style.left =
+          `${x}%`;
+
+        obstacle.style.top =
+          `${y}%`;
+      }
+    );
+
+    target.classList.remove(
+      'is-ready-release'
+    );
+
+    car.classList.remove(
+      'is-held'
+    );
+
+    indicator.classList.remove(
+      'is-visible',
+      'is-let-go-warning'
+    );
+
+    prompt.textContent =
+      'PRESS AND HOLD THE CAR';
+
+    stopLessonSlideSound();
+  }
+
+  function carHitsObstacle() {
+    const carRect =
+      car.getBoundingClientRect();
+
+    return obstacles.some(
+      (obstacle) => {
+        const rect =
+          obstacle.getBoundingClientRect();
+
+        const overlap =
+          !(
+            carRect.right <
+              rect.left + 12 ||
+            carRect.left >
+              rect.right - 12 ||
+            carRect.bottom <
+              rect.top + 12 ||
+            carRect.top >
+              rect.bottom - 12
+          );
+
+        return overlap;
+      }
+    );
+  }
+
+  function carInsideTarget() {
+    const carRect =
+      car.getBoundingClientRect();
+
+    const targetRect =
+      target.getBoundingClientRect();
+
+    const centerX =
+      carRect.left +
+      carRect.width / 2;
+
+    const centerY =
+      carRect.top +
+      carRect.height / 2;
+
+    return (
+      centerX >= targetRect.left &&
+      centerX <= targetRect.right &&
+      centerY >= targetRect.top &&
+      centerY <= targetRect.bottom
+    );
+  }
+
+  function resetRound(
+    message
+  ) {
+    holding = false;
+
+    stopLessonSlideSound();
+
+    car.classList.remove(
+      'is-held'
+    );
+
+    target.classList.remove(
+      'is-ready-release'
+    );
+
+    const round =
+      rounds[roundIndex];
+
+    car.style.left =
+      `${round.carX}%`;
+
+    car.style.top =
+      `${round.carY}%`;
+
+    car.style.transform =
+      'translate(-50%, -50%)';
+
+    prompt.textContent =
+      message;
+  }
+
+  car.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      car.setPointerCapture(
+        pointerId
+      );
+
+      const rect =
+        car.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      holding = true;
+
+      car.classList.add(
+        'is-held'
+      );
+
+      indicator.textContent =
+        '👈 KEEP HOLDING!';
+
+      indicator.classList.remove(
+        'is-let-go-warning'
+      );
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — STEER AROUND!';
+
+      playLessonClickSound();
+    }
+  );
+
+  car.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        car.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        car.offsetHeight;
+
+      car.style.left =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxX,
+              x
+            )
+          )
+        }px`;
+
+      car.style.top =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxY,
+              y
+            )
+          )
+        }px`;
+
+      car.style.transform =
+        'none';
+
+      startLessonSlideSound();
+
+      if (carHitsObstacle()) {
+        playLessonWrongSound();
+
+        resetRound(
+          'WATCH OUT — TRY AGAIN!'
+        );
+
+        indicator.textContent =
+          '🚧 AROUND THE OBSTACLES!';
+
+        indicator.classList.add(
+          'is-visible',
+          'is-let-go-warning'
+        );
+
+        window.setTimeout(
+          () => {
+            indicator.classList.remove(
+              'is-visible',
+              'is-let-go-warning'
+            );
+
+            indicator.textContent =
+              '👈 KEEP HOLDING!';
+          },
+          1200
+        );
+
+        return;
+      }
+
+      if (carInsideTarget()) {
+        target.classList.add(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'NOW RELEASE!';
+      } else {
+        target.classList.remove(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'KEEP HOLDING — STEER AROUND!';
+      }
+    }
+  );
+
+  function finishCar(
+    event
+  ) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    car.classList.remove(
+      'is-held'
+    );
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    if (!carInsideTarget()) {
+      playLessonLetGoSound();
+
+      resetRound(
+        'PRESS AND HOLD AGAIN'
+      );
+
+      indicator.textContent =
+        "✋ DON'T LET GO!";
+
+      indicator.classList.add(
+        'is-visible',
+        'is-let-go-warning'
+      );
+
+      window.setTimeout(
+        () => {
+          indicator.classList.remove(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+        },
+        1400
+      );
+
+      return;
+    }
+
+    roundIndex += 1;
+
+    count.textContent =
+      `${roundIndex} / 5`;
+
+    prompt.textContent =
+      'GREAT CONTROL!';
+
+    playLessonSuccessSound();
+
+    if (
+      roundIndex >=
+      rounds.length
+    ) {
+      car.hidden = true;
+      target.hidden = true;
+
+      prompt.hidden = true;
+
+      success.textContent =
+        'GREAT JOB! ⭐';
+
+      success.classList.add(
+        'is-visible',
+        'is-complete'
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      applyRound,
+      800
+    );
+  }
+
+  car.addEventListener(
+    'pointerup',
+    finishCar
+  );
+
+  car.addEventListener(
+    'pointercancel',
+    finishCar
+  );
+
+  count.textContent =
+    '0 / 5';
+
+  applyRound();
+}
+
+/* ----------------------------------------
+   Student activity fit-to-screen
+----------------------------------------- */
+
+function fitStudentLessonToViewport() {
+  if (
+    lessonView !== 'student' ||
+    !lessonActivity
+  ) {
+    return;
+  }
+
+  /*
+   * Always measure at natural size first.
+   */
+  lessonActivity.style.zoom = '1';
+
+  window.requestAnimationFrame(
+    () => {
+      const availableHeight =
+        lessonActivity.clientHeight;
+
+      const content =
+        lessonActivity.firstElementChild;
+
+      if (
+        !content ||
+        availableHeight <= 0
+      ) {
+        return;
+      }
+
+      const neededHeight =
+        content.scrollHeight;
+
+      if (
+        neededHeight <=
+        availableHeight
+      ) {
+        lessonActivity.style.zoom =
+          '1';
+
+        return;
+      }
+
+      /*
+       * Leave a little breathing room.
+       */
+      const scale =
+        Math.max(
+          0.72,
+          Math.min(
+            1,
+            (
+              availableHeight - 8
+            ) /
+            neededHeight
+          )
+        );
+
+      lessonActivity.style.zoom =
+        String(scale);
+    }
+  );
+}
+
+window.addEventListener(
+  'resize',
+  fitStudentLessonToViewport
+);
+
+/* ----------------------------------------
+   Student lesson completion screen
+----------------------------------------- */
+
+function showStudentLessonComplete() {
+  if (
+    lessonView !== 'student' ||
+    !lessonActivity
+  ) {
+    return;
+  }
+
+  const weekNumber =
+    Number.isInteger(
+      currentLessonNumber
+    )
+      ? currentLessonNumber
+      : '';
+
+  lessonActivity.innerHTML = `
+    <div class="student-lesson-complete">
+      <div class="student-complete-stars">
+        ⭐ ✨ ⭐
+      </div>
+
+      <h2>GREAT JOB!</h2>
+
+      <p class="student-complete-message">
+        You finished Week ${weekNumber}!
+      </p>
+
+      <div class="student-complete-wait">
+        <span>🙌</span>
+
+        <strong>
+          Wait for your teacher.
+        </strong>
+      </div>
+
+      <div class="student-complete-stars-bottom">
+        ✨ ⭐ ✨
+      </div>
+    </div>
+  `;
+
+  /*
+   * Students are finished, so remove
+   * their lesson navigation.
+   */
+  if (previousStepButton) {
+    previousStepButton.hidden = true;
+  }
+
+  if (nextStepButton) {
+    nextStepButton.hidden = true;
+  }
+}
+
+function initializeWeek6MovingDelivery() {
+  const area =
+    document.getElementById(
+      'week6DeliveryArea'
+    );
+
+  const packageBox =
+    document.getElementById(
+      'week6DeliveryObject'
+    );
+
+  const truck =
+    document.getElementById(
+      'week6DeliveryTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6DeliveryPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6DeliveryHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6DeliveryCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6DeliverySuccess'
+    );
+
+  if (
+    !area ||
+    !packageBox ||
+    !truck ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success
+  ) {
+    return;
+  }
+
+  /*
+   * Each delivery gets a little harder.
+   *
+   * Round 1: slow vertical
+   * Round 2: faster vertical
+   * Round 3: wider vertical range
+   * Round 4: vertical + horizontal
+   * Round 5: two-direction challenge
+   */
+  const rounds = [
+    {
+      packageY: 28,
+
+      minY: 28,
+      maxY: 66,
+
+      minX: 82,
+      maxX: 82,
+
+      speedY: 0.009,
+      speedX: 0,
+    },
+
+    {
+      packageY: 68,
+
+      minY: 20,
+      maxY: 74,
+
+      minX: 82,
+      maxX: 82,
+
+      speedY: 0.016,
+      speedX: 0,
+    },
+
+    {
+      packageY: 48,
+
+      minY: 48,
+      maxY: 48,
+
+      minX: 60,
+      maxX: 84,
+
+      speedY: 0,
+      speedX: 0.014,
+    },
+
+    {
+      packageY: 68,
+
+      minY: 22,
+      maxY: 72,
+
+      minX: 68,
+      maxX: 84,
+
+      speedY: 0.014,
+      speedX: 0.009,
+    },
+
+    {
+      packageY: 30,
+
+      minY: 16,
+      maxY: 78,
+
+      minX: 58,
+      maxX: 84,
+
+      speedY: 0.018,
+      speedX: 0.013,
+    },
+  ];
+
+  let roundIndex = 0;
+
+  let holding = false;
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  let truckX = 82;
+  let truckY = 28;
+
+  let directionX = 1;
+  let directionY = 1;
+
+  let lastTime = 0;
+  let stopped = false;
+  let roundActive = false;
+
+  function currentRound() {
+    return rounds[roundIndex];
+  }
+
+  function resetPackage() {
+    const round =
+      currentRound();
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    packageBox.classList.remove(
+      'is-held'
+    );
+
+    truck.classList.remove(
+      'is-ready-release'
+    );
+
+    packageBox.style.left =
+      '10%';
+
+    packageBox.style.top =
+      `${round.packageY}%`;
+
+    packageBox.style.transform =
+      'translate(-50%, -50%)';
+  }
+
+  function prepareRound() {
+    const round =
+      currentRound();
+
+    roundActive = true;
+
+    truckX =
+      round.maxX;
+
+    truckY =
+      round.minY;
+
+    directionX = -1;
+    directionY = 1;
+
+    truck.style.left =
+      `${truckX}%`;
+
+    truck.style.right =
+      'auto';
+
+    truck.style.top =
+      `${truckY}%`;
+
+    resetPackage();
+
+    prompt.textContent =
+      `DELIVERY ${roundIndex + 1} OF 5 — PRESS AND HOLD`;
+
+    indicator.classList.remove(
+      'is-visible',
+      'is-let-go-warning'
+    );
+  }
+
+  function packageInsideTruck() {
+    const packageRect =
+      packageBox.getBoundingClientRect();
+
+    const truckRect =
+      truck.getBoundingClientRect();
+
+    const centerX =
+      packageRect.left +
+      packageRect.width / 2;
+
+    const centerY =
+      packageRect.top +
+      packageRect.height / 2;
+
+    return (
+      centerX >= truckRect.left &&
+      centerX <= truckRect.right &&
+      centerY >= truckRect.top &&
+      centerY <= truckRect.bottom
+    );
+  }
+
+  function animateTruck(timestamp) {
+    if (
+      stopped ||
+      !document.body.contains(area)
+    ) {
+      return;
+    }
+
+    if (!lastTime) {
+      lastTime = timestamp;
+    }
+
+    const delta =
+      Math.min(
+        40,
+        timestamp - lastTime
+      );
+
+    lastTime = timestamp;
+
+    if (!roundActive) {
+      window.requestAnimationFrame(
+        animateTruck
+      );
+
+      return;
+    }
+
+    const round =
+      currentRound();
+
+    truckY +=
+      directionY *
+      round.speedY *
+      delta;
+
+    if (truckY >= round.maxY) {
+      truckY = round.maxY;
+      directionY = -1;
+    }
+
+    if (truckY <= round.minY) {
+      truckY = round.minY;
+      directionY = 1;
+    }
+
+    if (round.speedX > 0) {
+      truckX +=
+        directionX *
+        round.speedX *
+        delta;
+
+      if (truckX >= round.maxX) {
+        truckX = round.maxX;
+        directionX = -1;
+      }
+
+      if (truckX <= round.minX) {
+        truckX = round.minX;
+        directionX = 1;
+      }
+    }
+
+    truck.style.left =
+      `${truckX}%`;
+
+    truck.style.top =
+      `${truckY}%`;
+
+    window.requestAnimationFrame(
+      animateTruck
+    );
+  }
+
+  packageBox.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      packageBox.setPointerCapture(
+        pointerId
+      );
+
+      const rect =
+        packageBox.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      holding = true;
+
+      packageBox.classList.add(
+        'is-held'
+      );
+
+      indicator.textContent =
+        '👈 KEEP HOLDING!';
+
+      indicator.classList.remove(
+        'is-let-go-warning'
+      );
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — CATCH THE TRUCK';
+
+      playLessonClickSound();
+    }
+  );
+
+  packageBox.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        packageBox.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        packageBox.offsetHeight;
+
+      packageBox.style.left =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxX,
+              x
+            )
+          )
+        }px`;
+
+      packageBox.style.top =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxY,
+              y
+            )
+          )
+        }px`;
+
+      packageBox.style.transform =
+        'none';
+
+      startLessonSlideSound();
+
+      if (packageInsideTruck()) {
+        truck.classList.add(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'NOW RELEASE!';
+      } else {
+        truck.classList.remove(
+          'is-ready-release'
+        );
+
+        prompt.textContent =
+          'KEEP HOLDING — CATCH THE TRUCK';
+      }
+    }
+  );
+
+  function finishDelivery(event) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    packageBox.classList.remove(
+      'is-held'
+    );
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    if (!packageInsideTruck()) {
+      playLessonLetGoSound();
+
+      resetPackage();
+
+      indicator.textContent =
+        "✋ DON'T LET GO!";
+
+      indicator.classList.add(
+        'is-visible',
+        'is-let-go-warning'
+      );
+
+      prompt.textContent =
+        'PRESS AND HOLD AGAIN';
+
+      window.setTimeout(
+        () => {
+          indicator.classList.remove(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+        },
+        1400
+      );
+
+      return;
+    }
+
+    truck.classList.remove(
+      'is-ready-release'
+    );
+
+    /*
+     * Freeze the truck in place during
+     * the success pause. Do not begin
+     * the next round's movement yet.
+     */
+    roundActive = false;
+
+    roundIndex += 1;
+
+    count.textContent =
+      `${roundIndex} / 5`;
+
+    prompt.textContent =
+      'DELIVERED! 📦';
+
+    playLessonSuccessSound();
+
+    if (
+      roundIndex >=
+      rounds.length
+    ) {
+      stopped = true;
+
+      packageBox.hidden = true;
+      truck.hidden = true;
+
+      prompt.hidden = true;
+
+      success.textContent =
+        'GREAT JOB! ⭐';
+
+      success.classList.add(
+        'is-visible',
+        'is-complete'
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      prepareRound,
+      800
+    );
+  }
+
+  packageBox.addEventListener(
+    'pointerup',
+    finishDelivery
+  );
+
+  packageBox.addEventListener(
+    'pointercancel',
+    finishDelivery
+  );
+
+  count.textContent =
+    '0 / 5';
+
+  prepareRound();
+
+  window.requestAnimationFrame(
+    animateTruck
+  );
+}
+
+function initializeWeek6CleanRoom() {
+  const area =
+    document.getElementById(
+      'week6CleanArea'
+    );
+
+  const box =
+    document.getElementById(
+      'week6CleanBox'
+    );
+
+  const targetDisplay =
+    document.getElementById(
+      'week6CleanTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6CleanPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6CleanHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6CleanCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6CleanSuccess'
+    );
+
+  const objects =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-clean-object'
+      )
+    );
+
+  if (
+    !area ||
+    !box ||
+    !targetDisplay ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    objects.length !== 5
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      key: 'toy',
+      icon: '🧸',
+    },
+    {
+      key: 'book',
+      icon: '📕',
+    },
+    {
+      key: 'ball',
+      icon: '⚽',
+    },
+    {
+      key: 'pencil',
+      icon: '✏️',
+    },
+    {
+      key: 'paper',
+      icon: '📄',
+    },
+  ];
+
+  let roundIndex = 0;
+
+  function currentRound() {
+    return rounds[roundIndex];
+  }
+
+  function updateTarget() {
+    const round =
+      currentRound();
+
+    targetDisplay.textContent =
+      round.icon;
+
+    prompt.textContent =
+      'FIND THE FLASHING ITEM';
+
+    count.textContent =
+      `${roundIndex} / 5`;
+  }
+
+  function objectInsideBox(object) {
+    const objectRect =
+      object.getBoundingClientRect();
+
+    const boxRect =
+      box.getBoundingClientRect();
+
+    const centerX =
+      objectRect.left +
+      objectRect.width / 2;
+
+    const centerY =
+      objectRect.top +
+      objectRect.height / 2;
+
+    return (
+      centerX >= boxRect.left &&
+      centerX <= boxRect.right &&
+      centerY >= boxRect.top &&
+      centerY <= boxRect.bottom
+    );
+  }
+
+  objects.forEach(
+    (object) => {
+      const key =
+        object.dataset.clean;
+
+      const startingLeft =
+        getComputedStyle(object).left;
+
+      const startingTop =
+        getComputedStyle(object).top;
+
+      const startingTransform =
+        getComputedStyle(object).transform;
+
+      let holding = false;
+      let pointerId = null;
+
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function resetObject() {
+        holding = false;
+
+        stopLessonSlideSound();
+
+        object.classList.remove(
+          'is-held'
+        );
+
+        box.classList.remove(
+          'is-ready-release'
+        );
+
+        object.style.left =
+          startingLeft;
+
+        object.style.top =
+          startingTop;
+
+        object.style.transform =
+          startingTransform === 'none'
+            ? 'none'
+            : startingTransform;
+      }
+
+      object.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (
+            object.classList.contains(
+              'is-complete'
+            )
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const round =
+            currentRound();
+
+          /*
+           * Wrong object:
+           * do not even begin the drag.
+           */
+          if (key !== round.key) {
+            playLessonWrongSound();
+
+            prompt.textContent =
+              'FIND THE FLASHING ITEM!';
+
+            object.classList.add(
+              'is-wrong'
+            );
+
+            window.setTimeout(
+              () => {
+                object.classList.remove(
+                  'is-wrong'
+                );
+
+                prompt.textContent =
+                  'FIND THE FLASHING ITEM';
+              },
+              900
+            );
+
+            return;
+          }
+
+          pointerId =
+            event.pointerId;
+
+          object.setPointerCapture(
+            pointerId
+          );
+
+          const rect =
+            object.getBoundingClientRect();
+
+          offsetX =
+            event.clientX -
+            rect.left;
+
+          offsetY =
+            event.clientY -
+            rect.top;
+
+          holding = true;
+
+          object.classList.add(
+            'is-held'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+
+          indicator.classList.remove(
+            'is-let-go-warning'
+          );
+
+          indicator.classList.add(
+            'is-visible'
+          );
+
+          prompt.textContent =
+            'KEEP HOLDING — PUT IT IN THE BOX';
+
+          playLessonClickSound();
+        }
+      );
+
+      object.addEventListener(
+        'pointermove',
+        (event) => {
+          if (
+            !holding ||
+            event.pointerId !==
+              pointerId
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            areaRect.left -
+            offsetX;
+
+          const y =
+            event.clientY -
+            areaRect.top -
+            offsetY;
+
+          const maxX =
+            areaRect.width -
+            object.offsetWidth;
+
+          const maxY =
+            areaRect.height -
+            object.offsetHeight;
+
+          object.style.left =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxX,
+                  x
+                )
+              )
+            }px`;
+
+          object.style.top =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxY,
+                  y
+                )
+              )
+            }px`;
+
+          object.style.transform =
+            'none';
+
+          startLessonSlideSound();
+
+          if (objectInsideBox(object)) {
+            box.classList.add(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'NOW RELEASE!';
+          } else {
+            box.classList.remove(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              'KEEP HOLDING — PUT IT IN THE BOX';
+          }
+        }
+      );
+
+      function finishObject(event) {
+        if (
+          !holding ||
+          event.pointerId !==
+            pointerId
+        ) {
+          return;
+        }
+
+        holding = false;
+
+        stopLessonSlideSound();
+
+        object.classList.remove(
+          'is-held'
+        );
+
+        indicator.classList.remove(
+          'is-visible'
+        );
+
+        if (!objectInsideBox(object)) {
+          playLessonLetGoSound();
+
+          resetObject();
+
+          indicator.textContent =
+            "✋ DON'T LET GO!";
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          prompt.textContent =
+            'PRESS AND HOLD AGAIN';
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+
+              prompt.textContent =
+                'FIND THE FLASHING ITEM';
+            },
+            1400
+          );
+
+          return;
+        }
+
+        box.classList.remove(
+          'is-ready-release'
+        );
+
+        object.classList.add(
+          'is-complete'
+        );
+
+        object.hidden = true;
+
+        roundIndex += 1;
+
+        count.textContent =
+          `${roundIndex} / 5`;
+
+        prompt.textContent =
+          'PUT AWAY! ⭐';
+
+        playLessonSuccessSound();
+
+        if (
+          roundIndex >=
+          rounds.length
+        ) {
+          targetDisplay.hidden = true;
+
+          prompt.hidden = true;
+
+          success.textContent =
+            'ROOM CLEAN! ⭐';
+
+          success.classList.add(
+            'is-visible',
+            'is-complete'
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          updateTarget,
+          750
+        );
+      }
+
+      object.addEventListener(
+        'pointerup',
+        finishObject
+      );
+
+      object.addEventListener(
+        'pointercancel',
+        finishObject
+      );
+    }
+  );
+
+  updateTarget();
+}
+
+function initializeWeek6DontDrop() {
+  const area =
+    document.getElementById(
+      'week6LongHoldArea'
+    );
+
+  const object =
+    document.getElementById(
+      'week6LongHoldObject'
+    );
+
+  const target =
+    document.getElementById(
+      'week6LongHoldTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6LongHoldPrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6LongHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6LongHoldCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6LongHoldSuccess'
+    );
+
+  const checkpoints =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-long-checkpoint'
+      )
+    );
+
+  if (
+    !area ||
+    !object ||
+    !target ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    checkpoints.length !== 3
+  ) {
+    return;
+  }
+
+  const routes = [
+    /*
+     * Level 1 — simple zig-zag
+     */
+    [
+      [28, 26],
+      [48, 64],
+      [66, 28],
+    ],
+
+    /*
+     * Level 2 — wider spacing
+     */
+    [
+      [24, 66],
+      [47, 20],
+      [68, 64],
+    ],
+
+    /*
+     * Level 3 — scattered.
+     * Keep all checkpoints away from FINISH.
+     */
+    [
+      [62, 22],
+      [25, 38],
+      [52, 70],
+    ],
+
+    /*
+     * Level 4 — longest, least predictable.
+     * No checkpoint enters the child's area.
+     */
+    [
+      [64, 64],
+      [27, 18],
+      [48, 70],
+    ],
+  ];
+
+  let roundIndex = 0;
+  let checkpointIndex = 0;
+
+  let holding = false;
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function applyRoute() {
+    checkpointIndex = 0;
+
+    checkpoints.forEach(
+      (checkpoint, index) => {
+        const [
+          x,
+          y,
+        ] =
+          routes[roundIndex][index];
+
+        checkpoint.style.left =
+          `${x}%`;
+
+        checkpoint.style.top =
+          `${y}%`;
+
+        checkpoint.classList.remove(
+          'is-complete',
+          'is-next'
+        );
+      }
+    );
+
+    checkpoints[0].classList.add(
+      'is-next'
+    );
+
+    target.classList.remove(
+      'is-ready'
+    );
+
+    object.style.left =
+      '10%';
+
+    object.style.top =
+      '76%';
+
+    object.style.transform =
+      'translate(-50%, -50%)';
+
+    prompt.textContent =
+      'PRESS AND HOLD THE ICE CREAM';
+
+    indicator.classList.remove(
+      'is-visible',
+      'is-let-go-warning'
+    );
+
+    stopLessonSlideSound();
+  }
+
+  function resetRound(
+    message
+  ) {
+    holding = false;
+
+    stopLessonSlideSound();
+
+    object.classList.remove(
+      'is-held'
+    );
+
+    checkpointIndex = 0;
+
+    checkpoints.forEach(
+      (checkpoint) => {
+        checkpoint.classList.remove(
+          'is-complete',
+          'is-next'
+        );
+      }
+    );
+
+    checkpoints[0].classList.add(
+      'is-next'
+    );
+
+    target.classList.remove(
+      'is-ready'
+    );
+
+    object.style.left =
+      '10%';
+
+    object.style.top =
+      '76%';
+
+    object.style.transform =
+      'translate(-50%, -50%)';
+
+    prompt.textContent =
+      message;
+  }
+
+  function centerInside(
+    movingElement,
+    targetElement
+  ) {
+    const movingRect =
+      movingElement.getBoundingClientRect();
+
+    const targetRect =
+      targetElement.getBoundingClientRect();
+
+    const centerX =
+      movingRect.left +
+      movingRect.width / 2;
+
+    const centerY =
+      movingRect.top +
+      movingRect.height / 2;
+
+    return (
+      centerX >= targetRect.left &&
+      centerX <= targetRect.right &&
+      centerY >= targetRect.top &&
+      centerY <= targetRect.bottom
+    );
+  }
+
+  function checkCheckpoint() {
+    if (
+      checkpointIndex >=
+      checkpoints.length
+    ) {
+      return;
+    }
+
+    const nextCheckpoint =
+      checkpoints[
+        checkpointIndex
+      ];
+
+    if (
+      !centerInside(
+        object,
+        nextCheckpoint
+      )
+    ) {
+      return;
+    }
+
+    nextCheckpoint.classList.remove(
+      'is-next'
+    );
+
+    nextCheckpoint.classList.add(
+      'is-complete'
+    );
+
+    checkpointIndex += 1;
+
+    playLessonSuccessSound();
+
+    if (
+      checkpointIndex <
+      checkpoints.length
+    ) {
+      checkpoints[
+        checkpointIndex
+      ].classList.add(
+        'is-next'
+      );
+
+      prompt.textContent =
+        `KEEP HOLDING — GO TO ${checkpointIndex + 1}`;
+    } else {
+      target.classList.add(
+        'is-ready'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — GO TO THE FINISH';
+    }
+  }
+
+  object.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      object.setPointerCapture(
+        pointerId
+      );
+
+      const rect =
+        object.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      holding = true;
+
+      object.classList.add(
+        'is-held'
+      );
+
+      indicator.textContent =
+        '👈 KEEP HOLDING!';
+
+      indicator.classList.remove(
+        'is-let-go-warning'
+      );
+
+      indicator.classList.add(
+        'is-visible'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — GO TO 1';
+
+      playLessonClickSound();
+    }
+  );
+
+  object.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        object.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        object.offsetHeight;
+
+      object.style.left =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxX,
+              x
+            )
+          )
+        }px`;
+
+      object.style.top =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxY,
+              y
+            )
+          )
+        }px`;
+
+      object.style.transform =
+        'none';
+
+      startLessonSlideSound();
+
+      checkCheckpoint();
+
+      if (
+        checkpointIndex >=
+        checkpoints.length &&
+        centerInside(
+          object,
+          target
+        )
+      ) {
+        prompt.textContent =
+          'NOW RELEASE!';
+      }
+    }
+  );
+
+  function finishObject(
+    event
+  ) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    object.classList.remove(
+      'is-held'
+    );
+
+    indicator.classList.remove(
+      'is-visible'
+    );
+
+    const finishedRoute =
+      checkpointIndex >=
+      checkpoints.length &&
+      centerInside(
+        object,
+        target
+      );
+
+    if (!finishedRoute) {
+      playLessonLetGoSound();
+
+      resetRound(
+        'PRESS AND HOLD AGAIN'
+      );
+
+      indicator.textContent =
+        "✋ DON'T LET GO!";
+
+      indicator.classList.add(
+        'is-visible',
+        'is-let-go-warning'
+      );
+
+      window.setTimeout(
+        () => {
+          indicator.classList.remove(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+        },
+        1400
+      );
+
+      return;
+    }
+
+    roundIndex += 1;
+
+    count.textContent =
+      `${roundIndex} / 4`;
+
+    prompt.textContent =
+      'GREAT HOLD! ⭐';
+
+    playLessonSuccessSound();
+
+    if (
+      roundIndex >=
+      routes.length
+    ) {
+      object.hidden = true;
+      target.hidden = true;
+
+      checkpoints.forEach(
+        (checkpoint) => {
+          checkpoint.hidden = true;
+        }
+      );
+
+      prompt.hidden = true;
+
+      success.textContent =
+        'AMAZING HOLD! ⭐';
+
+      success.classList.add(
+        'is-visible',
+        'is-complete'
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      applyRoute,
+      850
+    );
+  }
+
+  object.addEventListener(
+    'pointerup',
+    finishObject
+  );
+
+  object.addEventListener(
+    'pointercancel',
+    finishObject
+  );
+
+  count.textContent =
+    '0 / 4';
+
+  applyRoute();
+}
+
+function initializeWeek6Puzzle() {
+  const area =
+    document.getElementById(
+      'week6PuzzleArea'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6PuzzlePrompt'
+    );
+
+  const indicator =
+    document.getElementById(
+      'week6PuzzleHoldIndicator'
+    );
+
+  const count =
+    document.getElementById(
+      'week6PuzzleCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6PuzzleSuccess'
+    );
+
+  const pieces =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-puzzle-piece'
+      )
+    );
+
+  const slots =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-puzzle-slot'
+      )
+    );
+
+  if (
+    !area ||
+    !prompt ||
+    !indicator ||
+    !count ||
+    !success ||
+    pieces.length !== 9 ||
+    slots.length !== 9
+  ) {
+    return;
+  }
+
+  let completed = 0;
+
+  pieces.forEach(
+    (piece) => {
+      const pieceNumber =
+        piece.dataset.piece;
+
+      const slot =
+        slots.find(
+          (item) =>
+            item.dataset.slot ===
+            pieceNumber
+        );
+
+      if (!slot) {
+        return;
+      }
+
+      const startingLeft =
+        getComputedStyle(piece).left;
+
+      const startingTop =
+        getComputedStyle(piece).top;
+
+      const startingTransform =
+        getComputedStyle(piece).transform;
+
+      const startingWidth =
+        piece.offsetWidth;
+
+      const startingHeight =
+        piece.offsetHeight;
+
+      let holding = false;
+      let pointerId = null;
+
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function getSlotOverlap(testSlot) {
+        const pieceRect =
+          piece.getBoundingClientRect();
+
+        const slotRect =
+          testSlot.getBoundingClientRect();
+
+        const overlapLeft =
+          Math.max(
+            pieceRect.left,
+            slotRect.left
+          );
+
+        const overlapTop =
+          Math.max(
+            pieceRect.top,
+            slotRect.top
+          );
+
+        const overlapRight =
+          Math.min(
+            pieceRect.right,
+            slotRect.right
+          );
+
+        const overlapBottom =
+          Math.min(
+            pieceRect.bottom,
+            slotRect.bottom
+          );
+
+        const overlapWidth =
+          Math.max(
+            0,
+            overlapRight - overlapLeft
+          );
+
+        const overlapHeight =
+          Math.max(
+            0,
+            overlapBottom - overlapTop
+          );
+
+        return (
+          overlapWidth *
+          overlapHeight
+        );
+      }
+
+      function getSlotUnderPiece() {
+        let bestSlot = null;
+        let bestOverlap = 0;
+
+        slots.forEach(
+          (testSlot) => {
+            const overlap =
+              getSlotOverlap(
+                testSlot
+              );
+
+            if (
+              overlap >
+              bestOverlap
+            ) {
+              bestOverlap =
+                overlap;
+
+              bestSlot =
+                testSlot;
+            }
+          }
+        );
+
+        const pieceArea =
+          piece.offsetWidth *
+          piece.offsetHeight;
+
+        if (
+          bestOverlap <
+          pieceArea * 0.18
+        ) {
+          return null;
+        }
+
+        return bestSlot;
+      }
+
+      function resetPiece() {
+        holding = false;
+
+        stopLessonSlideSound();
+
+        piece.classList.remove(
+          'is-held'
+        );
+
+        slots.forEach(
+          (testSlot) => {
+            testSlot.classList.remove(
+              'is-ready-release'
+            );
+          }
+        );
+
+        piece.style.position =
+          'relative';
+
+        piece.style.left =
+          startingLeft;
+
+        piece.style.top =
+          startingTop;
+
+        piece.style.width =
+          `${startingWidth}px`;
+
+        piece.style.height =
+          `${startingHeight}px`;
+
+        piece.style.transform =
+          startingTransform;
+      }
+
+      piece.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (
+            piece.classList.contains(
+              'is-complete'
+            )
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          pointerId =
+            event.pointerId;
+
+          const pieceRect =
+            piece.getBoundingClientRect();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          offsetX =
+            event.clientX -
+            pieceRect.left;
+
+          offsetY =
+            event.clientY -
+            pieceRect.top;
+
+          /*
+           * Move the piece into absolute
+           * positioning so it can leave
+           * the 3x3 loose-piece grid.
+           */
+          piece.style.position =
+            'absolute';
+
+          piece.style.width =
+            `${pieceRect.width}px`;
+
+          piece.style.height =
+            `${pieceRect.height}px`;
+
+          piece.style.left =
+            `${
+              pieceRect.left -
+              areaRect.left
+            }px`;
+
+          piece.style.top =
+            `${
+              pieceRect.top -
+              areaRect.top
+            }px`;
+
+          piece.style.transform =
+            'none';
+
+          area.appendChild(piece);
+
+          piece.setPointerCapture(
+            pointerId
+          );
+
+          holding = true;
+
+          piece.classList.add(
+            'is-held'
+          );
+
+          indicator.textContent =
+            '👈 KEEP HOLDING!';
+
+          indicator.classList.remove(
+            'is-let-go-warning'
+          );
+
+          indicator.classList.add(
+            'is-visible'
+          );
+
+          prompt.textContent =
+            'KEEP HOLDING — FIND ITS SPOT';
+
+          playLessonClickSound();
+        }
+      );
+
+      piece.addEventListener(
+        'pointermove',
+        (event) => {
+          if (
+            !holding ||
+            event.pointerId !==
+              pointerId
+          ) {
+            return;
+          }
+
+          event.preventDefault();
+
+          const areaRect =
+            area.getBoundingClientRect();
+
+          const x =
+            event.clientX -
+            areaRect.left -
+            offsetX;
+
+          const y =
+            event.clientY -
+            areaRect.top -
+            offsetY;
+
+          const maxX =
+            areaRect.width -
+            piece.offsetWidth;
+
+          const maxY =
+            areaRect.height -
+            piece.offsetHeight;
+
+          piece.style.left =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxX,
+                  x
+                )
+              )
+            }px`;
+
+          piece.style.top =
+            `${
+              Math.max(
+                0,
+                Math.min(
+                  maxY,
+                  y
+                )
+              )
+            }px`;
+
+          startLessonSlideSound();
+
+          const releasedSlot =
+            getSlotUnderPiece();
+
+          slots.forEach(
+            (testSlot) => {
+              testSlot.classList.remove(
+                'is-ready-release'
+              );
+            }
+          );
+
+          if (releasedSlot) {
+            releasedSlot.classList.add(
+              'is-ready-release'
+            );
+
+            prompt.textContent =
+              releasedSlot === slot
+                ? 'NOW RELEASE!'
+                : 'WRONG SPOT — KEEP HOLDING';
+          } else {
+            prompt.textContent =
+              'KEEP HOLDING — FIND ITS SPOT';
+          }
+        }
+      );
+
+      function finishPiece(event) {
+        if (
+          !holding ||
+          event.pointerId !==
+            pointerId
+        ) {
+          return;
+        }
+
+        holding = false;
+
+        stopLessonSlideSound();
+
+        piece.classList.remove(
+          'is-held'
+        );
+
+        indicator.classList.remove(
+          'is-visible'
+        );
+
+        const releasedSlot =
+          getSlotUnderPiece();
+
+        slots.forEach(
+          (testSlot) => {
+            testSlot.classList.remove(
+              'is-ready-release'
+            );
+          }
+        );
+
+        /*
+         * Released in open space:
+         * early release.
+         */
+        if (!releasedSlot) {
+          playLessonLetGoSound();
+
+          resetPiece();
+
+          indicator.textContent =
+            "✋ DON'T LET GO!";
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          prompt.textContent =
+            'PRESS AND HOLD AGAIN';
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+
+              prompt.textContent =
+                'PRESS AND HOLD A PIECE';
+            },
+            1400
+          );
+
+          return;
+        }
+
+        /*
+         * Released over a real slot,
+         * but not the matching slot.
+         */
+        if (releasedSlot !== slot) {
+          playLessonWrongSound();
+
+          resetPiece();
+
+          indicator.textContent =
+            '❌ WRONG SPOT!';
+
+          indicator.classList.add(
+            'is-visible',
+            'is-let-go-warning'
+          );
+
+          prompt.textContent =
+            'TRY A DIFFERENT SPOT';
+
+          window.setTimeout(
+            () => {
+              indicator.classList.remove(
+                'is-visible',
+                'is-let-go-warning'
+              );
+
+              indicator.textContent =
+                '👈 KEEP HOLDING!';
+
+              prompt.textContent =
+                'PRESS AND HOLD A PIECE';
+            },
+            1400
+          );
+
+          return;
+        }
+
+        /*
+         * Correct slot:
+         * fill the slot with the correct
+         * section of nemo.png.
+         */
+        slot.style.backgroundImage =
+          'url("images/nemo.png")';
+
+        slot.style.backgroundSize =
+          '300% 300%';
+
+        const positions = [
+          '0% 0%',
+          '50% 0%',
+          '100% 0%',
+          '0% 50%',
+          '50% 50%',
+          '100% 50%',
+          '0% 100%',
+          '50% 100%',
+          '100% 100%',
+        ];
+
+        slot.style.backgroundPosition =
+          positions[
+            Number(pieceNumber)
+          ];
+
+        slot.style.backgroundRepeat =
+          'no-repeat';
+
+        slot.classList.add(
+          'is-complete'
+        );
+
+        piece.classList.add(
+          'is-complete'
+        );
+
+        piece.hidden = true;
+
+        completed += 1;
+
+        count.textContent =
+          `${completed} / 9`;
+
+        prompt.textContent =
+          'GREAT HOLD! ⭐';
+
+        playLessonSuccessSound();
+
+        if (completed >= 9) {
+          prompt.hidden = true;
+
+          success.textContent =
+            'PICTURE COMPLETE! ⭐';
+
+          success.classList.add(
+            'is-visible',
+            'is-complete'
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          () => {
+            prompt.textContent =
+              'PRESS AND HOLD ANOTHER PIECE';
+          },
+          700
+        );
+      }
+
+      piece.addEventListener(
+        'pointerup',
+        finishPiece
+      );
+
+      piece.addEventListener(
+        'pointercancel',
+        finishPiece
+      );
+    }
+  );
+
+  count.textContent =
+    '0 / 9';
+}
+
+function initializeWeek6Final() {
+  const area =
+    document.getElementById(
+      'week6FinalArea'
+    );
+
+  const star =
+    document.getElementById(
+      'week6FinalObject'
+    );
+
+  const target =
+    document.getElementById(
+      'week6FinalTarget'
+    );
+
+  const prompt =
+    document.getElementById(
+      'week6FinalPrompt'
+    );
+
+  const count =
+    document.getElementById(
+      'week6FinalCount'
+    );
+
+  const success =
+    document.getElementById(
+      'week6FinalSuccess'
+    );
+
+  const checkpoints =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-final-checkpoint'
+      )
+    );
+
+  const obstacles =
+    Array.from(
+      document.querySelectorAll(
+        '.week6-final-obstacle'
+      )
+    );
+
+  if (
+    !area ||
+    !star ||
+    !target ||
+    !prompt ||
+    !count ||
+    !success ||
+    checkpoints.length !== 3 ||
+    obstacles.length !== 2
+  ) {
+    return;
+  }
+
+  const levels = [
+    /*
+     * Level 1:
+     * stationary obstacles from the start
+     */
+    {
+      checkpoints: [
+        [26, 24],
+        [49, 66],
+        [69, 26],
+      ],
+
+      obstacles: [
+        [38, 45],
+        [61, 48],
+      ],
+
+      movingObstacles: 0,
+    },
+
+    /*
+     * Level 2:
+     * harder stationary layout
+     */
+    {
+      checkpoints: [
+        [23, 66],
+        [48, 20],
+        [70, 64],
+      ],
+
+      obstacles: [
+        [36, 31],
+        [60, 51],
+      ],
+
+      movingObstacles: 0,
+    },
+
+    /*
+     * Level 3:
+     * scattered checkpoints +
+     * one moving obstacle
+     */
+    {
+      checkpoints: [
+        [63, 20],
+        [24, 37],
+        [52, 70],
+      ],
+
+      obstacles: [
+        [42, 55],
+        [67, 39],
+      ],
+
+      movingObstacles: 1,
+    },
+
+    /*
+     * Level 4:
+     * scattered route +
+     * both obstacles moving
+     */
+    {
+      checkpoints: [
+        [65, 66],
+        [25, 18],
+        [49, 71],
+      ],
+
+      obstacles: [
+        [40, 42],
+        [68, 24],
+      ],
+
+      movingObstacles: 2,
+    },
+  ];
+
+  let levelIndex = 0;
+  let completedLevels = 0;
+  let checkpointIndex = 0;
+
+  let holding = false;
+  let pointerId = null;
+
+  let offsetX = 0;
+  let offsetY = 0;
+
+  const movingObstacleX = [40, 68];
+  const movingObstacleDirection = [1, -1];
+
+  let animationFrame = null;
+  let lastAnimationTime = 0;
+  let levelActive = false;
+
+  function currentLevel() {
+    return levels[levelIndex];
+  }
+
+  function positionLevel() {
+    const level =
+      currentLevel();
+
+    /*
+     * The new level officially begins now.
+     * Moving obstacles may resume.
+     */
+    levelActive = true;
+    lastAnimationTime = 0;
+
+    checkpointIndex = 0;
+
+    checkpoints.forEach(
+      (checkpoint, index) => {
+        const [
+          x,
+          y,
+        ] =
+          level.checkpoints[index];
+
+        checkpoint.style.left =
+          `${x}%`;
+
+        checkpoint.style.top =
+          `${y}%`;
+
+        checkpoint.classList.remove(
+          'is-next',
+          'is-complete'
+        );
+
+        checkpoint.hidden = false;
+      }
+    );
+
+    checkpoints[0].classList.add(
+      'is-next'
+    );
+
+    obstacles.forEach(
+      (obstacle, index) => {
+        const position =
+          level.obstacles[index];
+
+        if (!position) {
+          obstacle.hidden = true;
+          return;
+        }
+
+        obstacle.hidden = false;
+
+        obstacle.style.left =
+          `${position[0]}%`;
+
+        obstacle.style.top =
+          `${position[1]}%`;
+      }
+    );
+
+    obstacles.forEach(
+      (obstacle, index) => {
+        const position =
+          level.obstacles[index];
+
+        if (!position) {
+          return;
+        }
+
+        movingObstacleX[index] =
+          position[0];
+
+        movingObstacleDirection[index] =
+          index === 0 ? 1 : -1;
+      }
+    );
+
+    target.classList.remove(
+      'is-ready'
+    );
+
+    star.style.left =
+      '10%';
+
+    star.style.top =
+      '76%';
+
+    star.style.transform =
+      'translate(-50%, -50%)';
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    prompt.textContent =
+      `LEVEL ${levelIndex + 1} — PRESS AND HOLD THE STAR`;
+
+    stopLessonSlideSound();
+  }
+
+  function resetLevel(
+    message
+  ) {
+    holding = false;
+
+    stopLessonSlideSound();
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    checkpointIndex = 0;
+
+    checkpoints.forEach(
+      (checkpoint) => {
+        checkpoint.classList.remove(
+          'is-next',
+          'is-complete'
+        );
+      }
+    );
+
+    checkpoints[0].classList.add(
+      'is-next'
+    );
+
+    target.classList.remove(
+      'is-ready'
+    );
+
+    star.style.left =
+      '10%';
+
+    star.style.top =
+      '76%';
+
+    star.style.transform =
+      'translate(-50%, -50%)';
+
+    prompt.textContent =
+      message;
+  }
+
+  function centerInside(
+    movingElement,
+    targetElement
+  ) {
+    const movingRect =
+      movingElement.getBoundingClientRect();
+
+    const targetRect =
+      targetElement.getBoundingClientRect();
+
+    const centerX =
+      movingRect.left +
+      movingRect.width / 2;
+
+    const centerY =
+      movingRect.top +
+      movingRect.height / 2;
+
+    return (
+      centerX >= targetRect.left &&
+      centerX <= targetRect.right &&
+      centerY >= targetRect.top &&
+      centerY <= targetRect.bottom
+    );
+  }
+
+  function starHitsObstacle() {
+    const starRect =
+      star.getBoundingClientRect();
+
+    return obstacles.some(
+      (obstacle) => {
+        if (obstacle.hidden) {
+          return false;
+        }
+
+        const rect =
+          obstacle.getBoundingClientRect();
+
+        /*
+         * Slight forgiveness around the
+         * visual edge of each obstacle.
+         */
+        return !(
+          starRect.right <
+            rect.left + 14 ||
+          starRect.left >
+            rect.right - 14 ||
+          starRect.bottom <
+            rect.top + 14 ||
+          starRect.top >
+            rect.bottom - 14
+        );
+      }
+    );
+  }
+
+  function checkCheckpoint() {
+    if (
+      checkpointIndex >=
+      checkpoints.length
+    ) {
+      return;
+    }
+
+    const checkpoint =
+      checkpoints[
+        checkpointIndex
+      ];
+
+    if (
+      !centerInside(
+        star,
+        checkpoint
+      )
+    ) {
+      return;
+    }
+
+    checkpoint.classList.remove(
+      'is-next'
+    );
+
+    checkpoint.classList.add(
+      'is-complete'
+    );
+
+    checkpointIndex += 1;
+
+    playLessonSuccessSound();
+
+    if (
+      checkpointIndex <
+      checkpoints.length
+    ) {
+      checkpoints[
+        checkpointIndex
+      ].classList.add(
+        'is-next'
+      );
+
+      prompt.textContent =
+        `KEEP HOLDING — GO TO ${checkpointIndex + 1}`;
+    } else {
+      target.classList.add(
+        'is-ready'
+      );
+
+      prompt.textContent =
+        'KEEP HOLDING — REACH THE TROPHY';
+    }
+  }
+
+  function animateFinalObstacle(
+    timestamp
+  ) {
+    if (
+      !document.body.contains(area)
+    ) {
+      return;
+    }
+
+    /*
+     * Keep the animation loop alive during
+     * the success pause, but freeze obstacles
+     * until positionLevel() starts the next level.
+     */
+    if (!levelActive) {
+      lastAnimationTime = 0;
+
+      animationFrame =
+        window.requestAnimationFrame(
+          animateFinalObstacle
+        );
+
+      return;
+    }
+
+    const level =
+      currentLevel();
+
+    if (!lastAnimationTime) {
+      lastAnimationTime =
+        timestamp;
+    }
+
+    const delta =
+      Math.min(
+        40,
+        timestamp -
+          lastAnimationTime
+      );
+
+    lastAnimationTime =
+      timestamp;
+
+    obstacles.forEach(
+      (obstacle, index) => {
+        if (
+          index >=
+            level.movingObstacles ||
+          obstacle.hidden
+        ) {
+          return;
+        }
+
+        movingObstacleX[index] +=
+          movingObstacleDirection[index] *
+          (index === 0 ? 0.010 : 0.013) *
+          delta;
+
+        const minX =
+          index === 0 ? 34 : 57;
+
+        const maxX =
+          index === 0 ? 57 : 76;
+
+        if (
+          movingObstacleX[index] >=
+          maxX
+        ) {
+          movingObstacleX[index] =
+            maxX;
+
+          movingObstacleDirection[index] =
+            -1;
+        }
+
+        if (
+          movingObstacleX[index] <=
+          minX
+        ) {
+          movingObstacleX[index] =
+            minX;
+
+          movingObstacleDirection[index] =
+            1;
+        }
+
+        obstacle.style.left =
+          `${movingObstacleX[index]}%`;
+      }
+    );
+
+    animationFrame =
+      window.requestAnimationFrame(
+        animateFinalObstacle
+      );
+  }
+
+  star.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      pointerId =
+        event.pointerId;
+
+      star.setPointerCapture(
+        pointerId
+      );
+
+      const rect =
+        star.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      holding = true;
+
+      star.classList.add(
+        'is-held'
+      );
+
+      prompt.textContent =
+        '👈 KEEP HOLDING!';
+
+      playLessonClickSound();
+    }
+  );
+
+  star.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const x =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      const y =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      const maxX =
+        areaRect.width -
+        star.offsetWidth;
+
+      const maxY =
+        areaRect.height -
+        star.offsetHeight;
+
+      star.style.left =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxX,
+              x
+            )
+          )
+        }px`;
+
+      star.style.top =
+        `${
+          Math.max(
+            0,
+            Math.min(
+              maxY,
+              y
+            )
+          )
+        }px`;
+
+      star.style.transform =
+        'none';
+
+      startLessonSlideSound();
+
+      if (starHitsObstacle()) {
+        playLessonWrongSound();
+
+        resetLevel(
+          'WATCH OUT — TRY AGAIN!'
+        );
+
+        prompt.textContent =
+          '🚧 AVOID THE OBSTACLES!';
+
+        window.setTimeout(
+          () => {
+            if (holding) {
+              prompt.textContent =
+                '👈 KEEP HOLDING!';
+            }
+          },
+          1200
+        );
+
+        return;
+      }
+
+      checkCheckpoint();
+
+      if (
+        checkpointIndex >=
+          checkpoints.length &&
+        centerInside(
+          star,
+          target
+        )
+      ) {
+        prompt.textContent =
+          'NOW RELEASE!';
+      }
+    }
+  );
+
+  function finishFinalDrag(
+    event
+  ) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    stopLessonSlideSound();
+
+    star.classList.remove(
+      'is-held'
+    );
+
+    const finished =
+      checkpointIndex >=
+        checkpoints.length &&
+      centerInside(
+        star,
+        target
+      );
+
+    if (!finished) {
+      playLessonLetGoSound();
+
+      resetLevel(
+        'PRESS AND HOLD AGAIN'
+      );
+
+      prompt.textContent =
+        "✋ DON'T LET GO!";
+
+      window.setTimeout(
+        () => {
+          prompt.textContent =
+            `LEVEL ${levelIndex + 1} — PRESS AND HOLD THE STAR`;
+        },
+        1400
+      );
+
+      return;
+    }
+
+    /*
+     * Freeze this level exactly where it ended.
+     * The next level must not begin moving until
+     * positionLevel() runs after the success pause.
+     */
+    levelActive = false;
+
+    completedLevels += 1;
+
+    count.textContent =
+      `${completedLevels} / 4`;
+
+    levelIndex += 1;
+
+    count.textContent =
+      `${completedLevels} / 4`;
+
+    prompt.textContent =
+      'LEVEL COMPLETE! ⭐';
+
+    playLessonSuccessSound();
+
+    if (
+      levelIndex >=
+      levels.length
+    ) {
+      if (animationFrame) {
+        window.cancelAnimationFrame(
+          animationFrame
+        );
+      }
+
+      star.hidden = true;
+      target.hidden = true;
+
+      checkpoints.forEach(
+        (checkpoint) => {
+          checkpoint.hidden = true;
+        }
+      );
+
+      obstacles.forEach(
+        (obstacle) => {
+          obstacle.hidden = true;
+        }
+      );
+
+      prompt.hidden = true;
+
+      success.textContent =
+        'DRAGGING CHAMPION! 🏆⭐';
+
+      success.classList.add(
+        'is-visible',
+        'is-complete'
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      positionLevel,
+      850
+    );
+  }
+
+  star.addEventListener(
+    'pointerup',
+    finishFinalDrag
+  );
+
+  star.addEventListener(
+    'pointercancel',
+    finishFinalDrag
+  );
+
+  count.textContent =
+    '0 / 4';
+
+  positionLevel();
+
+  animationFrame =
+    window.requestAnimationFrame(
+      animateFinalObstacle
+    );
 }
