@@ -15,7 +15,7 @@ const requestedLessonNumber =
   );
 
 const currentLessonNumber =
-  [1, 2, 3, 4, 5, 6, 7].includes(
+  [1, 2, 3, 4, 5, 6, 7, 8].includes(
     requestedLessonNumber
   )
     ? requestedLessonNumber
@@ -147,6 +147,56 @@ function renderLessonStep() {
   ) {
     initializeWeek7ScrollAdventure();
   }
+
+  if (
+    step.activityType ===
+    'week8ScrollAccuracy'
+  ) {
+    initializeWeek8ScrollAccuracy();
+  }
+
+  if (
+    step.activityType ===
+    'week8ScrollDirection'
+  ) {
+    initializeWeek8ScrollDirection();
+  }
+
+  if (
+    step.activityType ===
+    'week8ScrollHunt'
+  ) {
+    initializeWeek8ScrollHunt();
+  }
+
+  if (
+    step.activityType ===
+    'week8PointerChallenge'
+  ) {
+    initializeWeek8PointerChallenge();
+  }
+
+  if (
+    step.activityType ===
+    'week8DragChallenge'
+  ) {
+    initializeWeek8DragChallenge();
+  }
+
+  if (
+    step.activityType ===
+    'week8MixedMission'
+  ) {
+    initializeWeek8MixedMission();
+  }
+
+  if (
+    step.activityType ===
+    'week8MasterFinale'
+  ) {
+    initializeWeek8MasterFinale();
+  }
+
 
   if (
     step.activityType ===
@@ -3898,7 +3948,7 @@ function showClickWaitReminder() {
           'is-showing'
         );
       },
-      1400
+      2200
     );
 }
 
@@ -14396,5 +14446,3134 @@ function initializeWeek7ScrollAdventure() {
   );
 
   renderLevel();
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — SCROLLING ACCURACY
+----------------------------------------- */
+
+function initializeWeek8ScrollAccuracy() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week8AccuracyWindow'
+    );
+
+  const content =
+    document.getElementById(
+      'week8AccuracyContent'
+    );
+
+  const levelText =
+    document.getElementById(
+      'week8AccuracyLevel'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week8AccuracyTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week8AccuracyStatus'
+    );
+
+  const stopZone =
+    document.querySelector(
+      '.week8-stop-zone'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8AccuracyComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !content ||
+    !levelText ||
+    !targetText ||
+    !status ||
+    !stopZone ||
+    !complete
+  ) {
+    return;
+  }
+
+  const levels = [
+    {
+      target: 'lion',
+      emoji: '🦁',
+      word: 'LION',
+      zoneTolerance: 42,
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['lion', '🦁', 'LION'],
+        ['frog', '🐸', 'FROG'],
+        ['star', '⭐', 'STAR'],
+      ],
+    },
+
+    {
+      target: 'rocket',
+      emoji: '🚀',
+      word: 'ROCKET',
+      zoneTolerance: 28,
+
+      items: [
+        ['dog', '🐶', 'DOG'],
+        ['apple', '🍎', 'APPLE'],
+        ['train', '🚂', 'TRAIN'],
+        ['flower', '🌻', 'FLOWER'],
+        ['moon', '🌙', 'MOON'],
+        ['rocket', '🚀', 'ROCKET'],
+        ['fish', '🐠', 'FISH'],
+      ],
+    },
+
+    {
+      target: 'penguin',
+      emoji: '🐧',
+      word: 'PENGUIN',
+      zoneTolerance: 18,
+
+      items: [
+        ['banana', '🍌', 'BANANA'],
+        ['bear', '🐻', 'BEAR'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['bus', '🚌', 'BUS'],
+        ['bee', '🐝', 'BEE'],
+        ['cookie', '🍪', 'COOKIE'],
+        ['robot', '🤖', 'ROBOT'],
+        ['horse', '🐴', 'HORSE'],
+        ['rainbow', '🌈', 'RAINBOW'],
+        ['penguin', '🐧', 'PENGUIN'],
+      ],
+    },
+  ];
+
+  let levelIndex = 0;
+  let changingLevel = false;
+
+  function targetIsInZone(card) {
+    const zoneRect =
+      stopZone.getBoundingClientRect();
+
+    const cardRect =
+      card.getBoundingClientRect();
+
+    const zoneCenter =
+      zoneRect.top +
+      zoneRect.height / 2;
+
+    const cardCenter =
+      cardRect.top +
+      cardRect.height / 2;
+
+    return (
+      Math.abs(
+        zoneCenter -
+        cardCenter
+      ) <=
+      levels[levelIndex]
+        .zoneTolerance
+    );
+  }
+
+  function renderLevel() {
+    changingLevel = false;
+
+    const level =
+      levels[levelIndex];
+
+    content.innerHTML = '';
+
+    levelText.textContent =
+      `LEVEL ${levelIndex + 1} OF ${levels.length}`;
+
+    targetText.innerHTML = `
+      <span class="week8-accuracy-find-word">
+        FIND
+      </span>
+
+      <span class="week8-accuracy-find-picture">
+        ${level.emoji}
+      </span>
+
+      <span class="week8-accuracy-find-name">
+        ${level.word}
+      </span>
+    `;
+
+    status.textContent =
+      '🐰 SCROLL TO THE GREEN ZONE';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    level.items.forEach(
+      ([id, emoji, label]) => {
+        const card =
+          document.createElement(
+            'button'
+          );
+
+        card.type = 'button';
+
+        card.className =
+          'week8-accuracy-card';
+
+        card.dataset.item = id;
+
+        card.innerHTML = `
+          <span>${emoji}</span>
+          <strong>${label}</strong>
+        `;
+
+        card.addEventListener(
+          'click',
+          () => {
+            if (changingLevel) {
+              return;
+            }
+
+            if (
+              id !== level.target
+            ) {
+              card.classList.remove(
+                'is-wrong'
+              );
+
+              void card.offsetWidth;
+
+              card.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'FIND THE RIGHT PICTURE';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            if (
+              !targetIsInZone(card)
+            ) {
+              status.textContent =
+                'MOVE IT INTO THE GREEN ZONE';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingLevel = true;
+
+            card.classList.add(
+              'is-correct'
+            );
+
+            status.textContent =
+              'PERFECT STOP! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              levelIndex >=
+              levels.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  levelText.textContent =
+                    '3 OF 3 COMPLETE!';
+
+                  targetText.textContent =
+                    'SCROLLING CONTROL MASTER! 🎯';
+
+                  complete.hidden =
+                    false;
+                },
+                550
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                levelIndex += 1;
+                renderLevel();
+              },
+              850
+            );
+          }
+        );
+
+        content.appendChild(card);
+      }
+    );
+
+    /*
+     * Begin between cards so the target
+     * must be deliberately positioned.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          Math.max(
+            0,
+            (
+              scrollWindow.scrollHeight -
+              scrollWindow.clientHeight
+            ) / 3
+          );
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderLevel();
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — SCROLLING DIRECTION CHALLENGE
+----------------------------------------- */
+
+function initializeWeek8ScrollDirection() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week8ElevatorWindow'
+    );
+
+  const building =
+    document.getElementById(
+      'week8ElevatorBuilding'
+    );
+
+  const levelText =
+    document.getElementById(
+      'week8ElevatorLevel'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week8ElevatorTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week8ElevatorStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8ElevatorComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !building ||
+    !levelText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const allRooms = [
+    ['playground', '🛝', 'PLAYGROUND'],
+    ['library', '📚', 'LIBRARY'],
+    ['aquarium', '🐠', 'AQUARIUM'],
+    ['art', '🎨', 'ART ROOM'],
+    ['dinosaur', '🦖', 'DINOSAUR ROOM'],
+    ['space', '🚀', 'SPACE ROOM'],
+    ['music', '🎵', 'MUSIC ROOM'],
+    ['animals', '🐶', 'ANIMAL ROOM'],
+    ['science', '🔬', 'SCIENCE ROOM'],
+    ['garden', '🌻', 'GARDEN ROOM'],
+    ['building', '🧱', 'BUILDING ROOM'],
+    ['treasure', '💰', 'TREASURE ROOM'],
+  ];
+
+  const levels = [
+    {
+      floorCount: 6,
+      target: 'art',
+      startFloor: 3,
+    },
+
+    {
+      floorCount: 8,
+      target: 'space',
+      startFloor: 4,
+    },
+
+    {
+      floorCount: 10,
+      target: 'library',
+      startFloor: 6,
+    },
+
+    {
+      floorCount: 12,
+      target: 'treasure',
+      startFloor: 6,
+    },
+  ];
+
+  let levelIndex = 0;
+  let changingLevel = false;
+
+  function renderLevel() {
+    changingLevel = false;
+
+    const level =
+      levels[levelIndex];
+
+    const rooms =
+      allRooms.slice(
+        0,
+        level.floorCount
+      );
+
+    const targetRoom =
+      rooms.find(
+        ([id]) =>
+          id === level.target
+      );
+
+    if (!targetRoom) {
+      return;
+    }
+
+    building.innerHTML = '';
+
+    levelText.textContent =
+      `LEVEL ${levelIndex + 1} OF ${levels.length}`;
+
+    targetText.innerHTML = `
+      <span class="week8-elevator-target-word">
+        GO TO
+      </span>
+
+      <span class="week8-elevator-target-picture">
+        ${targetRoom[1]}
+      </span>
+
+      <span class="week8-elevator-target-word">
+        ${targetRoom[2]}
+      </span>
+    `;
+
+    status.textContent =
+      '🛗 FIND THE ROOM';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    rooms.forEach(
+      ([id, emoji, label], index) => {
+        const floorNumber =
+          index + 1;
+
+        const floor =
+          document.createElement(
+            'section'
+          );
+
+        floor.className =
+          'week8-elevator-floor';
+
+        floor.dataset.floor =
+          String(floorNumber);
+
+        floor.innerHTML = `
+          <div class="week8-elevator-floor-number">
+            ${floorNumber}
+          </div>
+
+          <div class="week8-elevator-room">
+
+            <div class="week8-elevator-room-picture">
+              ${emoji}
+            </div>
+
+            <div class="week8-elevator-room-name">
+              ${label}
+            </div>
+
+            <button
+              type="button"
+              class="week8-elevator-enter"
+              aria-label="Open this door"
+            >
+              <span class="week8-door-inside">
+                ⭐
+              </span>
+
+              <span class="week8-door-panel">
+                <span class="week8-door-knob"></span>
+              </span>
+            </button>
+
+          </div>
+        `;
+
+        const enterButton =
+          floor.querySelector(
+            '.week8-elevator-enter'
+          );
+
+        enterButton.addEventListener(
+          'click',
+          () => {
+            if (changingLevel) {
+              return;
+            }
+
+            if (id !== level.target) {
+              enterButton.classList.remove(
+                'is-wrong'
+              );
+
+              void enterButton.offsetWidth;
+
+              enterButton.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'WRONG ROOM — KEEP LOOKING';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingLevel = true;
+
+            enterButton.classList.add(
+              'is-correct',
+              'is-open'
+            );
+
+            enterButton.textContent =
+              '⭐';
+
+            status.textContent =
+              'RIGHT ROOM! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              levelIndex >=
+              levels.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  levelText.textContent =
+                    '4 OF 4 COMPLETE!';
+
+                  targetText.textContent =
+                    'ELEVATOR MASTER! 🛗';
+
+                  complete.hidden =
+                    false;
+                },
+                550
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                levelIndex += 1;
+                renderLevel();
+              },
+              900
+            );
+          }
+        );
+
+        building.appendChild(
+          floor
+        );
+      }
+    );
+
+    /*
+     * Place the student around the
+     * requested middle floor.
+     */
+    window.requestAnimationFrame(
+      () => {
+        const targetFloor =
+          building.querySelector(
+            `[data-floor="${level.startFloor}"]`
+          );
+
+        if (!targetFloor) {
+          return;
+        }
+
+        const desiredTop =
+          targetFloor.offsetTop -
+          (
+            scrollWindow.clientHeight -
+            targetFloor.offsetHeight
+          ) / 2;
+
+        scrollWindow.scrollTop =
+          Math.max(
+            0,
+            desiredTop
+          );
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderLevel();
+}
+/* ----------------------------------------
+   WEEK 8 — SCROLLING SCAVENGER HUNT
+----------------------------------------- */
+
+function initializeWeek8ScrollHunt() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week8HuntWindow'
+    );
+
+  const world =
+    document.getElementById(
+      'week8HuntWorld'
+    );
+
+  const levelText =
+    document.getElementById(
+      'week8HuntLevel'
+    );
+
+  const targetsBar =
+    document.getElementById(
+      'week8HuntTargets'
+    );
+
+  const status =
+    document.getElementById(
+      'week8HuntStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8HuntComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !world ||
+    !levelText ||
+    !targetsBar ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const objects = [
+    ['cloud', '☁️', 18, 8],
+    ['bird', '🐦', 68, 13],
+    ['rocket', '🚀', 34, 22],
+    ['frog', '🐸', 72, 31],
+    ['tree', '🌳', 25, 39],
+    ['dog', '🐶', 66, 47],
+    ['pizza', '🍕', 30, 54],
+    ['star', '⭐', 73, 62],
+    ['fish', '🐠', 27, 70],
+    ['boat', '⛵', 68, 76],
+    ['bat', '🦇', 30, 85],
+    ['treasure', '💰', 70, 93],
+  ];
+
+  const levels = [
+    {
+      targets: [
+        'frog',
+        'rocket',
+        'star',
+      ],
+    },
+
+    {
+      targets: [
+        'fish',
+        'bird',
+        'pizza',
+        'bat',
+      ],
+    },
+
+    {
+      targets: [
+        'treasure',
+        'cloud',
+        'boat',
+        'tree',
+        'rocket',
+      ],
+    },
+  ];
+
+  let levelIndex = 0;
+  let targetIndex = 0;
+  let changingLevel = false;
+
+  function renderTargets() {
+    const level =
+      levels[levelIndex];
+
+    targetsBar.innerHTML = '';
+
+    level.targets.forEach(
+      (id, index) => {
+        const object =
+          objects.find(
+            ([objectId]) =>
+              objectId === id
+          );
+
+        if (!object) {
+          return;
+        }
+
+        const target =
+          document.createElement(
+            'div'
+          );
+
+        target.className =
+          'week8-hunt-target';
+
+        target.textContent =
+          object[1];
+
+        if (index < targetIndex) {
+          target.classList.add(
+            'is-found'
+          );
+        } else if (
+          index === targetIndex
+        ) {
+          target.classList.add(
+            'is-current'
+          );
+        }
+
+        targetsBar.appendChild(
+          target
+        );
+      }
+    );
+  }
+
+  function renderWorld() {
+    world.innerHTML = `
+      <div
+        class="week8-hunt-zone-label"
+        style="top: 2%;"
+      >
+        ☁️ SKY
+      </div>
+
+      <div
+        class="week8-hunt-zone-label"
+        style="top: 20%;"
+      >
+        🌲 FOREST
+      </div>
+
+      <div
+        class="week8-hunt-zone-label"
+        style="top: 40%;"
+      >
+        🏠 VILLAGE
+      </div>
+
+      <div
+        class="week8-hunt-zone-label"
+        style="top: 60%;"
+      >
+        🌊 RIVER
+      </div>
+
+      <div
+        class="week8-hunt-zone-label"
+        style="top: 80%;"
+      >
+        🪨 CAVE
+      </div>
+
+      <div
+        class="week8-hunt-scenery"
+        style="left: 12%; top: 25%;"
+      >
+        🌲
+      </div>
+
+      <div
+        class="week8-hunt-scenery"
+        style="right: 10%; top: 44%;"
+      >
+        🏠
+      </div>
+
+      <div
+        class="week8-hunt-scenery"
+        style="left: 13%; top: 66%;"
+      >
+        🌊
+      </div>
+
+      <div
+        class="week8-hunt-scenery"
+        style="right: 13%; top: 87%;"
+      >
+        🪨
+      </div>
+    `;
+
+    objects.forEach(
+      (
+        [
+          id,
+          emoji,
+          left,
+          top,
+        ]
+      ) => {
+        const button =
+          document.createElement(
+            'button'
+          );
+
+        button.type = 'button';
+
+        button.className =
+          'week8-hunt-object';
+
+        button.dataset.item = id;
+
+        button.textContent = emoji;
+
+        button.style.left =
+          `${left}%`;
+
+        button.style.top =
+          `${top}%`;
+
+        button.style.transform =
+          'translate(-50%, -50%)';
+
+        button.addEventListener(
+          'click',
+          () => {
+            handleObjectClick(
+              button,
+              id
+            );
+          }
+        );
+
+        world.appendChild(
+          button
+        );
+      }
+    );
+  }
+
+  function handleObjectClick(
+    button,
+    id
+  ) {
+    if (changingLevel) {
+      return;
+    }
+
+    const level =
+      levels[levelIndex];
+
+    const expected =
+      level.targets[
+        targetIndex
+      ];
+
+    if (id !== expected) {
+      button.classList.remove(
+        'is-wrong'
+      );
+
+      void button.offsetWidth;
+
+      button.classList.add(
+        'is-wrong'
+      );
+
+      status.textContent =
+        'NOT YET — FIND THE PICTURE';
+
+      status.classList.add(
+        'is-wrong'
+      );
+
+      playLessonClickSound();
+
+      return;
+    }
+
+    button.classList.add(
+      'is-found'
+    );
+
+    targetIndex += 1;
+
+    status.classList.remove(
+      'is-wrong'
+    );
+
+    status.classList.add(
+      'is-correct'
+    );
+
+    playLessonSuccessSound();
+
+    if (
+      targetIndex <
+      level.targets.length
+    ) {
+      status.textContent =
+        'GREAT! FIND THE NEXT ONE';
+
+      renderTargets();
+
+      /*
+       * IMPORTANT:
+       * Do not change scrollTop.
+       * Student stays exactly where
+       * they found the last object.
+       */
+      return;
+    }
+
+    changingLevel = true;
+
+    status.textContent =
+      'LEVEL COMPLETE! ⭐';
+
+    renderTargets();
+
+    if (
+      levelIndex >=
+      levels.length - 1
+    ) {
+      window.setTimeout(
+        () => {
+          stopWeek7ScrollSound();
+
+          levelText.textContent =
+            'ALL FOUND!';
+
+          status.textContent =
+            'SCAVENGER HUNT COMPLETE!';
+
+          complete.hidden =
+            false;
+        },
+        600
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      () => {
+        levelIndex += 1;
+        targetIndex = 0;
+        changingLevel = false;
+
+        renderLevel();
+      },
+      900
+    );
+  }
+
+  function renderLevel() {
+    levelText.textContent =
+      `LEVEL ${levelIndex + 1} OF ${levels.length}`;
+
+    status.textContent =
+      '🐰 FIND THE FIRST PICTURE';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    renderWorld();
+    renderTargets();
+
+    /*
+     * Start each LEVEL in the middle.
+     * Individual finds never reset it.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderLevel();
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — POINTER CHALLENGE
+----------------------------------------- */
+
+function initializeWeek8PointerChallenge() {
+  const area =
+    document.getElementById(
+      'week8PointerArea'
+    );
+
+  const targetButton =
+    document.getElementById(
+      'week8PointerObject'
+    );
+
+  const roundText =
+    document.getElementById(
+      'week8PointerRound'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week8PointerTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week8PointerStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8PointerComplete'
+    );
+
+  if (
+    !area ||
+    !targetButton ||
+    !roundText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      emoji: '⭐',
+      word: 'STAR',
+      size: 72,
+      left: 18,
+      top: 22,
+    },
+
+    {
+      emoji: '🐸',
+      word: 'FROG',
+      size: 58,
+      left: 70,
+      top: 58,
+    },
+
+    {
+      emoji: '🚀',
+      word: 'ROCKET',
+      size: 46,
+      left: 26,
+      top: 68,
+    },
+
+    {
+      emoji: '🐧',
+      word: 'PENGUIN',
+      size: 34,
+      left: 76,
+      top: 20,
+    },
+  ];
+
+  let roundIndex = 0;
+  let changingRound = false;
+
+  const pointerClickGuard =
+    createClickWaitGuard();
+
+  function renderRound() {
+    changingRound = false;
+
+    const round =
+      rounds[roundIndex];
+
+    roundText.textContent =
+      `ROUND ${roundIndex + 1} OF ${rounds.length}`;
+
+    targetText.innerHTML = `
+      <span class="week8-pointer-find-word">
+        FIND
+      </span>
+
+      <span class="week8-pointer-find-picture">
+        ${round.emoji}
+      </span>
+
+      <span class="week8-pointer-find-name">
+        ${round.word}
+      </span>
+    `;
+
+    status.textContent =
+      'MOVE AND CLICK';
+
+    status.classList.remove(
+      'is-correct'
+    );
+
+    targetButton.classList.remove(
+      'is-correct'
+    );
+
+    targetButton.textContent =
+      round.emoji;
+
+    targetButton.style.width =
+      `${round.size}px`;
+
+    targetButton.style.height =
+      `${round.size}px`;
+
+    targetButton.style.fontSize =
+      `${Math.max(
+        2.2,
+        round.size / 28
+      )}rem`;
+
+    targetButton.style.left =
+      `${round.left}%`;
+
+    targetButton.style.top =
+      `${round.top}%`;
+
+    targetButton.style.transform =
+      'translate(-50%, -50%)';
+  }
+
+  targetButton.addEventListener(
+    'click',
+    () => {
+      if (changingRound) {
+        return;
+      }
+
+      if (!pointerClickGuard.begin()) {
+        return;
+      }
+
+      pointerClickGuard.lock();
+
+      changingRound = true;
+
+      targetButton.classList.add(
+        'is-correct'
+      );
+
+      status.textContent =
+        'GREAT CLICK! ⭐';
+
+      status.classList.add(
+        'is-correct'
+      );
+
+      playLessonSuccessSound();
+
+      if (
+        roundIndex >=
+        rounds.length - 1
+      ) {
+        window.setTimeout(
+          () => {
+            roundText.textContent =
+              '4 OF 4 COMPLETE!';
+
+            targetText.textContent =
+              'POINTER MASTER! 🎯';
+
+            complete.hidden =
+              false;
+          },
+          550
+        );
+
+        return;
+      }
+
+      window.setTimeout(
+        () => {
+          roundIndex += 1;
+          renderRound();
+        },
+        750
+      );
+    }
+  );
+
+  renderRound();
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — DRAG DELIVERY CHALLENGE
+----------------------------------------- */
+
+function initializeWeek8DragChallenge() {
+  const area =
+    document.getElementById(
+      'week8DragArea'
+    );
+
+  const packageEl =
+    document.getElementById(
+      'week8DragPackage'
+    );
+
+  const truck =
+    document.getElementById(
+      'week8DragTruck'
+    );
+
+  const obstaclesLayer =
+    document.getElementById(
+      'week8DragObstacles'
+    );
+
+  const roundText =
+    document.getElementById(
+      'week8DragRound'
+    );
+
+  const status =
+    document.getElementById(
+      'week8DragStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8DragComplete'
+    );
+
+  if (
+    !area ||
+    !packageEl ||
+    !truck ||
+    !obstaclesLayer ||
+    !roundText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      packageSize: 82,
+      truckWidth: 150,
+      truckHeight: 135,
+      packageX: 15,
+      packageY: 50,
+      truckX: 76,
+      truckY: 50,
+
+      truckMotion: {
+        speed: 0.00125,
+        xRadius: 17,
+        yRadius: 0,
+      },
+
+      obstacles: [],
+    },
+
+    {
+      packageSize: 68,
+      truckWidth: 132,
+      truckHeight: 120,
+      packageX: 15,
+      packageY: 72,
+      truckX: 70,
+      truckY: 48,
+
+      truckMotion: {
+        speed: 0.00145,
+        xRadius: 20,
+        yRadius: 22,
+      },
+
+      obstacles: [],
+    },
+
+    {
+      packageSize: 58,
+      truckWidth: 116,
+      truckHeight: 108,
+      packageX: 13,
+      packageY: 50,
+      truckX: 72,
+      truckY: 50,
+
+      truckMotion: {
+        speed: 0.00155,
+        xRadius: 26,
+        yRadius: 20,
+      },
+
+      obstacles: [
+        {
+          x: 48,
+          y: 50,
+          w: 105,
+          h: 115,
+          emoji: '🪨',
+        },
+      ],
+    },
+
+    {
+      packageSize: 48,
+      truckWidth: 104,
+      truckHeight: 98,
+      packageX: 14,
+      packageY: 78,
+      truckX: 68,
+      truckY: 48,
+
+      truckMotion: {
+        speed: 0.00175,
+        xRadius: 28,
+        yRadius: 27,
+      },
+
+      obstacles: [
+        {
+          x: 43,
+          y: 32,
+          w: 95,
+          h: 90,
+          emoji: '🌳',
+        },
+        {
+          x: 58,
+          y: 71,
+          w: 92,
+          h: 86,
+          emoji: '🪨',
+        },
+      ],
+    },
+  ];
+
+  let roundIndex = 0;
+  let holding = false;
+  let pointerId = null;
+  let offsetX = 0;
+  let offsetY = 0;
+  let changingRound = false;
+
+  let truckAnimationFrame = 0;
+  let truckMotionStartedAt = 0;
+
+  function stopTruckMotion() {
+    if (truckAnimationFrame) {
+      window.cancelAnimationFrame(
+        truckAnimationFrame
+      );
+
+      truckAnimationFrame = 0;
+    }
+  }
+
+  function startTruckMotion() {
+    stopTruckMotion();
+
+    const round =
+      rounds[roundIndex];
+
+    if (!round.truckMotion) {
+      return;
+    }
+
+    truckMotionStartedAt =
+      performance.now();
+
+    function animateTruck(now) {
+      /*
+       * Stop automatically if the student
+       * leaves this activity.
+       */
+      if (
+        !document.body.contains(truck) ||
+        changingRound
+      ) {
+        stopTruckMotion();
+        return;
+      }
+
+      const elapsed =
+        now - truckMotionStartedAt;
+
+      const motion =
+        round.truckMotion;
+
+      /*
+       * Smooth elliptical movement.
+       * Using different wave rates for X
+       * and Y keeps the route from feeling
+       * like a simple back-and-forth line.
+       */
+      const x =
+        round.truckX +
+        Math.sin(
+          elapsed * motion.speed
+        ) *
+        motion.xRadius;
+
+      const y =
+        round.truckY +
+        Math.sin(
+          elapsed *
+            motion.speed *
+            1.63
+        ) *
+        motion.yRadius;
+
+      /*
+       * Keep enough room around the edges
+       * for the entire truck target.
+       */
+      const safeX =
+        Math.max(
+          14,
+          Math.min(
+            86,
+            x
+          )
+        );
+
+      const safeY =
+        Math.max(
+          18,
+          Math.min(
+            82,
+            y
+          )
+        );
+
+      setPercentPosition(
+        truck,
+        safeX,
+        safeY
+      );
+
+      truckAnimationFrame =
+        window.requestAnimationFrame(
+          animateTruck
+        );
+    }
+
+    truckAnimationFrame =
+      window.requestAnimationFrame(
+        animateTruck
+      );
+  }
+
+  function setPercentPosition(
+    element,
+    x,
+    y
+  ) {
+    element.style.left =
+      `${x}%`;
+
+    element.style.top =
+      `${y}%`;
+
+    element.style.transform =
+      'translate(-50%, -50%)';
+  }
+
+  function renderRound() {
+    const round =
+      rounds[roundIndex];
+
+    changingRound = false;
+    holding = false;
+    pointerId = null;
+
+    roundText.textContent =
+      `ROUND ${roundIndex + 1} OF ${rounds.length}`;
+
+    status.textContent =
+      'GET THE BOX TO THE TRUCK';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    packageEl.classList.remove(
+      'is-held'
+    );
+
+    truck.classList.remove(
+      'is-ready'
+    );
+
+    packageEl.style.width =
+      `${round.packageSize}px`;
+
+    packageEl.style.height =
+      `${round.packageSize}px`;
+
+    packageEl.style.fontSize =
+      `${Math.max(
+        2.2,
+        round.packageSize / 18
+      )}rem`;
+
+    truck.style.width =
+      `${round.truckWidth}px`;
+
+    truck.style.height =
+      `${round.truckHeight}px`;
+
+    setPercentPosition(
+      packageEl,
+      round.packageX,
+      round.packageY
+    );
+
+    setPercentPosition(
+      truck,
+      round.truckX,
+      round.truckY
+    );
+
+    obstaclesLayer.innerHTML = '';
+
+    round.obstacles.forEach(
+      (obstacle) => {
+        const el =
+          document.createElement(
+            'div'
+          );
+
+        el.className =
+          'week8-drag-obstacle';
+
+        el.textContent =
+          obstacle.emoji;
+
+        el.style.width =
+          `${obstacle.w}px`;
+
+        el.style.height =
+          `${obstacle.h}px`;
+
+        setPercentPosition(
+          el,
+          obstacle.x,
+          obstacle.y
+        );
+
+        obstaclesLayer.appendChild(
+          el
+        );
+      }
+    );
+
+    startTruckMotion();
+  }
+
+  function pointInsideObstacle(
+    centerX,
+    centerY
+  ) {
+    const obstacles =
+      Array.from(
+        obstaclesLayer.children
+      );
+
+    return obstacles.some(
+      (obstacle) => {
+        const rect =
+          obstacle.getBoundingClientRect();
+
+        return (
+          centerX > rect.left &&
+          centerX < rect.right &&
+          centerY > rect.top &&
+          centerY < rect.bottom
+        );
+      }
+    );
+  }
+
+  function packageInsideTruck() {
+    const packageRect =
+      packageEl.getBoundingClientRect();
+
+    const truckRect =
+      truck.getBoundingClientRect();
+
+    /*
+     * Kindergarten-friendly drop detection:
+     * accept the delivery when a meaningful
+     * portion of the package overlaps the
+     * truck instead of requiring the exact
+     * package center to be inside.
+     */
+    const overlapLeft =
+      Math.max(
+        packageRect.left,
+        truckRect.left
+      );
+
+    const overlapRight =
+      Math.min(
+        packageRect.right,
+        truckRect.right
+      );
+
+    const overlapTop =
+      Math.max(
+        packageRect.top,
+        truckRect.top
+      );
+
+    const overlapBottom =
+      Math.min(
+        packageRect.bottom,
+        truckRect.bottom
+      );
+
+    const overlapWidth =
+      Math.max(
+        0,
+        overlapRight - overlapLeft
+      );
+
+    const overlapHeight =
+      Math.max(
+        0,
+        overlapBottom - overlapTop
+      );
+
+    const overlapArea =
+      overlapWidth *
+      overlapHeight;
+
+    const packageArea =
+      packageRect.width *
+      packageRect.height;
+
+    return (
+      packageArea > 0 &&
+      overlapArea / packageArea >= 0.35
+    );
+  }
+
+  packageEl.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (
+        changingRound ||
+        holding
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const rect =
+        packageEl.getBoundingClientRect();
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      holding = true;
+      pointerId = event.pointerId;
+
+      packageEl.classList.add(
+        'is-held'
+      );
+
+      packageEl.setPointerCapture(
+        pointerId
+      );
+
+      playLessonClickSound();
+    }
+  );
+
+  packageEl.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !==
+          pointerId ||
+        changingRound
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const areaRect =
+        area.getBoundingClientRect();
+
+      const packageRect =
+        packageEl.getBoundingClientRect();
+
+      let left =
+        event.clientX -
+        areaRect.left -
+        offsetX;
+
+      let top =
+        event.clientY -
+        areaRect.top -
+        offsetY;
+
+      left =
+        Math.max(
+          0,
+          Math.min(
+            areaRect.width -
+              packageRect.width,
+            left
+          )
+        );
+
+      top =
+        Math.max(
+          0,
+          Math.min(
+            areaRect.height -
+              packageRect.height,
+            top
+          )
+        );
+
+      const centerX =
+        areaRect.left +
+        left +
+        packageRect.width / 2;
+
+      const centerY =
+        areaRect.top +
+        top +
+        packageRect.height / 2;
+
+      if (
+        pointInsideObstacle(
+          centerX,
+          centerY
+        )
+      ) {
+        status.textContent =
+          'GO AROUND THE OBSTACLE';
+
+        status.classList.add(
+          'is-wrong'
+        );
+
+        return;
+      }
+
+      status.classList.remove(
+        'is-wrong'
+      );
+
+      packageEl.style.left =
+        `${left}px`;
+
+      packageEl.style.top =
+        `${top}px`;
+
+      packageEl.style.transform =
+        'none';
+
+      /*
+       * Do not toggle truck success styling
+       * while the package is moving.
+       * Check delivery only on release.
+       */
+
+    }
+  );
+
+  function finishDrag(event) {
+    if (
+      !holding ||
+      event.pointerId !==
+        pointerId ||
+      changingRound
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    packageEl.classList.remove(
+      'is-held'
+    );
+
+    if (
+      packageEl.hasPointerCapture(
+        pointerId
+      )
+    ) {
+      packageEl.releasePointerCapture(
+        pointerId
+      );
+    }
+
+    pointerId = null;
+
+    if (!packageInsideTruck()) {
+      status.textContent =
+        'KEEP HOLDING — TRY AGAIN';
+
+      status.classList.add(
+        'is-wrong'
+      );
+
+      renderRound();
+
+      return;
+    }
+
+    changingRound = true;
+
+    stopTruckMotion();
+
+    truck.classList.add(
+      'is-ready'
+    );
+
+    status.textContent =
+      'DELIVERED! ⭐';
+
+    status.classList.remove(
+      'is-wrong'
+    );
+
+    status.classList.add(
+      'is-correct'
+    );
+
+    playLessonSuccessSound();
+
+    if (
+      roundIndex >=
+      rounds.length - 1
+    ) {
+      window.setTimeout(
+        () => {
+          roundText.textContent =
+            '4 OF 4 COMPLETE!';
+
+          status.textContent =
+            'DRAGGING MASTER!';
+
+          complete.hidden =
+            false;
+        },
+        550
+      );
+
+      return;
+    }
+
+    window.setTimeout(
+      () => {
+        roundIndex += 1;
+        renderRound();
+      },
+      850
+    );
+  }
+
+  packageEl.addEventListener(
+    'pointerup',
+    finishDrag
+  );
+
+  packageEl.addEventListener(
+    'pointercancel',
+    finishDrag
+  );
+
+  renderRound();
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — MIXED TRACKPAD MISSION
+----------------------------------------- */
+
+function initializeWeek8MixedMission() {
+  stopWeek7ScrollSound();
+
+  const startStage =
+    document.getElementById(
+      'week8MissionStart'
+    );
+
+  const startButton =
+    document.getElementById(
+      'week8MissionStartButton'
+    );
+
+  const keyStage =
+    document.getElementById(
+      'week8MissionKeyStage'
+    );
+
+  const key =
+    document.getElementById(
+      'week8MissionKey'
+    );
+
+  const lock =
+    document.getElementById(
+      'week8MissionLock'
+    );
+
+  const scrollStage =
+    document.getElementById(
+      'week8MissionScrollStage'
+    );
+
+  const scrollWindow =
+    document.getElementById(
+      'week8MissionScrollWindow'
+    );
+
+  const treasure =
+    document.getElementById(
+      'week8MissionTreasure'
+    );
+
+  const status =
+    document.getElementById(
+      'week8MissionStatus'
+    );
+
+  const progress =
+    document.getElementById(
+      'week8MissionProgress'
+    );
+
+  const treasureDragStage =
+    document.getElementById(
+      'week8MissionTreasureDragStage'
+    );
+
+  const treasureBox =
+    document.getElementById(
+      'week8MissionTreasureBox'
+    );
+
+  const chest =
+    document.getElementById(
+      'week8MissionChest'
+    );
+
+  const trophyStage =
+    document.getElementById(
+      'week8MissionTrophyStage'
+    );
+
+  const trophyScroll =
+    document.getElementById(
+      'week8MissionTrophyScroll'
+    );
+
+  const trophy =
+    document.getElementById(
+      'week8MissionTrophy'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8MissionComplete'
+    );
+
+  if (
+    !startStage ||
+    !startButton ||
+    !keyStage ||
+    !key ||
+    !lock ||
+    !scrollStage ||
+    !scrollWindow ||
+    !treasure ||
+    !status ||
+    !progress ||
+    !treasureDragStage ||
+    !treasureBox ||
+    !chest ||
+    !trophyStage ||
+    !trophyScroll ||
+    !trophy ||
+    !complete
+  ) {
+    return;
+  }
+
+  const progressIcons =
+    Array.from(
+      progress.children
+    );
+
+  const missionClickGuard =
+    createClickWaitGuard();
+
+  function setProgress(index) {
+    progressIcons.forEach(
+      (icon, iconIndex) => {
+        icon.classList.toggle(
+          'is-complete',
+          iconIndex < index
+        );
+
+        icon.classList.toggle(
+          'is-current',
+          iconIndex === index
+        );
+      }
+    );
+  }
+
+  startButton.addEventListener(
+    'click',
+    () => {
+      if (!missionClickGuard.begin()) {
+        return;
+      }
+
+      missionClickGuard.lock();
+
+      playLessonSuccessSound();
+
+      setProgress(1);
+
+      status.textContent =
+        'DRAG THE KEY TO THE LOCK';
+
+      startStage.hidden = true;
+      keyStage.hidden = false;
+    }
+  );
+
+  let holdingKey = false;
+  let keyPointerId = null;
+  let keyOffsetX = 0;
+  let keyOffsetY = 0;
+
+  key.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      const rect =
+        key.getBoundingClientRect();
+
+      holdingKey = true;
+      keyPointerId =
+        event.pointerId;
+
+      keyOffsetX =
+        event.clientX -
+        rect.left;
+
+      keyOffsetY =
+        event.clientY -
+        rect.top;
+
+      key.classList.add(
+        'is-held'
+      );
+
+      key.setPointerCapture(
+        keyPointerId
+      );
+
+      playLessonClickSound();
+    }
+  );
+
+  key.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holdingKey ||
+        event.pointerId !==
+          keyPointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const stageRect =
+        keyStage.getBoundingClientRect();
+
+      const keyRect =
+        key.getBoundingClientRect();
+
+      let left =
+        event.clientX -
+        stageRect.left -
+        keyOffsetX;
+
+      let top =
+        event.clientY -
+        stageRect.top -
+        keyOffsetY;
+
+      left =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.width -
+              keyRect.width,
+            left
+          )
+        );
+
+      top =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.height -
+              keyRect.height,
+            top
+          )
+        );
+
+      key.style.left =
+        `${left}px`;
+
+      key.style.top =
+        `${top}px`;
+
+      key.style.transform =
+        'none';
+    }
+  );
+
+  function finishKeyDrag(event) {
+    if (
+      !holdingKey ||
+      event.pointerId !==
+        keyPointerId
+    ) {
+      return;
+    }
+
+    holdingKey = false;
+
+    key.classList.remove(
+      'is-held'
+    );
+
+    const keyRect =
+      key.getBoundingClientRect();
+
+    const lockRect =
+      lock.getBoundingClientRect();
+
+    const centerX =
+      keyRect.left +
+      keyRect.width / 2;
+
+    const centerY =
+      keyRect.top +
+      keyRect.height / 2;
+
+    const unlocked =
+      centerX >= lockRect.left &&
+      centerX <= lockRect.right &&
+      centerY >= lockRect.top &&
+      centerY <= lockRect.bottom;
+
+    if (!unlocked) {
+      status.textContent =
+        'KEEP HOLDING — TRY AGAIN';
+
+      key.style.left = '15%';
+      key.style.top = '50%';
+
+      key.style.transform =
+        'translate(-50%, -50%)';
+
+      return;
+    }
+
+    lock.textContent = '🔓';
+
+    lock.classList.add(
+      'is-unlocked'
+    );
+
+    playLessonSuccessSound();
+
+    status.textContent =
+      'GATE OPEN!';
+
+    window.setTimeout(
+      () => {
+        setProgress(2);
+
+        keyStage.hidden = true;
+        scrollStage.hidden = false;
+
+        status.innerHTML = `
+          <span class="week8-mission-find-label">
+            FIND
+          </span>
+
+          <span class="week8-mission-find-picture">
+            💎
+          </span>
+
+          <span class="week8-mission-find-name">
+            TREASURE
+          </span>
+        `;
+
+        /*
+         * Begin around the middle of
+         * the scrolling world.
+         */
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      },
+      650
+    );
+  }
+
+  key.addEventListener(
+    'pointerup',
+    finishKeyDrag
+  );
+
+  key.addEventListener(
+    'pointercancel',
+    finishKeyDrag
+  );
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  treasure.addEventListener(
+    'click',
+    () => {
+      if (!missionClickGuard.begin()) {
+        return;
+      }
+
+      missionClickGuard.lock();
+
+      stopWeek7ScrollSound();
+
+      playLessonSuccessSound();
+
+      /*
+       * Star, key, scroll, and gem
+       * are now complete.
+       */
+      setProgress(4);
+
+      status.textContent =
+        'DRAG THE TREASURE TO THE CHEST';
+
+      window.setTimeout(
+        () => {
+          scrollStage.hidden = true;
+
+          treasureDragStage.hidden =
+            false;
+        },
+        450
+      );
+    }
+  );
+
+  /*
+   * ------------------------------------------------
+   * TREASURE DELIVERY
+   * ------------------------------------------------
+   */
+
+  let holdingTreasure = false;
+  let treasurePointerId = null;
+  let treasureOffsetX = 0;
+  let treasureOffsetY = 0;
+
+  treasureBox.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      const rect =
+        treasureBox.getBoundingClientRect();
+
+      holdingTreasure = true;
+
+      treasurePointerId =
+        event.pointerId;
+
+      treasureOffsetX =
+        event.clientX -
+        rect.left;
+
+      treasureOffsetY =
+        event.clientY -
+        rect.top;
+
+      treasureBox.classList.add(
+        'is-held'
+      );
+
+      treasureBox.setPointerCapture(
+        treasurePointerId
+      );
+
+      playLessonClickSound();
+    }
+  );
+
+  treasureBox.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holdingTreasure ||
+        event.pointerId !==
+          treasurePointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const stageRect =
+        treasureDragStage
+          .getBoundingClientRect();
+
+      const boxRect =
+        treasureBox
+          .getBoundingClientRect();
+
+      let left =
+        event.clientX -
+        stageRect.left -
+        treasureOffsetX;
+
+      let top =
+        event.clientY -
+        stageRect.top -
+        treasureOffsetY;
+
+      left =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.width -
+              boxRect.width,
+            left
+          )
+        );
+
+      top =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.height -
+              boxRect.height,
+            top
+          )
+        );
+
+      treasureBox.style.left =
+        `${left}px`;
+
+      treasureBox.style.top =
+        `${top}px`;
+
+      treasureBox.style.transform =
+        'none';
+    }
+  );
+
+  function finishTreasureDrag(event) {
+    if (
+      !holdingTreasure ||
+      event.pointerId !==
+        treasurePointerId
+    ) {
+      return;
+    }
+
+    holdingTreasure = false;
+
+    treasureBox.classList.remove(
+      'is-held'
+    );
+
+    if (
+      treasureBox.hasPointerCapture(
+        treasurePointerId
+      )
+    ) {
+      treasureBox.releasePointerCapture(
+        treasurePointerId
+      );
+    }
+
+    treasurePointerId = null;
+
+    const boxRect =
+      treasureBox.getBoundingClientRect();
+
+    const chestRect =
+      chest.getBoundingClientRect();
+
+    const overlapLeft =
+      Math.max(
+        boxRect.left,
+        chestRect.left
+      );
+
+    const overlapRight =
+      Math.min(
+        boxRect.right,
+        chestRect.right
+      );
+
+    const overlapTop =
+      Math.max(
+        boxRect.top,
+        chestRect.top
+      );
+
+    const overlapBottom =
+      Math.min(
+        boxRect.bottom,
+        chestRect.bottom
+      );
+
+    const overlapWidth =
+      Math.max(
+        0,
+        overlapRight -
+        overlapLeft
+      );
+
+    const overlapHeight =
+      Math.max(
+        0,
+        overlapBottom -
+        overlapTop
+      );
+
+    const overlapArea =
+      overlapWidth *
+      overlapHeight;
+
+    const boxArea =
+      boxRect.width *
+      boxRect.height;
+
+    const delivered =
+      boxArea > 0 &&
+      overlapArea / boxArea >= 0.35;
+
+    if (!delivered) {
+      status.textContent =
+        'KEEP HOLDING — TRY AGAIN';
+
+      treasureBox.style.left =
+        '16%';
+
+      treasureBox.style.top =
+        '55%';
+
+      treasureBox.style.transform =
+        'translate(-50%, -50%)';
+
+      return;
+    }
+
+    chest.classList.add(
+      'is-filled'
+    );
+
+    chest.textContent =
+      '💰';
+
+    playLessonSuccessSound();
+
+    setProgress(5);
+
+    status.innerHTML = `
+      <span class="week8-mission-find-label">
+        FIND
+      </span>
+
+      <span class="week8-mission-find-picture">
+        🏆
+      </span>
+
+      <span class="week8-mission-find-name">
+        TROPHY
+      </span>
+    `;
+
+    window.setTimeout(
+      () => {
+        treasureDragStage.hidden =
+          true;
+
+        trophyStage.hidden =
+          false;
+
+        /*
+         * Start around the middle again
+         * so Bunny Ears are needed.
+         */
+        trophyScroll.scrollTop =
+          (
+            trophyScroll.scrollHeight -
+            trophyScroll.clientHeight
+          ) / 2;
+      },
+      600
+    );
+  }
+
+  treasureBox.addEventListener(
+    'pointerup',
+    finishTreasureDrag
+  );
+
+  treasureBox.addEventListener(
+    'pointercancel',
+    finishTreasureDrag
+  );
+
+  /*
+   * ------------------------------------------------
+   * FINAL TROPHY SCROLL
+   * ------------------------------------------------
+   */
+
+  trophyScroll.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  trophy.addEventListener(
+    'click',
+    () => {
+      if (!missionClickGuard.begin()) {
+        return;
+      }
+
+      missionClickGuard.lock();
+
+      stopWeek7ScrollSound();
+
+      playLessonSuccessSound();
+
+      progressIcons.forEach(
+        (icon) => {
+          icon.classList.remove(
+            'is-current'
+          );
+
+          icon.classList.add(
+            'is-complete'
+          );
+        }
+      );
+
+      status.textContent =
+        'MISSION COMPLETE! 🏆';
+
+      window.setTimeout(
+        () => {
+          complete.hidden =
+            false;
+        },
+        500
+      );
+    }
+  );
+
+  setProgress(0);
+}
+
+
+/* ----------------------------------------
+   WEEK 8 — TRACKPAD MASTER FINALE
+----------------------------------------- */
+
+function initializeWeek8MasterFinale() {
+  stopWeek7ScrollSound();
+
+  const clickStage =
+    document.getElementById(
+      'week8FinaleClickStage'
+    );
+
+  const clickTarget =
+    document.getElementById(
+      'week8FinaleClickTarget'
+    );
+
+  const dragStage =
+    document.getElementById(
+      'week8FinaleDragStage'
+    );
+
+  const packageEl =
+    document.getElementById(
+      'week8FinalePackage'
+    );
+
+  const dropZone =
+    document.getElementById(
+      'week8FinaleDropZone'
+    );
+
+  const scrollStage =
+    document.getElementById(
+      'week8FinaleScrollStage'
+    );
+
+  const scrollWindow =
+    document.getElementById(
+      'week8FinaleScrollWindow'
+    );
+
+  const trophy =
+    document.getElementById(
+      'week8FinaleTrophy'
+    );
+
+  const status =
+    document.getElementById(
+      'week8FinaleStatus'
+    );
+
+  const progress =
+    document.getElementById(
+      'week8FinaleProgress'
+    );
+
+  const complete =
+    document.getElementById(
+      'week8FinaleComplete'
+    );
+
+  if (
+    !clickStage ||
+    !clickTarget ||
+    !dragStage ||
+    !packageEl ||
+    !dropZone ||
+    !scrollStage ||
+    !scrollWindow ||
+    !trophy ||
+    !status ||
+    !progress ||
+    !complete
+  ) {
+    return;
+  }
+
+  const progressIcons =
+    Array.from(
+      progress.children
+    );
+
+  const finaleClickGuard =
+    createClickWaitGuard();
+
+  function setProgress(index) {
+    progressIcons.forEach(
+      (icon, iconIndex) => {
+        icon.classList.toggle(
+          'is-complete',
+          iconIndex < index
+        );
+
+        icon.classList.toggle(
+          'is-current',
+          iconIndex === index
+        );
+      }
+    );
+  }
+
+  /*
+   * TEST 1 — CLICK
+   */
+
+  status.innerHTML = `
+    <span>CLICK</span>
+    <span class="week8-finale-status-picture">
+      ⭐
+    </span>
+  `;
+
+  let finaleStarClicked = false;
+
+  clickTarget.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (finaleStarClicked) {
+        return;
+      }
+
+      event.preventDefault();
+
+      finaleStarClicked = true;
+
+      /*
+       * Stop the moving star immediately
+       * and advance to the drag challenge.
+       */
+      clickTarget.style.animation =
+        'none';
+
+      playLessonSuccessSound();
+
+      setProgress(1);
+
+      status.innerHTML = `
+        <span>DRAG</span>
+        <span class="week8-finale-status-picture">
+          📦
+        </span>
+        <span>TO</span>
+        <span class="week8-finale-status-picture">
+          🎯
+        </span>
+      `;
+
+      clickStage.hidden = true;
+      dragStage.hidden = false;
+    }
+  );
+
+  /*
+   * TEST 2 — DRAG
+   */
+
+  let holding = false;
+  let pointerId = null;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  packageEl.addEventListener(
+    'pointerdown',
+    (event) => {
+      event.preventDefault();
+
+      const rect =
+        packageEl.getBoundingClientRect();
+
+      holding = true;
+      pointerId = event.pointerId;
+
+      offsetX =
+        event.clientX -
+        rect.left;
+
+      offsetY =
+        event.clientY -
+        rect.top;
+
+      packageEl.classList.add(
+        'is-held'
+      );
+
+      packageEl.setPointerCapture(
+        pointerId
+      );
+
+      playLessonClickSound();
+    }
+  );
+
+  packageEl.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        !holding ||
+        event.pointerId !== pointerId
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const stageRect =
+        dragStage.getBoundingClientRect();
+
+      const packageRect =
+        packageEl.getBoundingClientRect();
+
+      let left =
+        event.clientX -
+        stageRect.left -
+        offsetX;
+
+      let top =
+        event.clientY -
+        stageRect.top -
+        offsetY;
+
+      left =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.width -
+              packageRect.width,
+            left
+          )
+        );
+
+      top =
+        Math.max(
+          0,
+          Math.min(
+            stageRect.height -
+              packageRect.height,
+            top
+          )
+        );
+
+      packageEl.style.left =
+        `${left}px`;
+
+      packageEl.style.top =
+        `${top}px`;
+
+      packageEl.style.transform =
+        'none';
+    }
+  );
+
+  function finishFinaleDrag(event) {
+    if (
+      !holding ||
+      event.pointerId !== pointerId
+    ) {
+      return;
+    }
+
+    holding = false;
+
+    packageEl.classList.remove(
+      'is-held'
+    );
+
+    const packageRect =
+      packageEl.getBoundingClientRect();
+
+    const targetRect =
+      dropZone.getBoundingClientRect();
+
+    const overlapLeft =
+      Math.max(
+        packageRect.left,
+        targetRect.left
+      );
+
+    const overlapRight =
+      Math.min(
+        packageRect.right,
+        targetRect.right
+      );
+
+    const overlapTop =
+      Math.max(
+        packageRect.top,
+        targetRect.top
+      );
+
+    const overlapBottom =
+      Math.min(
+        packageRect.bottom,
+        targetRect.bottom
+      );
+
+    const overlapWidth =
+      Math.max(
+        0,
+        overlapRight - overlapLeft
+      );
+
+    const overlapHeight =
+      Math.max(
+        0,
+        overlapBottom - overlapTop
+      );
+
+    const overlapArea =
+      overlapWidth *
+      overlapHeight;
+
+    const packageArea =
+      packageRect.width *
+      packageRect.height;
+
+    const success =
+      packageArea > 0 &&
+      overlapArea / packageArea >= 0.35;
+
+    if (!success) {
+      status.innerHTML = `
+        <span>TRY AGAIN</span>
+        <span class="week8-finale-status-picture">
+          📦
+        </span>
+      `;
+
+      packageEl.style.left = '15%';
+      packageEl.style.top = '70%';
+
+      packageEl.style.transform =
+        'translate(-50%, -50%)';
+
+      return;
+    }
+
+    dropZone.classList.add(
+      'is-complete'
+    );
+
+    playLessonSuccessSound();
+
+    setProgress(2);
+
+    status.innerHTML = `
+      <span>FIND</span>
+      <span class="week8-finale-status-picture">
+        🏆
+      </span>
+      <span>TROPHY</span>
+    `;
+
+    window.setTimeout(
+      () => {
+        dragStage.hidden = true;
+        scrollStage.hidden = false;
+
+        /*
+         * Start in the middle so the
+         * final Bunny Ears test requires
+         * actual scrolling.
+         */
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      },
+      600
+    );
+  }
+
+  packageEl.addEventListener(
+    'pointerup',
+    finishFinaleDrag
+  );
+
+  packageEl.addEventListener(
+    'pointercancel',
+    finishFinaleDrag
+  );
+
+  /*
+   * TEST 3 — BUNNY EARS
+   */
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  trophy.addEventListener(
+    'click',
+    () => {
+      if (!finaleClickGuard.begin()) {
+        return;
+      }
+
+      finaleClickGuard.lock();
+
+      stopWeek7ScrollSound();
+
+      playLessonSuccessSound();
+
+      progressIcons.forEach(
+        (icon) => {
+          icon.classList.remove(
+            'is-current'
+          );
+
+          icon.classList.add(
+            'is-complete'
+          );
+        }
+      );
+
+      status.textContent =
+        'YOU DID IT! 🏆';
+
+      window.setTimeout(
+        () => {
+          complete.hidden = false;
+        },
+        500
+      );
+    }
+  );
+
+  setProgress(0);
 }
 

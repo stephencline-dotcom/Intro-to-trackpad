@@ -14552,3 +14552,3946 @@ body {
   }
 }
 
+
+/* ========================================
+   WEEK 8 — STEP 1
+   FINAL EVERYTHING REVIEW
+======================================== */
+
+.week8-review-step {
+  width: min(920px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-master-badge {
+  width: fit-content;
+
+  margin: 0 auto 4px;
+  padding: 6px 16px;
+
+  border-radius: 999px;
+
+  background: #fff0ad;
+  color: #765000;
+
+  font-size: 0.82rem;
+  font-weight: 950;
+
+  letter-spacing: 0.08em;
+}
+
+.week8-review-step h2 {
+  margin: 3px 0;
+
+  color: #0b3158;
+
+  font-size: clamp(
+    2rem,
+    4vw,
+    2.7rem
+  );
+}
+
+.week8-review-step
+.lesson-kid-prompt {
+  margin: 2px 0 7px;
+
+  color: #d7ebff !important;
+
+  font-weight: 850;
+}
+
+.week8-review-grid {
+  width: min(800px, 100%);
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.week8-review-card {
+  position: relative;
+
+  min-height: 115px;
+
+  padding: 9px 7px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  border: 3px solid
+    rgba(255, 255, 255, 0.75);
+
+  border-radius: 18px;
+
+  background: #e7f6ff;
+
+  box-shadow:
+    0 6px 0
+      rgba(0, 0, 0, 0.13),
+    0 9px 18px
+      rgba(0, 0, 0, 0.1);
+}
+
+.week8-review-card:nth-child(2) {
+  background: #ffe5ee;
+}
+
+.week8-review-card:nth-child(3) {
+  background: #fff1c8;
+}
+
+.week8-review-card:nth-child(4) {
+  background: #e7e5ff;
+}
+
+.week8-review-card:nth-child(5) {
+  background: #e4f7de;
+}
+
+.week8-review-card:nth-child(6) {
+  background: #fff4b8;
+}
+
+.week8-review-card:nth-child(7) {
+  background: #e4f5ff;
+}
+
+.week8-review-number {
+  position: absolute;
+
+  top: 6px;
+  left: 7px;
+
+  width: 23px;
+  height: 23px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #29b6f6;
+  color: #07365c;
+
+  font-size: 0.75rem;
+  font-weight: 950;
+}
+
+.week8-review-icon {
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.week8-review-card strong {
+  color: #0b3158;
+
+  font-size: 0.92rem;
+  font-weight: 950;
+}
+
+.week8-review-card span {
+  color: #48647d;
+
+  font-size: 0.74rem;
+  font-weight: 750;
+}
+
+.week8-review-bunny {
+  grid-column:
+    span 2;
+}
+
+.week8-review-bunny img {
+  width: 72px;
+  height: 58px;
+
+  object-fit: contain;
+}
+
+.week8-review-ready {
+  width: fit-content;
+
+  margin: 8px auto 0;
+  padding: 7px 17px;
+
+  border: 3px solid #f4c430;
+  border-radius: 999px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  font-weight: 950;
+
+  animation:
+    week8MasterPulse
+    1.7s ease-in-out infinite;
+}
+
+@keyframes week8MasterPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+
+/* Chromebook student fit */
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-review-card {
+    min-height: 92px;
+    padding: 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-review-icon {
+    font-size: 1.7rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-review-bunny img {
+    width: 60px;
+    height: 46px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-review-ready {
+    margin-top: 5px;
+    padding: 5px 14px;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 2
+   SCROLLING ACCURACY CHALLENGE
+======================================== */
+
+.week8-accuracy-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-accuracy-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-accuracy-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-accuracy-topbar {
+  width: min(610px, 94%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.week8-accuracy-level,
+.week8-accuracy-target,
+.week8-accuracy-status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 950;
+}
+
+.week8-accuracy-level {
+  background: #e0f2fe;
+  color: #075985;
+  border: 2px solid #7dd3fc;
+}
+
+.week8-accuracy-target {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  border: 3px solid #f4c430;
+}
+
+.week8-accuracy-find-picture {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+.week8-accuracy-find-word,
+.week8-accuracy-find-name {
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.week8-accuracy-status {
+  width: fit-content;
+  margin: 0 auto 5px;
+
+  background: #e7f8ec;
+  color: #166534;
+
+  font-size: 0.84rem;
+}
+
+.week8-accuracy-status.is-wrong {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.week8-accuracy-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week8-accuracy-window {
+  position: relative;
+
+  width: min(610px, 94%);
+  height: 300px;
+
+  margin: 0 auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  border: 6px solid #64798c;
+  border-radius: 28px;
+
+  background: #eef8ff;
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.72),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-accuracy-content {
+  display: grid;
+  gap: 30px;
+
+  padding:
+    180px 28px;
+}
+
+.week8-accuracy-card {
+  min-height: 125px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  border: 3px solid #b9def3;
+  border-radius: 24px;
+
+  background: #ffffff;
+  color: #164b70;
+
+  font: inherit;
+  font-weight: 950;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0
+    rgba(58,122,158,0.12);
+}
+
+.week8-accuracy-card span {
+  font-size: 3.6rem;
+  line-height: 1;
+}
+
+.week8-accuracy-card strong {
+  font-size: 0.9rem;
+}
+
+.week8-stop-zone {
+  position: sticky;
+
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  width: calc(100% - 30px);
+  height: 128px;
+
+  margin: 0 auto;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  border: 5px dashed #22c55e;
+  border-radius: 24px;
+
+  background:
+    rgba(220,252,231,0.3);
+
+  box-sizing: border-box;
+}
+
+.week8-stop-zone span {
+  position: absolute;
+
+  top: 6px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  padding: 3px 10px;
+
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #166534;
+
+  font-size: 0.76rem;
+  font-weight: 950;
+}
+
+.week8-accuracy-card.is-wrong {
+  animation:
+    week7WrongCard
+    300ms ease;
+}
+
+.week8-accuracy-card.is-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-accuracy-complete {
+  position: sticky;
+
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+  padding: 25px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  border: 6px solid #22c55e;
+  border-radius: 20px;
+
+  color: #14532d;
+
+  text-align: center;
+
+  z-index: 20;
+}
+
+.week8-accuracy-complete[hidden] {
+  display: none !important;
+}
+
+.week8-accuracy-complete div {
+  font-size: 2.8rem;
+}
+
+.week8-accuracy-complete strong {
+  font-size: clamp(
+    2.3rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-accuracy-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-accuracy-window {
+    height: 245px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-stop-zone {
+    height: 108px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-accuracy-card {
+    min-height: 105px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-accuracy-card span {
+    font-size: 3rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 3
+   SCROLLING DIRECTION CHALLENGE
+======================================== */
+
+.week8-direction-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-direction-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-direction-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-direction-topbar {
+  width: min(620px, 94%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.week8-direction-round {
+  padding: 6px 14px;
+
+  border: 2px solid #c4b5fd;
+  border-radius: 999px;
+
+  background: #f0eaff;
+  color: #5b21b6;
+
+  font-weight: 950;
+}
+
+.week8-direction-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 6px 14px;
+
+  border: 3px solid #f4c430;
+  border-radius: 999px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  font-weight: 950;
+}
+
+.week8-direction-find-picture {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+.week8-direction-find-word,
+.week8-direction-find-name {
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.week8-direction-status {
+  width: fit-content;
+
+  margin: 0 auto 5px;
+  padding: 6px 15px;
+
+  border-radius: 999px;
+
+  background: #f0eaff;
+  color: #5b21b6;
+
+  font-size: 0.85rem;
+  font-weight: 950;
+}
+
+.week8-direction-status.is-wrong {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.week8-direction-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week8-direction-window {
+  position: relative;
+
+  width: min(620px, 94%);
+  height: 300px;
+
+  margin: 0 auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  border: 6px solid #64798c;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef8ff,
+      #f7f3ff
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.72),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-direction-content {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 22px;
+
+  padding:
+    34px 30px 50px;
+}
+
+.week8-direction-card {
+  min-height: 145px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border: 3px solid #b9def3;
+  border-radius: 24px;
+
+  background: #ffffff;
+  color: #164b70;
+
+  font: inherit;
+  font-weight: 950;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0
+    rgba(58,122,158,0.12);
+}
+
+.week8-direction-card span {
+  font-size: 3.7rem;
+  line-height: 1;
+}
+
+.week8-direction-card strong {
+  font-size: 0.88rem;
+}
+
+.week8-direction-card.is-wrong {
+  animation:
+    week7WrongCard
+    300ms ease;
+}
+
+.week8-direction-card.is-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-direction-complete {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+  padding: 25px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  border: 6px solid #22c55e;
+  border-radius: 20px;
+
+  color: #14532d;
+
+  text-align: center;
+
+  z-index: 20;
+}
+
+.week8-direction-complete[hidden] {
+  display: none !important;
+}
+
+.week8-direction-complete div {
+  font-size: 2.8rem;
+}
+
+.week8-direction-complete strong {
+  font-size: clamp(
+    2.3rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-direction-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-direction-window {
+    height: 245px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-direction-card {
+    min-height: 125px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-direction-card span {
+    font-size: 3.1rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-direction-find-picture {
+    font-size: 2.5rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 3
+   ELEVATOR ADVENTURE
+======================================== */
+
+.week8-elevator-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-elevator-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-elevator-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-elevator-topbar {
+  width: min(630px, 94%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.week8-elevator-level {
+  padding: 6px 14px;
+
+  border: 2px solid #7dd3fc;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-weight: 950;
+}
+
+.week8-elevator-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 6px 16px;
+
+  border: 3px solid #f4c430;
+  border-radius: 999px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  font-weight: 950;
+}
+
+.week8-elevator-target-picture {
+  font-size: 2.9rem;
+  line-height: 1;
+}
+
+.week8-elevator-target-word {
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.week8-elevator-status {
+  width: fit-content;
+
+  margin: 0 auto 5px;
+  padding: 6px 15px;
+
+  border-radius: 999px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.85rem;
+  font-weight: 950;
+}
+
+.week8-elevator-status.is-wrong {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.week8-elevator-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week8-elevator-window {
+  position: relative;
+
+  width: min(630px, 94%);
+  height: 305px;
+
+  margin: 0 auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  border: 7px solid #526f86;
+  border-radius: 28px;
+
+  background: #d7e8f4;
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.65),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-elevator-building {
+  display: flex;
+  flex-direction: column-reverse;
+
+  gap: 0;
+}
+
+.week8-elevator-floor {
+  position: relative;
+
+  min-height: 190px;
+
+  display: grid;
+
+  grid-template-columns:
+    80px 1fr;
+
+  align-items: stretch;
+
+  border-bottom:
+    5px solid #526f86;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f3f8fc,
+      #e5eef5
+    );
+}
+
+.week8-elevator-floor-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #526f86;
+  color: #ffffff;
+
+  font-size: 1.25rem;
+  font-weight: 1000;
+}
+
+.week8-elevator-room {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 18px 24px;
+}
+
+.week8-elevator-room-picture {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.week8-elevator-room-name {
+  flex: 1;
+
+  color: #164b70;
+
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.week8-elevator-enter {
+  min-width: 96px;
+
+  padding: 12px 15px;
+
+  border: 3px solid #2563eb;
+  border-radius: 16px;
+
+  background: #dbeafe;
+  color: #1e3a8a;
+
+  font: inherit;
+  font-weight: 950;
+
+  cursor: pointer;
+}
+
+.week8-elevator-enter:hover {
+  background: #bfdbfe;
+}
+
+.week8-elevator-enter.is-wrong {
+  animation:
+    week7WrongCard
+    300ms ease;
+}
+
+.week8-elevator-enter.is-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+  color: #166534;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-elevator-floor:nth-child(odd) {
+  background:
+    linear-gradient(
+      180deg,
+      #fff8e1,
+      #fcefc7
+    );
+}
+
+.week8-elevator-floor:nth-child(3n) {
+  background:
+    linear-gradient(
+      180deg,
+      #edf7e7,
+      #d9efcf
+    );
+}
+
+.week8-elevator-complete {
+  position: sticky;
+
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+  padding: 25px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  border: 6px solid #22c55e;
+  border-radius: 20px;
+
+  color: #14532d;
+  text-align: center;
+
+  z-index: 20;
+}
+
+.week8-elevator-complete[hidden] {
+  display: none !important;
+}
+
+.week8-elevator-complete-icons {
+  font-size: 3rem;
+}
+
+.week8-elevator-complete strong {
+  font-size: clamp(
+    2.4rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-elevator-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-elevator-window {
+    height: 250px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-elevator-floor {
+    min-height: 165px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-elevator-room-picture {
+    font-size: 3.8rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-elevator-target-picture {
+    font-size: 2.5rem;
+  }
+}
+
+
+/* Week 8 Elevator — large picture-first doors */
+
+.week8-elevator-enter {
+  min-width: 88px;
+  width: 88px;
+  height: 105px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #8b5a2b;
+  border-radius: 10px 10px 4px 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #b97836,
+      #d89b54
+    );
+
+  color: inherit;
+
+  font-size: 4rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset -7px 0 0
+      rgba(91, 52, 19, 0.16),
+    0 5px 0 #70421f;
+}
+
+.week8-elevator-enter:hover {
+  background:
+    linear-gradient(
+      90deg,
+      #c9853c,
+      #e3a65d
+    );
+
+  transform: translateY(-2px);
+}
+
+.week8-elevator-enter.is-correct {
+  font-size: 3.7rem;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-elevator-enter {
+    width: 76px;
+    min-width: 76px;
+    height: 90px;
+
+    font-size: 3.4rem;
+  }
+}
+
+
+/* Week 8 Elevator — bigger, clearer doorknob */
+
+.week8-door-knob {
+  position: absolute;
+
+  right: 8px;
+  top: 52%;
+
+  width: 15px;
+  height: 15px;
+
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff4a3 0%,
+      #facc15 38%,
+      #d99a00 72%,
+      #8a5b00 100%
+    );
+
+  border: 2px solid #8a5b00;
+
+  box-shadow:
+    0 2px 3px
+      rgba(0, 0, 0, 0.35),
+    inset 2px 2px 2px
+      rgba(255, 255, 255, 0.55);
+
+  z-index: 4;
+}
+
+/* Small plate behind the knob */
+.week8-door-knob::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 22px;
+  height: 28px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: 2px solid #9a6700;
+  border-radius: 8px;
+
+  background: #eab308;
+
+  z-index: -1;
+}
+
+
+/* ========================================
+   WEEK 8 — REAL ELEVATOR DOOR
+======================================== */
+
+.week8-elevator-enter {
+  position: relative !important;
+
+  overflow: visible !important;
+
+  perspective: 500px;
+
+  background: #3a2716 !important;
+
+  border: 5px solid #70421f !important;
+
+  transform-style: preserve-3d;
+}
+
+.week8-door-inside {
+  position: absolute;
+
+  inset: 3px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 4px;
+
+  background:
+    radial-gradient(
+      circle,
+      #fff7a8 0%,
+      #facc15 45%,
+      #8a5b00 100%
+    );
+
+  font-size: 3rem;
+
+  z-index: 1;
+}
+
+.week8-door-panel {
+  position: absolute;
+
+  inset: 2px;
+
+  z-index: 3;
+
+  border: 3px solid #70421f;
+
+  border-radius: 6px 6px 2px 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #9b5e2b 0%,
+      #c9833e 52%,
+      #a8652f 100%
+    );
+
+  box-sizing: border-box;
+
+  transform-origin: left center;
+
+  transition:
+    transform 700ms
+    cubic-bezier(
+      0.2,
+      0.75,
+      0.25,
+      1
+    );
+
+  backface-visibility: hidden;
+}
+
+/* Door inset panel */
+.week8-door-panel::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 12px 10px;
+
+  border:
+    3px solid
+    rgba(91, 52, 19, 0.5);
+
+  border-radius: 4px;
+
+  box-shadow:
+    inset 0 0 0 4px
+    rgba(255,255,255,0.06);
+}
+
+/* Gold plate */
+.week8-door-knob::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 24px;
+  height: 30px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border:
+    2px solid #8a5b00;
+
+  border-radius: 7px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8d84f,
+      #d9a300
+    );
+
+  z-index: -1;
+}
+
+/* Gold knob */
+.week8-door-knob {
+  position: absolute;
+
+  right: 9px;
+  top: 52%;
+
+  width: 15px;
+  height: 15px;
+
+  transform:
+    translateY(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff8a8 0%,
+      #facc15 38%,
+      #d99a00 72%,
+      #815400 100%
+    );
+
+  border: 2px solid #815400;
+
+  box-shadow:
+    0 2px 3px
+      rgba(0,0,0,0.35);
+
+  z-index: 5;
+}
+
+/* Correct door swings open */
+.week8-elevator-enter.is-open
+.week8-door-panel {
+  transform:
+    rotateY(-78deg);
+}
+
+/* Star behind the open door */
+.week8-elevator-enter.is-open
+.week8-door-inside {
+  animation:
+    week8ElevatorStarPop
+    650ms ease-out;
+}
+
+@keyframes week8ElevatorStarPop {
+
+  0% {
+    transform: scale(0.5);
+  }
+
+  60% {
+    transform: scale(1.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 4
+   SCROLLING SCAVENGER HUNT
+======================================== */
+
+.week8-hunt-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-hunt-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-hunt-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-hunt-topbar {
+  width: min(650px, 95%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+}
+
+.week8-hunt-level {
+  padding: 6px 13px;
+
+  border: 2px solid #7dd3fc;
+  border-radius: 999px;
+
+  background: #e0f2fe;
+  color: #075985;
+
+  font-size: 0.85rem;
+  font-weight: 950;
+}
+
+.week8-hunt-targets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 48px;
+
+  padding: 4px 11px;
+
+  border: 3px solid #f4c430;
+  border-radius: 18px;
+
+  background: #fff4ba;
+}
+
+.week8-hunt-target {
+  position: relative;
+
+  min-width: 43px;
+  height: 43px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  font-size: 2rem;
+  line-height: 1;
+
+  box-shadow:
+    0 3px 0
+    rgba(123, 84, 0, 0.16);
+}
+
+.week8-hunt-target.is-current {
+  outline: 4px solid #29b6f6;
+
+  animation:
+    week8HuntTargetPulse
+    1.1s ease-in-out infinite;
+}
+
+.week8-hunt-target.is-found {
+  background: #dcfce7;
+
+  opacity: 0.7;
+}
+
+.week8-hunt-target.is-found::after {
+  content: "✓";
+
+  position: absolute;
+
+  right: -5px;
+  bottom: -5px;
+
+  width: 20px;
+  height: 20px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+  color: #ffffff;
+
+  font-size: 0.8rem;
+  font-weight: 1000;
+}
+
+@keyframes week8HuntTargetPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.week8-hunt-status {
+  width: fit-content;
+
+  margin: 0 auto 5px;
+  padding: 5px 14px;
+
+  border-radius: 999px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.82rem;
+  font-weight: 950;
+}
+
+.week8-hunt-status.is-wrong {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.week8-hunt-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week8-hunt-window {
+  position: relative;
+
+  width: min(650px, 95%);
+  height: 305px;
+
+  margin: 0 auto;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  border: 7px solid #526f86;
+  border-radius: 28px;
+
+  background: #dff4ff;
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.65),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-hunt-world {
+  position: relative;
+
+  min-height: 2200px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #9ee3ff 0%,
+      #dff8ff 16%,
+      #b7efb0 16%,
+      #66c96f 36%,
+      #ffe4a7 36%,
+      #f7c976 56%,
+      #9ee8ff 56%,
+      #45bde8 76%,
+      #7b8793 76%,
+      #354555 100%
+    );
+}
+
+.week8-hunt-zone-label {
+  position: absolute;
+
+  left: 15px;
+
+  padding: 5px 11px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.88);
+
+  color: #164b70;
+
+  font-size: 0.75rem;
+  font-weight: 950;
+
+  pointer-events: none;
+}
+
+.week8-hunt-scenery {
+  position: absolute;
+
+  font-size: 4rem;
+
+  opacity: 0.4;
+
+  pointer-events: none;
+}
+
+.week8-hunt-object {
+  position: absolute;
+
+  width: 94px;
+  height: 94px;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid
+    rgba(255,255,255,0.9);
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,0.9);
+
+  font-size: 3.5rem;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 0
+    rgba(0,0,0,0.13);
+}
+
+.week8-hunt-object.is-wrong {
+  animation:
+    week7WrongCard
+    300ms ease;
+}
+
+.week8-hunt-object.is-found {
+  border-color: #22c55e;
+
+  background: #dcfce7;
+
+  pointer-events: none;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-hunt-complete {
+  position: sticky;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+  padding: 25px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  border: 6px solid #22c55e;
+  border-radius: 20px;
+
+  color: #14532d;
+
+  text-align: center;
+
+  z-index: 30;
+}
+
+.week8-hunt-complete[hidden] {
+  display: none !important;
+}
+
+.week8-hunt-complete div {
+  font-size: 3rem;
+}
+
+.week8-hunt-complete strong {
+  font-size: clamp(
+    2.3rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-hunt-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-hunt-window {
+    height: 250px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-hunt-object {
+    width: 82px;
+    height: 82px;
+
+    font-size: 3rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 5
+   POINTER CHALLENGE
+======================================== */
+
+.week8-pointer-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-pointer-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-pointer-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-pointer-topbar {
+  width: min(650px, 95%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.week8-pointer-round,
+.week8-pointer-target,
+.week8-pointer-status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 950;
+}
+
+.week8-pointer-round {
+  background: #e0f2fe;
+  color: #075985;
+  border: 2px solid #7dd3fc;
+}
+
+.week8-pointer-target {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #fff4ba;
+  color: #694900;
+
+  border: 3px solid #f4c430;
+}
+
+.week8-pointer-find-picture {
+  font-size: 2.7rem;
+  line-height: 1;
+}
+
+.week8-pointer-find-word,
+.week8-pointer-find-name {
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.week8-pointer-status {
+  width: fit-content;
+  margin: 0 auto 5px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.84rem;
+}
+
+.week8-pointer-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.week8-pointer-area {
+  position: relative;
+
+  width: min(650px, 95%);
+  height: 330px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 6px solid #64798c;
+  border-radius: 28px;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255,255,255,0.9),
+      rgba(224,242,254,0.95)
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.7),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-pointer-object {
+  position: absolute;
+
+  display: grid;
+  place-items: center;
+
+  border: 4px solid #38bdf8;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  font: inherit;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 0
+    rgba(14,116,144,0.18);
+
+  transition:
+    left 220ms ease,
+    top 220ms ease,
+    width 220ms ease,
+    height 220ms ease,
+    transform 120ms ease;
+}
+
+.week8-pointer-object:hover {
+  transform: scale(1.04);
+}
+
+.week8-pointer-object.is-correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-pointer-complete {
+  position: absolute;
+  inset: 0;
+
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  color: #14532d;
+
+  text-align: center;
+}
+
+.week8-pointer-complete[hidden] {
+  display: none !important;
+}
+
+.week8-pointer-complete div {
+  font-size: 3rem;
+}
+
+.week8-pointer-complete strong {
+  font-size: clamp(
+    2.4rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-pointer-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-pointer-area {
+    height: 270px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-pointer-find-picture {
+    font-size: 2.4rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 5
+   PICTURE-ONLY POINTER TARGETS
+======================================== */
+
+.week8-pointer-object {
+  border: none !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  padding: 0 !important;
+
+  line-height: 1;
+
+  display: grid;
+  place-items: center;
+}
+
+.week8-pointer-object:hover {
+  background: transparent !important;
+}
+
+.week8-pointer-object.is-correct {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 6
+   DRAG DELIVERY CHALLENGE
+======================================== */
+
+.week8-drag-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-drag-step h2 {
+  margin: 2px 0;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-drag-step .lesson-kid-prompt {
+  margin: 2px 0 5px;
+  color: #48647d;
+  font-weight: 850;
+}
+
+.week8-drag-topbar {
+  width: min(670px, 95%);
+  margin: 0 auto 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.week8-drag-round,
+.week8-drag-status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 950;
+}
+
+.week8-drag-round {
+  background: #e0f2fe;
+  color: #075985;
+  border: 2px solid #7dd3fc;
+}
+
+.week8-drag-status {
+  background: #fff4ba;
+  color: #694900;
+  border: 2px solid #f4c430;
+}
+
+.week8-drag-status.is-wrong {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+.week8-drag-status.is-correct {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #22c55e;
+}
+
+.week8-drag-area {
+  position: relative;
+
+  width: min(670px, 95%);
+  height: 330px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 6px solid #64798c;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eaf8ff,
+      #d7f0d0
+    );
+
+  box-shadow:
+    inset 0 0 0 4px rgba(255,255,255,0.7),
+    0 7px 0 rgba(48,81,105,0.16);
+}
+
+.week8-drag-package {
+  position: absolute;
+
+  display: grid;
+  place-items: center;
+
+  border: none;
+  background: transparent;
+
+  padding: 0;
+
+  font: inherit;
+  line-height: 1;
+
+  cursor: grab;
+
+  touch-action: none;
+  user-select: none;
+
+  z-index: 5;
+}
+
+.week8-drag-package.is-held {
+  cursor: grabbing;
+
+  filter:
+    drop-shadow(
+      0 8px 7px rgba(0,0,0,0.25)
+    );
+}
+
+.week8-drag-truck {
+  position: absolute;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px dashed #22c55e;
+  border-radius: 22px;
+
+  background:
+    rgba(220,252,231,0.75);
+
+  font-size: 5rem;
+
+  box-sizing: border-box;
+
+  z-index: 2;
+}
+
+.week8-drag-truck.is-ready {
+  background: #dcfce7;
+  border-style: solid;
+
+  animation:
+    week7CorrectCard
+    550ms ease;
+}
+
+.week8-drag-obstacle {
+  position: absolute;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 18px;
+
+  background: #cbd5e1;
+
+  border: 4px solid #64748b;
+
+  font-size: 2.8rem;
+
+  box-sizing: border-box;
+
+  z-index: 3;
+}
+
+.week8-drag-complete {
+  position: absolute;
+  inset: 0;
+
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  color: #14532d;
+
+  text-align: center;
+}
+
+.week8-drag-complete[hidden] {
+  display: none !important;
+}
+
+.week8-drag-complete div {
+  font-size: 3rem;
+}
+
+.week8-drag-complete strong {
+  font-size: clamp(
+    2.4rem,
+    6vw,
+    4rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-drag-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-drag-area {
+    height: 270px;
+  }
+}
+
+
+/* Week 8 Step 6 — face truck toward incoming package */
+
+.week8-drag-truck {
+  transform:
+    translate(-50%, -50%)
+    scaleX(-1);
+}
+
+
+/* ========================================
+   WEEK 8 STEP 6 — TRUCK FIX
+======================================== */
+
+/*
+ * Positioning stays on the truck container.
+ * Flip only the picture inside it.
+ */
+.week8-drag-truck {
+  transform:
+    translate(-50%, -50%) !important;
+}
+
+.week8-drag-truck-icon {
+  display: inline-block;
+
+  transform: scaleX(-1);
+
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 7
+   MIXED TRACKPAD MISSION
+======================================== */
+
+.week8-mission-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-mission-step h2 {
+  margin: 2px 0 5px;
+  color: #0b3158;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.week8-mission-progress {
+  width: fit-content;
+  margin: 0 auto 5px;
+
+  display: flex;
+  gap: 10px;
+
+  padding: 5px 13px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+}
+
+.week8-mission-progress span {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  font-size: 1.5rem;
+}
+
+.week8-mission-progress span.is-current {
+  background: #fff4ba;
+
+  outline:
+    4px solid #f4c430;
+
+  transform: scale(1.08);
+}
+
+.week8-mission-progress span.is-complete {
+  background: #dcfce7;
+
+  outline:
+    3px solid #22c55e;
+}
+
+.week8-mission-status {
+  width: fit-content;
+
+  margin: 0 auto 5px;
+  padding: 6px 15px;
+
+  border-radius: 999px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.84rem;
+  font-weight: 950;
+}
+
+.week8-mission-area {
+  position: relative;
+
+  width: min(670px, 95%);
+  height: 330px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 6px solid #64798c;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eaf8ff,
+      #f3f0ff
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255,255,255,0.7),
+    0 7px 0
+      rgba(48,81,105,0.16);
+}
+
+.week8-mission-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.week8-mission-stage[hidden] {
+  display: none !important;
+}
+
+/* START */
+
+#week8MissionStart {
+  display: grid;
+  place-items: center;
+}
+
+.week8-mission-big-icon {
+  position: absolute;
+
+  top: 35px;
+
+  font-size: 5rem;
+}
+
+.week8-mission-start-button {
+  width: 105px;
+  height: 105px;
+
+  display: grid;
+  place-items: center;
+
+  margin-top: 90px;
+
+  border: 6px solid #f4c430;
+  border-radius: 50%;
+
+  background: #fff4ba;
+
+  font-size: 4rem;
+
+  cursor: pointer;
+
+  animation:
+    week8MissionPulse
+    1.2s ease-in-out infinite;
+}
+
+@keyframes week8MissionPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* KEY DRAG */
+
+#week8MissionKeyStage {
+  background:
+    linear-gradient(
+      180deg,
+      #e0f2fe,
+      #dbeafe
+    );
+}
+
+.week8-mission-key {
+  position: absolute;
+
+  left: 15%;
+  top: 50%;
+
+  width: 90px;
+  height: 90px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: none;
+  background: transparent;
+
+  font-size: 4.5rem;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  z-index: 5;
+}
+
+.week8-mission-key.is-held {
+  cursor: grabbing;
+}
+
+.week8-mission-lock {
+  position: absolute;
+
+  right: 8%;
+  top: 50%;
+
+  width: 145px;
+  height: 145px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #f4c430;
+  border-radius: 28px;
+
+  background: #fff4ba;
+
+  font-size: 5rem;
+}
+
+.week8-mission-lock.is-unlocked {
+  border-color: #22c55e;
+
+  background: #dcfce7;
+}
+
+/* SCROLL WORLD */
+
+.week8-mission-scroll-window {
+  position: absolute;
+  inset: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+}
+
+.week8-mission-world {
+  display: flex;
+  flex-direction: column;
+}
+
+.week8-mission-world-section {
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  font-size: 4.5rem;
+}
+
+.week8-mission-world-section:nth-child(1) {
+  background: #a5e7ff;
+}
+
+.week8-mission-world-section:nth-child(2) {
+  background: #8cdb83;
+}
+
+.week8-mission-world-section:nth-child(3) {
+  background: #ffd991;
+}
+
+.week8-mission-world-section:nth-child(4) {
+  background: #79d7f5;
+}
+
+.week8-mission-world-section:nth-child(5) {
+  background: #667788;
+}
+
+.week8-mission-treasure-section {
+  background:
+    linear-gradient(
+      180deg,
+      #ffe77a,
+      #e5aa32
+    ) !important;
+}
+
+.week8-mission-treasure {
+  border: none;
+  background: transparent;
+
+  font-size: 6rem;
+
+  cursor: pointer;
+
+  animation:
+    week8MissionTreasurePulse
+    1.2s ease-in-out infinite;
+}
+
+@keyframes week8MissionTreasurePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* COMPLETE */
+
+.week8-mission-complete {
+  position: absolute;
+  inset: 0;
+
+  z-index: 30;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  background:
+    rgba(220,252,231,0.98);
+
+  color: #14532d;
+
+  text-align: center;
+}
+
+.week8-mission-complete[hidden] {
+  display: none !important;
+}
+
+.week8-mission-complete div {
+  font-size: 3rem;
+}
+
+.week8-mission-complete strong {
+  font-size: clamp(
+    2.1rem,
+    5vw,
+    3.5rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-mission-complete span {
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-mission-area {
+    height: 270px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-mission-world-section {
+    min-height: 260px;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 7 EXTENDED MISSION
+======================================== */
+
+.week8-mission-progress span {
+  width: 34px;
+  height: 34px;
+
+  font-size: 1.35rem;
+}
+
+/* Treasure delivery stage */
+
+#week8MissionTreasureDragStage {
+  background:
+    linear-gradient(
+      180deg,
+      #fff4ba,
+      #fde68a
+    );
+}
+
+.week8-mission-treasure-box {
+  position: absolute;
+
+  left: 16%;
+  top: 55%;
+
+  width: 90px;
+  height: 90px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border: none;
+  background: transparent;
+
+  font-size: 4.7rem;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  z-index: 5;
+}
+
+.week8-mission-treasure-box.is-held {
+  cursor: grabbing;
+
+  filter:
+    drop-shadow(
+      0 8px 7px
+      rgba(0,0,0,0.24)
+    );
+}
+
+.week8-mission-chest {
+  position: absolute;
+
+  right: 8%;
+  top: 50%;
+
+  width: 155px;
+  height: 145px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #f59e0b;
+  border-radius: 28px;
+
+  background:
+    rgba(255,247,205,0.9);
+
+  font-size: 5rem;
+}
+
+.week8-mission-chest.is-filled {
+  border-color: #22c55e;
+  background: #dcfce7;
+}
+
+/* Final trophy scroll */
+
+.week8-mission-trophy-scroll {
+  position: absolute;
+  inset: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+}
+
+.week8-mission-trophy-world {
+  display: flex;
+  flex-direction: column;
+}
+
+.week8-mission-trophy-world > div {
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  font-size: 4.5rem;
+}
+
+.week8-mission-trophy-world > div:nth-child(1) {
+  background: #8cdb83;
+}
+
+.week8-mission-trophy-world > div:nth-child(2) {
+  background: #ffd991;
+}
+
+.week8-mission-trophy-world > div:nth-child(3) {
+  background: #79d7f5;
+}
+
+.week8-mission-trophy-world > div:nth-child(4) {
+  background: #667788;
+}
+
+.week8-mission-trophy-finish {
+  background:
+    linear-gradient(
+      180deg,
+      #fff3a0,
+      #e6b53c
+    );
+}
+
+.week8-mission-trophy {
+  border: none;
+  background: transparent;
+
+  font-size: 7rem;
+
+  cursor: pointer;
+
+  animation:
+    week8MissionTreasurePulse
+    1.2s ease-in-out infinite;
+}
+
+
+/* Week 8 Step 7 — picture-first trophy clue */
+
+.week8-mission-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.week8-mission-find-label,
+.week8-mission-find-name {
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.week8-mission-find-picture {
+  display: inline-block;
+
+  font-size: 3rem;
+  line-height: 1;
+
+  animation:
+    week8MissionTrophyHint
+    1.2s ease-in-out infinite;
+}
+
+@keyframes week8MissionTrophyHint {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 8
+   TRACKPAD MASTER FINALE
+======================================== */
+
+.week8-finale-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-finale-step h2 {
+  margin: 2px 0 5px;
+
+  color: #0b3158;
+
+  font-size: clamp(
+    1.9rem,
+    4vw,
+    2.6rem
+  );
+}
+
+.week8-finale-progress {
+  width: fit-content;
+
+  margin: 0 auto 6px;
+  padding: 6px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, 0.1);
+}
+
+.week8-finale-progress span {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  font-size: 1.6rem;
+}
+
+.week8-finale-progress span.is-current {
+  background: #fff4ba;
+
+  outline: 4px solid #f4c430;
+
+  transform: scale(1.08);
+}
+
+.week8-finale-progress span.is-complete {
+  background: #dcfce7;
+
+  outline: 3px solid #22c55e;
+}
+
+.week8-finale-status {
+  width: fit-content;
+  min-height: 38px;
+
+  margin: 0 auto 6px;
+  padding: 6px 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-radius: 999px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.9rem;
+  font-weight: 950;
+}
+
+.week8-finale-status-picture {
+  font-size: 2.7rem;
+  line-height: 1;
+}
+
+.week8-finale-area {
+  position: relative;
+
+  width: min(670px, 95%);
+  height: 335px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 7px solid #526f86;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eaf8ff,
+      #f4f0ff
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255, 255, 255, 0.7),
+    0 7px 0
+      rgba(48, 81, 105, 0.16);
+}
+
+.week8-finale-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.week8-finale-stage[hidden] {
+  display: none !important;
+}
+
+/* ----------------------------------------
+   CLICK TEST
+----------------------------------------- */
+
+.week8-finale-click-target {
+  position: absolute;
+
+  left: 72%;
+  top: 28%;
+
+  width: 50px;
+  height: 50px;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 2.8rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  animation:
+    week8FinaleTargetMove
+    3.2s ease-in-out infinite;
+}
+
+@keyframes week8FinaleTargetMove {
+
+  0%,
+  100% {
+    left: 72%;
+    top: 28%;
+  }
+
+  25% {
+    left: 27%;
+    top: 34%;
+  }
+
+  50% {
+    left: 70%;
+    top: 72%;
+  }
+
+  75% {
+    left: 34%;
+    top: 68%;
+  }
+}
+
+/* ----------------------------------------
+   DRAG TEST
+----------------------------------------- */
+
+#week8FinaleDragStage {
+  background:
+    linear-gradient(
+      180deg,
+      #dff4ff,
+      #e7f7df
+    );
+}
+
+.week8-finale-package {
+  position: absolute;
+
+  left: 15%;
+  top: 70%;
+
+  width: 62px;
+  height: 62px;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 3.6rem;
+  line-height: 1;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  z-index: 5;
+}
+
+.week8-finale-package.is-held {
+  cursor: grabbing;
+
+  filter:
+    drop-shadow(
+      0 8px 7px
+      rgba(0, 0, 0, 0.25)
+    );
+}
+
+.week8-finale-drop-zone {
+  position: absolute;
+
+  right: 8%;
+  top: 30%;
+
+  width: 115px;
+  height: 115px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #22c55e;
+  border-radius: 26px;
+
+  background:
+    rgba(220, 252, 231, 0.78);
+
+  font-size: 4rem;
+}
+
+.week8-finale-drop-zone.is-complete {
+  border-style: solid;
+  background: #dcfce7;
+}
+
+/* ----------------------------------------
+   BUNNY EARS TEST
+----------------------------------------- */
+
+.week8-finale-scroll-window {
+  position: absolute;
+  inset: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+}
+
+.week8-finale-world {
+  display: flex;
+  flex-direction: column;
+}
+
+.week8-finale-world > div {
+  min-height: 330px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  font-size: 4.5rem;
+}
+
+.week8-finale-world > div:nth-child(1) {
+  background: #a5e7ff;
+}
+
+.week8-finale-world > div:nth-child(2) {
+  background: #8cdb83;
+}
+
+.week8-finale-world > div:nth-child(3) {
+  background: #ffd991;
+}
+
+.week8-finale-world > div:nth-child(4) {
+  background: #79d7f5;
+}
+
+.week8-finale-trophy-zone {
+  background:
+    linear-gradient(
+      180deg,
+      #fff4a3,
+      #e5ae32
+    ) !important;
+}
+
+.week8-finale-trophy {
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 7rem;
+
+  cursor: pointer;
+
+  animation:
+    week8FinaleTrophyPulse
+    1.15s ease-in-out infinite;
+}
+
+@keyframes week8FinaleTrophyPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* ----------------------------------------
+   TRACKPAD MASTER CELEBRATION
+----------------------------------------- */
+
+.week8-finale-complete {
+  position: absolute;
+  inset: 0;
+
+  z-index: 40;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle,
+      #fffbd1 0%,
+      #dcfce7 58%,
+      #bae6fd 100%
+    );
+
+  color: #14532d;
+
+  text-align: center;
+}
+
+.week8-finale-complete[hidden] {
+  display: none !important;
+}
+
+.week8-finale-crown {
+  font-size: 6rem;
+
+  animation:
+    week8FinaleChampion
+    900ms ease-in-out
+    infinite alternate;
+}
+
+@keyframes week8FinaleChampion {
+
+  from {
+    transform:
+      scale(1)
+      rotate(-3deg);
+  }
+
+  to {
+    transform:
+      scale(1.12)
+      rotate(3deg);
+  }
+}
+
+.week8-finale-complete strong {
+  color: #0b5d38;
+
+  font-size: clamp(
+    2.4rem,
+    6vw,
+    4.2rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-finale-complete span {
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.week8-finale-stars {
+  font-size: 2rem;
+
+  letter-spacing: 7px;
+}
+
+
+/* Chromebook student fit */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-finale-area {
+    height: 270px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-finale-world > div {
+    min-height: 275px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-finale-crown {
+    font-size: 5rem;
+  }
+}
+
+EOFcd /workspaces/Intro-to-trackpad
+
+cat >> lesson-shell.css <<'EOF'
+
+/* ========================================
+   WEEK 8 — STEP 8
+   TRACKPAD MASTER FINALE
+======================================== */
+
+.week8-finale-step {
+  width: min(900px, 96%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.week8-finale-step h2 {
+  margin: 2px 0 5px;
+
+  color: #0b3158;
+
+  font-size: clamp(
+    1.9rem,
+    4vw,
+    2.6rem
+  );
+}
+
+.week8-finale-progress {
+  width: fit-content;
+
+  margin: 0 auto 6px;
+  padding: 6px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, 0.1);
+}
+
+.week8-finale-progress span {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  font-size: 1.6rem;
+}
+
+.week8-finale-progress span.is-current {
+  background: #fff4ba;
+
+  outline: 4px solid #f4c430;
+
+  transform: scale(1.08);
+}
+
+.week8-finale-progress span.is-complete {
+  background: #dcfce7;
+
+  outline: 3px solid #22c55e;
+}
+
+.week8-finale-status {
+  width: fit-content;
+  min-height: 38px;
+
+  margin: 0 auto 6px;
+  padding: 6px 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-radius: 999px;
+
+  background: #ede9fe;
+  color: #5b21b6;
+
+  font-size: 0.9rem;
+  font-weight: 950;
+}
+
+.week8-finale-status-picture {
+  font-size: 2.7rem;
+  line-height: 1;
+}
+
+.week8-finale-area {
+  position: relative;
+
+  width: min(670px, 95%);
+  height: 335px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  border: 7px solid #526f86;
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eaf8ff,
+      #f4f0ff
+    );
+
+  box-shadow:
+    inset 0 0 0 4px
+      rgba(255, 255, 255, 0.7),
+    0 7px 0
+      rgba(48, 81, 105, 0.16);
+}
+
+.week8-finale-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.week8-finale-stage[hidden] {
+  display: none !important;
+}
+
+/* ----------------------------------------
+   CLICK TEST
+----------------------------------------- */
+
+.week8-finale-click-target {
+  position: absolute;
+
+  left: 72%;
+  top: 28%;
+
+  width: 50px;
+  height: 50px;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 2.8rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  animation:
+    week8FinaleTargetMove
+    3.2s ease-in-out infinite;
+}
+
+@keyframes week8FinaleTargetMove {
+
+  0%,
+  100% {
+    left: 72%;
+    top: 28%;
+  }
+
+  25% {
+    left: 27%;
+    top: 34%;
+  }
+
+  50% {
+    left: 70%;
+    top: 72%;
+  }
+
+  75% {
+    left: 34%;
+    top: 68%;
+  }
+}
+
+/* ----------------------------------------
+   DRAG TEST
+----------------------------------------- */
+
+#week8FinaleDragStage {
+  background:
+    linear-gradient(
+      180deg,
+      #dff4ff,
+      #e7f7df
+    );
+}
+
+.week8-finale-package {
+  position: absolute;
+
+  left: 15%;
+  top: 70%;
+
+  width: 62px;
+  height: 62px;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 3.6rem;
+  line-height: 1;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  z-index: 5;
+}
+
+.week8-finale-package.is-held {
+  cursor: grabbing;
+
+  filter:
+    drop-shadow(
+      0 8px 7px
+      rgba(0, 0, 0, 0.25)
+    );
+}
+
+.week8-finale-drop-zone {
+  position: absolute;
+
+  right: 8%;
+  top: 30%;
+
+  width: 115px;
+  height: 115px;
+
+  transform:
+    translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  border: 6px dashed #22c55e;
+  border-radius: 26px;
+
+  background:
+    rgba(220, 252, 231, 0.78);
+
+  font-size: 4rem;
+}
+
+.week8-finale-drop-zone.is-complete {
+  border-style: solid;
+  background: #dcfce7;
+}
+
+/* ----------------------------------------
+   BUNNY EARS TEST
+----------------------------------------- */
+
+.week8-finale-scroll-window {
+  position: absolute;
+  inset: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior: contain;
+}
+
+.week8-finale-world {
+  display: flex;
+  flex-direction: column;
+}
+
+.week8-finale-world > div {
+  min-height: 330px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  font-size: 4.5rem;
+}
+
+.week8-finale-world > div:nth-child(1) {
+  background: #a5e7ff;
+}
+
+.week8-finale-world > div:nth-child(2) {
+  background: #8cdb83;
+}
+
+.week8-finale-world > div:nth-child(3) {
+  background: #ffd991;
+}
+
+.week8-finale-world > div:nth-child(4) {
+  background: #79d7f5;
+}
+
+.week8-finale-trophy-zone {
+  background:
+    linear-gradient(
+      180deg,
+      #fff4a3,
+      #e5ae32
+    ) !important;
+}
+
+.week8-finale-trophy {
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 7rem;
+
+  cursor: pointer;
+
+  animation:
+    week8FinaleTrophyPulse
+    1.15s ease-in-out infinite;
+}
+
+@keyframes week8FinaleTrophyPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* ----------------------------------------
+   TRACKPAD MASTER CELEBRATION
+----------------------------------------- */
+
+.week8-finale-complete {
+  position: absolute;
+  inset: 0;
+
+  z-index: 40;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle,
+      #fffbd1 0%,
+      #dcfce7 58%,
+      #bae6fd 100%
+    );
+
+  color: #14532d;
+
+  text-align: center;
+}
+
+.week8-finale-complete[hidden] {
+  display: none !important;
+}
+
+.week8-finale-crown {
+  font-size: 6rem;
+
+  animation:
+    week8FinaleChampion
+    900ms ease-in-out
+    infinite alternate;
+}
+
+@keyframes week8FinaleChampion {
+
+  from {
+    transform:
+      scale(1)
+      rotate(-3deg);
+  }
+
+  to {
+    transform:
+      scale(1.12)
+      rotate(3deg);
+  }
+}
+
+.week8-finale-complete strong {
+  color: #0b5d38;
+
+  font-size: clamp(
+    2.4rem,
+    6vw,
+    4.2rem
+  );
+
+  font-weight: 1000;
+}
+
+.week8-finale-complete span {
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.week8-finale-stars {
+  font-size: 2rem;
+
+  letter-spacing: 7px;
+}
+
+
+/* Chromebook student fit */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-finale-area {
+    height: 270px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-finale-world > div {
+    min-height: 275px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-finale-crown {
+    font-size: 5rem;
+  }
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 8
+   HARDER MOVING DRAG TARGET
+======================================== */
+
+.week8-finale-drop-zone {
+  animation:
+    week8FinaleDropZoneMove
+    3.4s ease-in-out infinite;
+}
+
+@keyframes week8FinaleDropZoneMove {
+
+  0%,
+  100% {
+    right: 8%;
+    top: 28%;
+  }
+
+  25% {
+    right: 58%;
+    top: 24%;
+  }
+
+  50% {
+    right: 20%;
+    top: 72%;
+  }
+
+  75% {
+    right: 54%;
+    top: 66%;
+  }
+}
+
+/*
+ * Once the package is successfully
+ * delivered, stop the target movement.
+ */
+.week8-finale-drop-zone.is-complete {
+  animation: none;
+}
+
+
+/* ========================================
+   WEEK 8 — STEP 8
+   LONGER FINAL TROPHY SEARCH
+======================================== */
+
+.week8-finale-world > div {
+  min-height: 520px;
+}
+
+.week8-finale-trophy-zone {
+  min-height: 620px !important;
+}
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .week8-finale-world > div {
+    min-height: 440px;
+  }
+
+  body[data-lesson-view="student"]
+  .week8-finale-trophy-zone {
+    min-height: 540px !important;
+  }
+}
+
+
+/* ========================================
+   CLICK ONCE + WAIT
+   LARGE CENTER-SCREEN WARNING
+======================================== */
+
+.click-wait-reminder {
+  position: fixed !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  transform:
+    translate(-50%, -50%) !important;
+
+  width: min(560px, 86vw);
+
+  padding: 24px 30px;
+
+  z-index: 99999 !important;
+
+  border: 7px solid #f4b400;
+  border-radius: 28px;
+
+  background: #fff4bf;
+
+  box-shadow:
+    0 18px 50px
+      rgba(15, 23, 42, 0.38),
+    0 0 0 100vmax
+      rgba(15, 23, 42, 0.22);
+
+  text-align: center;
+}
+
+.click-wait-reminder-icon {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.click-wait-reminder strong {
+  font-size: 1.8rem;
+  font-weight: 1000;
+}
+
+.click-wait-reminder span {
+  margin-top: 5px;
+
+  font-size: 1.15rem;
+  font-weight: 850;
+}
+
+.click-wait-reminder.is-showing {
+  animation:
+    clickWaitReminderBigCenterPulse
+    260ms ease-out;
+}
+
+@keyframes clickWaitReminderBigCenterPulse {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.82);
+  }
+
+  70% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.07);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+
+/* ========================================
+   CLICK ONCE + WAIT
+   DEFINITIVE CENTER POSITION
+======================================== */
+
+.click-wait-reminder {
+  position: fixed !important;
+
+  inset: 0 !important;
+
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+
+  width: min(560px, 86vw) !important;
+  height: fit-content !important;
+
+  margin: auto !important;
+
+  transform: none !important;
+
+  z-index: 999999 !important;
+}
+
+.click-wait-reminder.is-showing {
+  animation:
+    clickWaitReminderTrueCenterPulse
+    300ms ease-out !important;
+}
+
+@keyframes clickWaitReminderTrueCenterPulse {
+
+  0% {
+    scale: 0.82;
+  }
+
+  70% {
+    scale: 1.07;
+  }
+
+  100% {
+    scale: 1;
+  }
+}
+
