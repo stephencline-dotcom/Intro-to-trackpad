@@ -115,6 +115,41 @@ function renderLessonStep() {
 
   if (
     step.activityType ===
+    'week7ScrollIntro'
+  ) {
+    initializeWeek7ScrollIntro();
+  }
+
+  if (
+    step.activityType ===
+    'week7ScrollDown'
+  ) {
+    initializeWeek7ScrollDown();
+  }
+
+  if (
+    step.activityType ===
+    'week7ScrollUp'
+  ) {
+    initializeWeek7ScrollUp();
+  }
+
+  if (
+    step.activityType ===
+    'week7ScrollSearch'
+  ) {
+    initializeWeek7ScrollSearch();
+  }
+
+  if (
+    step.activityType ===
+    'week7ScrollAdventure'
+  ) {
+    initializeWeek7ScrollAdventure();
+  }
+
+  if (
+    step.activityType ===
     'starPractice'
   ) {
     initializeStarPractice();
@@ -12562,5 +12597,1804 @@ function initializeWeek7BunnySlide() {
   }
 
   runDemo();
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — FIRST SCROLL PRACTICE
+----------------------------------------- */
+
+const week7ScrollSound =
+  new Audio(
+    'sounds/bunnysound.mp3'
+  );
+
+week7ScrollSound.preload =
+  'auto';
+
+week7ScrollSound.loop =
+  false;
+
+week7ScrollSound.volume =
+  0.28;
+
+let week7ScrollSoundTimer = 0;
+let week7ScrollSoundActive = false;
+let week7ScrollFadeTimer = 0;
+
+function playWeek7ScrollSound() {
+  window.clearTimeout(
+    week7ScrollSoundTimer
+  );
+
+  window.clearInterval(
+    week7ScrollFadeTimer
+  );
+
+  /*
+   * Any new scroll activity immediately
+   * cancels the fade and restores volume.
+   */
+  week7ScrollSound.volume =
+    0.28;
+
+  if (!week7ScrollSoundActive) {
+    week7ScrollSoundActive = true;
+
+    try {
+      week7ScrollSound.currentTime =
+        0.04;
+
+      void week7ScrollSound.play();
+    } catch {
+      // Keep lesson usable if audio is blocked.
+    }
+  } else if (week7ScrollSound.paused) {
+    try {
+      void week7ScrollSound.play();
+    } catch {
+      // Keep lesson usable if audio is blocked.
+    }
+  }
+
+  week7ScrollSoundTimer =
+    window.setTimeout(
+      beginWeek7ScrollSoundFade,
+      320
+    );
+}
+
+function beginWeek7ScrollSoundFade() {
+  window.clearInterval(
+    week7ScrollFadeTimer
+  );
+
+  week7ScrollFadeTimer =
+    window.setInterval(
+      () => {
+        const nextVolume =
+          Math.max(
+            0,
+            week7ScrollSound.volume -
+              0.035
+          );
+
+        week7ScrollSound.volume =
+          nextVolume;
+
+        if (nextVolume <= 0) {
+          stopWeek7ScrollSound();
+        }
+      },
+      35
+    );
+}
+
+function stopWeek7ScrollSound() {
+  window.clearTimeout(
+    week7ScrollSoundTimer
+  );
+
+  window.clearInterval(
+    week7ScrollFadeTimer
+  );
+
+  week7ScrollSoundTimer = 0;
+  week7ScrollFadeTimer = 0;
+  week7ScrollSoundActive = false;
+
+  week7ScrollSound.pause();
+
+  try {
+    week7ScrollSound.currentTime =
+      0.04;
+  } catch {
+    // Reset is optional.
+  }
+
+  week7ScrollSound.volume =
+    0.28;
+}
+
+function initializeWeek7ScrollIntro() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7ScrollWindow'
+    );
+
+  const star =
+    document.getElementById(
+      'week7ScrollStar'
+    );
+
+  const status =
+    document.getElementById(
+      'week7ScrollStatus'
+    );
+
+  if (
+    !scrollWindow ||
+    !star ||
+    !status
+  ) {
+    return;
+  }
+
+  scrollWindow.scrollTop = 0;
+
+  let completed = false;
+
+  function checkStar() {
+    playWeek7ScrollSound();
+
+    if (completed) {
+      return;
+    }
+
+    const windowRect =
+      scrollWindow.getBoundingClientRect();
+
+    const starRect =
+      star.getBoundingClientRect();
+
+    const visible =
+      starRect.top <
+        windowRect.bottom - 35 &&
+      starRect.bottom >
+        windowRect.top + 35;
+
+    if (!visible) {
+      return;
+    }
+
+    completed = true;
+
+    star.classList.add(
+      'is-found'
+    );
+
+    status.textContent =
+      'YOU SCROLLED! ⭐';
+
+    status.classList.add(
+      'is-complete'
+    );
+
+    playLessonSuccessSound();
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    checkStar,
+    {
+      passive: true,
+    }
+  );
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — SCROLL DOWN CHALLENGE
+----------------------------------------- */
+
+function initializeWeek7ScrollDown() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7DownWindow'
+    );
+
+  const content =
+    document.getElementById(
+      'week7DownContent'
+    );
+
+  const roundText =
+    document.getElementById(
+      'week7DownRound'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week7DownTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week7DownStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week7DownComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !content ||
+    !roundText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      target: 'lion',
+      targetEmoji: '🦁',
+      targetWord: 'LION',
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['turtle', '🐢', 'TURTLE'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['lion', '🦁', 'LION'],
+        ['rocket', '🚀', 'ROCKET'],
+        ['frog', '🐸', 'FROG'],
+      ],
+    },
+
+    {
+      target: 'fish',
+      targetEmoji: '🐠',
+      targetWord: 'FISH',
+
+      items: [
+        ['dog', '🐶', 'DOG'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['plane', '✈️', 'PLANE'],
+        ['flower', '🌻', 'FLOWER'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+        ['banana', '🍌', 'BANANA'],
+        ['cat', '🐱', 'CAT'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['tree', '🌳', 'TREE'],
+        ['fish', '🐠', 'FISH'],
+        ['duck', '🦆', 'DUCK'],
+      ],
+    },
+
+    {
+      target: 'robot',
+      targetEmoji: '🤖',
+      targetWord: 'ROBOT',
+
+      items: [
+        ['star', '⭐', 'STAR'],
+        ['bear', '🐻', 'BEAR'],
+        ['orange', '🍊', 'ORANGE'],
+        ['bus', '🚌', 'BUS'],
+        ['mouse', '🐭', 'MOUSE'],
+        ['cake', '🎂', 'CAKE'],
+        ['horse', '🐴', 'HORSE'],
+        ['rainbow', '🌈', 'RAINBOW'],
+        ['bee', '🐝', 'BEE'],
+        ['boat', '⛵', 'BOAT'],
+        ['icecream', '🍦', 'ICE CREAM'],
+        ['monkey', '🐵', 'MONKEY'],
+        ['bike', '🚲', 'BIKE'],
+        ['penguin', '🐧', 'PENGUIN'],
+        ['robot', '🤖', 'ROBOT'],
+        ['cookie', '🍪', 'COOKIE'],
+      ],
+    },
+  ];
+
+  let roundIndex = 0;
+  let changingRound = false;
+
+  function renderRound() {
+    changingRound = false;
+
+    const round =
+      rounds[roundIndex];
+
+    content.innerHTML = '';
+
+    roundText.textContent =
+      `ROUND ${roundIndex + 1} OF ${rounds.length}`;
+
+    targetText.innerHTML = `
+      <span class="week7-down-find-word">
+        FIND
+      </span>
+
+      <span class="week7-down-find-picture">
+        ${round.targetEmoji}
+      </span>
+
+      <span class="week7-down-find-name">
+        ${round.targetWord}
+      </span>
+    `;
+
+    status.textContent =
+      'SCROLL DOWN ↓';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    round.items.forEach(
+      ([id, emoji, label]) => {
+        const card =
+          document.createElement(
+            'button'
+          );
+
+        card.type = 'button';
+
+        card.className =
+          'week7-down-card';
+
+        card.dataset.item = id;
+
+        card.innerHTML = `
+          <span>${emoji}</span>
+          <strong>${label}</strong>
+        `;
+
+        card.addEventListener(
+          'click',
+          () => {
+            if (changingRound) {
+              return;
+            }
+
+            if (
+              id !== round.target
+            ) {
+              card.classList.remove(
+                'is-wrong'
+              );
+
+              void card.offsetWidth;
+
+              card.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'TRY AGAIN';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingRound = true;
+
+            card.classList.add(
+              'is-correct'
+            );
+
+            status.textContent =
+              'FOUND IT! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              roundIndex >=
+              rounds.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  targetText.textContent =
+                    'COMPLETE! 🐰⭐';
+
+                  status.textContent =
+                    '3 OF 3 COMPLETE!';
+
+                  complete.hidden =
+                    false;
+                },
+                500
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                roundIndex += 1;
+
+                renderRound();
+              },
+              850
+            );
+          }
+        );
+
+        content.appendChild(card);
+      }
+    );
+
+    /*
+     * Every round begins at the top,
+     * forcing a fresh downward scroll.
+     */
+    scrollWindow.scrollTop = 0;
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderRound();
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — SCROLL UP CHALLENGE
+----------------------------------------- */
+
+function initializeWeek7ScrollUp() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7UpWindow'
+    );
+
+  const content =
+    document.getElementById(
+      'week7UpContent'
+    );
+
+  const roundText =
+    document.getElementById(
+      'week7UpRound'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week7UpTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week7UpStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week7UpComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !content ||
+    !roundText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      target: 'bear',
+      targetEmoji: '🐻',
+      targetWord: 'BEAR',
+
+      items: [
+        ['bear', '🐻', 'BEAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['car', '🚗', 'CAR'],
+        ['tree', '🌳', 'TREE'],
+        ['duck', '🦆', 'DUCK'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+      ],
+    },
+
+    {
+      target: 'rainbow',
+      targetEmoji: '🌈',
+      targetWord: 'RAINBOW',
+
+      items: [
+        ['rainbow', '🌈', 'RAINBOW'],
+        ['frog', '🐸', 'FROG'],
+        ['cookie', '🍪', 'COOKIE'],
+        ['plane', '✈️', 'PLANE'],
+        ['dog', '🐶', 'DOG'],
+        ['flower', '🌻', 'FLOWER'],
+        ['boat', '⛵', 'BOAT'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['cat', '🐱', 'CAT'],
+        ['fish', '🐠', 'FISH'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['star', '⭐', 'STAR'],
+      ],
+    },
+
+    {
+      target: 'rocket',
+      targetEmoji: '🚀',
+      targetWord: 'ROCKET',
+
+      items: [
+        ['rocket', '🚀', 'ROCKET'],
+        ['bee', '🐝', 'BEE'],
+        ['orange', '🍊', 'ORANGE'],
+        ['horse', '🐴', 'HORSE'],
+        ['cake', '🎂', 'CAKE'],
+        ['bus', '🚌', 'BUS'],
+        ['monkey', '🐵', 'MONKEY'],
+        ['bike', '🚲', 'BIKE'],
+        ['icecream', '🍦', 'ICE CREAM'],
+        ['mouse', '🐭', 'MOUSE'],
+        ['penguin', '🐧', 'PENGUIN'],
+        ['banana', '🍌', 'BANANA'],
+        ['robot', '🤖', 'ROBOT'],
+        ['turtle', '🐢', 'TURTLE'],
+        ['lion', '🦁', 'LION'],
+        ['sun', '☀️', 'SUN'],
+      ],
+    },
+  ];
+
+  let roundIndex = 0;
+  let changingRound = false;
+
+  function renderRound() {
+    changingRound = false;
+
+    const round =
+      rounds[roundIndex];
+
+    content.innerHTML = '';
+
+    roundText.textContent =
+      `ROUND ${roundIndex + 1} OF ${rounds.length}`;
+
+    targetText.innerHTML = `
+      <span class="week7-up-find-word">
+        FIND
+      </span>
+
+      <span class="week7-up-find-picture">
+        ${round.targetEmoji}
+      </span>
+
+      <span class="week7-up-find-name">
+        ${round.targetWord}
+      </span>
+    `;
+
+    status.textContent =
+      'SCROLL UP ↑';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    round.items.forEach(
+      ([id, emoji, label]) => {
+        const card =
+          document.createElement(
+            'button'
+          );
+
+        card.type = 'button';
+        card.className =
+          'week7-up-card';
+
+        card.dataset.item = id;
+
+        card.innerHTML = `
+          <span>${emoji}</span>
+          <strong>${label}</strong>
+        `;
+
+        card.addEventListener(
+          'click',
+          () => {
+            if (changingRound) {
+              return;
+            }
+
+            if (id !== round.target) {
+              card.classList.remove(
+                'is-wrong'
+              );
+
+              void card.offsetWidth;
+
+              card.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'TRY AGAIN';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingRound = true;
+
+            card.classList.add(
+              'is-correct'
+            );
+
+            status.textContent =
+              'FOUND IT! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              roundIndex >=
+              rounds.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  targetText.textContent =
+                    'COMPLETE! 🐰⭐';
+
+                  status.textContent =
+                    '3 OF 3 COMPLETE!';
+
+                  complete.hidden =
+                    false;
+                },
+                500
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                roundIndex += 1;
+                renderRound();
+              },
+              850
+            );
+          }
+        );
+
+        content.appendChild(card);
+      }
+    );
+
+    /*
+     * Start at the bottom every round.
+     * Student must scroll upward.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          scrollWindow.scrollHeight;
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderRound();
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — BUNNY EARS SEARCH
+----------------------------------------- */
+
+function initializeWeek7ScrollSearch() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7SearchWindow'
+    );
+
+  const content =
+    document.getElementById(
+      'week7SearchContent'
+    );
+
+  const roundText =
+    document.getElementById(
+      'week7SearchRound'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week7SearchTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week7SearchStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week7SearchComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !content ||
+    !roundText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const rounds = [
+    {
+      target: 'frog',
+      targetEmoji: '🐸',
+      targetWord: 'FROG',
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['tree', '🌳', 'TREE'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['duck', '🦆', 'DUCK'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['dog', '🐶', 'DOG'],
+        ['plane', '✈️', 'PLANE'],
+        ['frog', '🐸', 'FROG'],
+      ],
+    },
+
+    {
+      target: 'pizza',
+      targetEmoji: '🍕',
+      targetWord: 'PIZZA',
+
+      items: [
+        ['pizza', '🍕', 'PIZZA'],
+        ['flower', '🌻', 'FLOWER'],
+        ['boat', '⛵', 'BOAT'],
+        ['fish', '🐠', 'FISH'],
+        ['cat', '🐱', 'CAT'],
+        ['star', '⭐', 'STAR'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['bear', '🐻', 'BEAR'],
+        ['banana', '🍌', 'BANANA'],
+        ['bus', '🚌', 'BUS'],
+        ['bee', '🐝', 'BEE'],
+        ['cake', '🎂', 'CAKE'],
+        ['horse', '🐴', 'HORSE'],
+        ['rainbow', '🌈', 'RAINBOW'],
+      ],
+    },
+
+    {
+      target: 'penguin',
+      targetEmoji: '🐧',
+      targetWord: 'PENGUIN',
+
+      items: [
+        ['robot', '🤖', 'ROBOT'],
+        ['mouse', '🐭', 'MOUSE'],
+        ['orange', '🍊', 'ORANGE'],
+        ['bike', '🚲', 'BIKE'],
+        ['cookie', '🍪', 'COOKIE'],
+        ['lion', '🦁', 'LION'],
+        ['icecream', '🍦', 'ICE CREAM'],
+        ['monkey', '🐵', 'MONKEY'],
+        ['turtle', '🐢', 'TURTLE'],
+        ['rainbow', '🌈', 'RAINBOW'],
+        ['apple', '🍎', 'APPLE'],
+        ['bear', '🐻', 'BEAR'],
+        ['star', '⭐', 'STAR'],
+        ['dog', '🐶', 'DOG'],
+        ['train', '🚂', 'TRAIN'],
+        ['frog', '🐸', 'FROG'],
+        ['banana', '🍌', 'BANANA'],
+        ['penguin', '🐧', 'PENGUIN'],
+      ],
+    },
+
+    {
+      target: 'rocket',
+      targetEmoji: '🚀',
+      targetWord: 'ROCKET',
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['tree', '🌳', 'TREE'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['duck', '🦆', 'DUCK'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['dog', '🐶', 'DOG'],
+        ['plane', '✈️', 'PLANE'],
+        ['flower', '🌻', 'FLOWER'],
+        ['boat', '⛵', 'BOAT'],
+        ['fish', '🐠', 'FISH'],
+        ['cat', '🐱', 'CAT'],
+        ['star', '⭐', 'STAR'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['bear', '🐻', 'BEAR'],
+        ['banana', '🍌', 'BANANA'],
+        ['bus', '🚌', 'BUS'],
+        ['bee', '🐝', 'BEE'],
+        ['cake', '🎂', 'CAKE'],
+        ['rocket', '🚀', 'ROCKET'],
+        ['horse', '🐴', 'HORSE'],
+      ],
+    },
+  ];
+
+  let roundIndex = 0;
+  let changingRound = false;
+
+  function renderRound() {
+    changingRound = false;
+
+    const round =
+      rounds[roundIndex];
+
+    content.innerHTML = '';
+
+    roundText.textContent =
+      `ROUND ${roundIndex + 1} OF ${rounds.length}`;
+
+    targetText.innerHTML = `
+      <span class="week7-search-find-word">
+        FIND
+      </span>
+
+      <span class="week7-search-find-picture">
+        ${round.targetEmoji}
+      </span>
+
+      <span class="week7-search-find-name">
+        ${round.targetWord}
+      </span>
+    `;
+
+    status.textContent =
+      '🐰 FIND IT!';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    round.items.forEach(
+      ([id, emoji, label]) => {
+        const card =
+          document.createElement(
+            'button'
+          );
+
+        card.type = 'button';
+
+        card.className =
+          'week7-search-card';
+
+        card.innerHTML = `
+          <span>${emoji}</span>
+          <strong>${label}</strong>
+        `;
+
+        card.addEventListener(
+          'click',
+          () => {
+            if (changingRound) {
+              return;
+            }
+
+            if (id !== round.target) {
+              card.classList.remove(
+                'is-wrong'
+              );
+
+              void card.offsetWidth;
+
+              card.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'TRY AGAIN';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingRound = true;
+
+            card.classList.add(
+              'is-correct'
+            );
+
+            status.textContent =
+              'FOUND IT! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              roundIndex >=
+              rounds.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  targetText.textContent =
+                    'COMPLETE! 🐰⭐';
+
+                  status.textContent =
+                    '4 OF 4 COMPLETE!';
+
+                  complete.hidden =
+                    false;
+                },
+                500
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                roundIndex += 1;
+                renderRound();
+              },
+              850
+            );
+          }
+        );
+
+        content.appendChild(card);
+      }
+    );
+
+    /*
+     * Every search round begins in the
+     * middle so the student must decide
+     * whether the target is above or below.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderRound();
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — FINAL BUNNY EARS ADVENTURE
+----------------------------------------- */
+
+function initializeWeek7FinalAdventure() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7FinalWindow'
+    );
+
+  const content =
+    document.getElementById(
+      'week7FinalContent'
+    );
+
+  const levelText =
+    document.getElementById(
+      'week7FinalLevel'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week7FinalTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week7FinalStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week7FinalComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !content ||
+    !levelText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const levels = [
+    {
+      target: 'lion',
+      targetEmoji: '🦁',
+      targetWord: 'LION',
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['tree', '🌳', 'TREE'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['duck', '🦆', 'DUCK'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+        ['lion', '🦁', 'LION'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['dog', '🐶', 'DOG'],
+        ['plane', '✈️', 'PLANE'],
+      ],
+    },
+
+    {
+      target: 'rainbow',
+      targetEmoji: '🌈',
+      targetWord: 'RAINBOW',
+
+      items: [
+        ['frog', '🐸', 'FROG'],
+        ['cookie', '🍪', 'COOKIE'],
+        ['boat', '⛵', 'BOAT'],
+        ['fish', '🐠', 'FISH'],
+        ['cat', '🐱', 'CAT'],
+        ['star', '⭐', 'STAR'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['bear', '🐻', 'BEAR'],
+        ['banana', '🍌', 'BANANA'],
+        ['bus', '🚌', 'BUS'],
+        ['bee', '🐝', 'BEE'],
+        ['rainbow', '🌈', 'RAINBOW'],
+        ['cake', '🎂', 'CAKE'],
+        ['horse', '🐴', 'HORSE'],
+      ],
+    },
+
+    {
+      target: 'penguin',
+      targetEmoji: '🐧',
+      targetWord: 'PENGUIN',
+
+      items: [
+        ['robot', '🤖', 'ROBOT'],
+        ['mouse', '🐭', 'MOUSE'],
+        ['orange', '🍊', 'ORANGE'],
+        ['bike', '🚲', 'BIKE'],
+        ['icecream', '🍦', 'ICE CREAM'],
+        ['monkey', '🐵', 'MONKEY'],
+        ['turtle', '🐢', 'TURTLE'],
+        ['apple', '🍎', 'APPLE'],
+        ['bear', '🐻', 'BEAR'],
+        ['star', '⭐', 'STAR'],
+        ['dog', '🐶', 'DOG'],
+        ['train', '🚂', 'TRAIN'],
+        ['frog', '🐸', 'FROG'],
+        ['banana', '🍌', 'BANANA'],
+        ['fish', '🐠', 'FISH'],
+        ['penguin', '🐧', 'PENGUIN'],
+        ['bus', '🚌', 'BUS'],
+        ['flower', '🌻', 'FLOWER'],
+      ],
+    },
+
+    {
+      target: 'rocket',
+      targetEmoji: '🚀',
+      targetWord: 'ROCKET',
+
+      items: [
+        ['sun', '☀️', 'SUN'],
+        ['car', '🚗', 'CAR'],
+        ['apple', '🍎', 'APPLE'],
+        ['tree', '🌳', 'TREE'],
+        ['balloon', '🎈', 'BALLOON'],
+        ['duck', '🦆', 'DUCK'],
+        ['moon', '🌙', 'MOON'],
+        ['train', '🚂', 'TRAIN'],
+        ['pizza', '🍕', 'PIZZA'],
+        ['dog', '🐶', 'DOG'],
+        ['plane', '✈️', 'PLANE'],
+        ['flower', '🌻', 'FLOWER'],
+        ['boat', '⛵', 'BOAT'],
+        ['fish', '🐠', 'FISH'],
+        ['cat', '🐱', 'CAT'],
+        ['star', '⭐', 'STAR'],
+        ['soccer', '⚽', 'SOCCER'],
+        ['bear', '🐻', 'BEAR'],
+        ['banana', '🍌', 'BANANA'],
+        ['bus', '🚌', 'BUS'],
+        ['bee', '🐝', 'BEE'],
+        ['cake', '🎂', 'CAKE'],
+        ['rocket', '🚀', 'ROCKET'],
+        ['horse', '🐴', 'HORSE'],
+      ],
+    },
+  ];
+
+  let levelIndex = 0;
+  let changingLevel = false;
+
+  function renderLevel() {
+    changingLevel = false;
+
+    const level =
+      levels[levelIndex];
+
+    content.innerHTML = '';
+
+    levelText.textContent =
+      `LEVEL ${levelIndex + 1} OF ${levels.length}`;
+
+    targetText.innerHTML = `
+      <span class="week7-final-find-word">
+        FIND
+      </span>
+
+      <span class="week7-final-find-picture">
+        ${level.targetEmoji}
+      </span>
+
+      <span class="week7-final-find-name">
+        ${level.targetWord}
+      </span>
+    `;
+
+    status.textContent =
+      '🐰 FIND IT!';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    level.items.forEach(
+      ([id, emoji, label]) => {
+        const card =
+          document.createElement(
+            'button'
+          );
+
+        card.type = 'button';
+
+        card.className =
+          'week7-final-card';
+
+        card.innerHTML = `
+          <span>${emoji}</span>
+          <strong>${label}</strong>
+        `;
+
+        card.addEventListener(
+          'click',
+          () => {
+            if (changingLevel) {
+              return;
+            }
+
+            if (id !== level.target) {
+              card.classList.remove(
+                'is-wrong'
+              );
+
+              void card.offsetWidth;
+
+              card.classList.add(
+                'is-wrong'
+              );
+
+              status.textContent =
+                'TRY AGAIN';
+
+              status.classList.add(
+                'is-wrong'
+              );
+
+              playLessonClickSound();
+
+              return;
+            }
+
+            changingLevel = true;
+
+            card.classList.add(
+              'is-correct'
+            );
+
+            status.textContent =
+              'FOUND IT! ⭐';
+
+            status.classList.remove(
+              'is-wrong'
+            );
+
+            status.classList.add(
+              'is-correct'
+            );
+
+            playLessonSuccessSound();
+
+            if (
+              levelIndex >=
+              levels.length - 1
+            ) {
+              window.setTimeout(
+                () => {
+                  stopWeek7ScrollSound();
+
+                  levelText.textContent =
+                    '4 OF 4 COMPLETE!';
+
+                  targetText.textContent =
+                    'BUNNY EARS MASTER! 🐰';
+
+                  complete.hidden =
+                    false;
+                },
+                500
+              );
+
+              return;
+            }
+
+            window.setTimeout(
+              () => {
+                levelIndex += 1;
+                renderLevel();
+              },
+              850
+            );
+          }
+        );
+
+        content.appendChild(card);
+      }
+    );
+
+    /*
+     * Every final level starts in the middle.
+     * No directional clue is given.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderLevel();
+}
+
+
+/* ----------------------------------------
+   WEEK 7 — BUNNY EARS TREASURE HUNT
+----------------------------------------- */
+
+function initializeWeek7ScrollAdventure() {
+  stopWeek7ScrollSound();
+
+  const scrollWindow =
+    document.getElementById(
+      'week7AdventureWindow'
+    );
+
+  const world =
+    document.getElementById(
+      'week7AdventureWorld'
+    );
+
+  const levelText =
+    document.getElementById(
+      'week7AdventureLevel'
+    );
+
+  const targetText =
+    document.getElementById(
+      'week7AdventureTarget'
+    );
+
+  const status =
+    document.getElementById(
+      'week7AdventureStatus'
+    );
+
+  const complete =
+    document.getElementById(
+      'week7AdventureComplete'
+    );
+
+  if (
+    !scrollWindow ||
+    !world ||
+    !levelText ||
+    !targetText ||
+    !status ||
+    !complete
+  ) {
+    return;
+  }
+
+  const zones = [
+    {
+      name: 'SKY',
+      className: 'sky',
+      scenery: ['☁️', '☀️', '☁️'],
+    },
+
+    {
+      name: 'FOREST',
+      className: 'forest',
+      scenery: ['🌲', '🌳', '🌲'],
+    },
+
+    {
+      name: 'VILLAGE',
+      className: 'village',
+      scenery: ['🏠', '🌻', '🏡'],
+    },
+
+    {
+      name: 'RIVER',
+      className: 'river',
+      scenery: ['🌊', '🐟', '🌊'],
+    },
+
+    {
+      name: 'CAVE',
+      className: 'cave',
+      scenery: ['🪨', '🦇', '🪨'],
+    },
+
+    {
+      name: 'TREASURE',
+      className: 'treasure',
+      scenery: ['⭐', '💰', '⭐'],
+    },
+  ];
+
+  const levels = [
+    {
+      target: 'frog',
+      targetEmoji: '🐸',
+      targetWord: 'FROG',
+      targetZone: 1,
+
+      decoys: [
+        ['bird', '🐦', 0],
+        ['dog', '🐶', 2],
+        ['fish', '🐠', 3],
+      ],
+    },
+
+    {
+      target: 'pizza',
+      targetEmoji: '🍕',
+      targetWord: 'PIZZA',
+      targetZone: 2,
+
+      decoys: [
+        ['bee', '🐝', 1],
+        ['boat', '⛵', 3],
+        ['bat', '🦇', 4],
+        ['star', '⭐', 5],
+      ],
+    },
+
+    {
+      target: 'bat',
+      targetEmoji: '🦇',
+      targetWord: 'BAT',
+      targetZone: 4,
+
+      decoys: [
+        ['cloud', '☁️', 0],
+        ['frog', '🐸', 1],
+        ['house', '🏠', 2],
+        ['fish', '🐟', 3],
+        ['coin', '🪙', 5],
+      ],
+    },
+
+    {
+      target: 'treasure',
+      targetEmoji: '💰',
+      targetWord: 'TREASURE',
+      targetZone: 5,
+
+      decoys: [
+        ['star', '⭐', 0],
+        ['bird', '🐦', 0],
+        ['tree', '🌳', 1],
+        ['pizza', '🍕', 2],
+        ['boat', '⛵', 3],
+        ['bat', '🦇', 4],
+        ['rock', '🪨', 4],
+      ],
+    },
+  ];
+
+  let levelIndex = 0;
+  let changingLevel = false;
+
+  function addObject(
+    zoneElement,
+    id,
+    emoji,
+    isTarget,
+    objectIndex
+  ) {
+    const button =
+      document.createElement(
+        'button'
+      );
+
+    button.type = 'button';
+
+    button.className =
+      'week7-adventure-object';
+
+    button.dataset.item = id;
+
+    button.textContent = emoji;
+
+    const positions = [
+      [18, 42],
+      [65, 25],
+      [42, 67],
+      [74, 66],
+      [26, 73],
+    ];
+
+    const [
+      leftPercent,
+      topPercent,
+    ] =
+      positions[
+        objectIndex %
+        positions.length
+      ];
+
+    button.style.left =
+      `${leftPercent}%`;
+
+    button.style.top =
+      `${topPercent}%`;
+
+    button.style.transform =
+      'translate(-50%, -50%)';
+
+    button.addEventListener(
+      'click',
+      () => {
+        if (changingLevel) {
+          return;
+        }
+
+        if (!isTarget) {
+          button.classList.remove(
+            'is-wrong'
+          );
+
+          void button.offsetWidth;
+
+          button.classList.add(
+            'is-wrong'
+          );
+
+          status.textContent =
+            'TRY AGAIN';
+
+          status.classList.add(
+            'is-wrong'
+          );
+
+          playLessonClickSound();
+
+          return;
+        }
+
+        changingLevel = true;
+
+        button.classList.add(
+          'is-correct'
+        );
+
+        status.textContent =
+          'FOUND IT! ⭐';
+
+        status.classList.remove(
+          'is-wrong'
+        );
+
+        status.classList.add(
+          'is-correct'
+        );
+
+        playLessonSuccessSound();
+
+        if (
+          levelIndex >=
+          levels.length - 1
+        ) {
+          window.setTimeout(
+            () => {
+              stopWeek7ScrollSound();
+
+              levelText.textContent =
+                '4 OF 4 COMPLETE!';
+
+              targetText.textContent =
+                'TREASURE FOUND! 💰';
+
+              complete.hidden =
+                false;
+            },
+            550
+          );
+
+          return;
+        }
+
+        window.setTimeout(
+          () => {
+            levelIndex += 1;
+            renderLevel();
+          },
+          900
+        );
+      }
+    );
+
+    zoneElement.appendChild(
+      button
+    );
+  }
+
+  function renderLevel() {
+    changingLevel = false;
+
+    const level =
+      levels[levelIndex];
+
+    world.innerHTML = '';
+
+    levelText.textContent =
+      `LEVEL ${levelIndex + 1} OF ${levels.length}`;
+
+    targetText.innerHTML = `
+      <span class="week7-adventure-find-word">
+        FIND
+      </span>
+
+      <span class="week7-adventure-find-picture">
+        ${level.targetEmoji}
+      </span>
+
+      <span class="week7-adventure-find-name">
+        ${level.targetWord}
+      </span>
+    `;
+
+    status.textContent =
+      '🐰 FIND IT!';
+
+    status.classList.remove(
+      'is-wrong',
+      'is-correct'
+    );
+
+    const zoneElements = [];
+
+    zones.forEach(
+      (zone) => {
+        const zoneElement =
+          document.createElement(
+            'section'
+          );
+
+        zoneElement.className =
+          `week7-adventure-zone ${zone.className}`;
+
+        zoneElement.innerHTML = `
+          <div class="week7-adventure-zone-label">
+            ${zone.name}
+          </div>
+
+          <div class="week7-adventure-scenery">
+            ${zone.scenery
+              .map(
+                (item) =>
+                  `<span>${item}</span>`
+              )
+              .join('')}
+          </div>
+        `;
+
+        world.appendChild(
+          zoneElement
+        );
+
+        zoneElements.push(
+          zoneElement
+        );
+      }
+    );
+
+    level.decoys.forEach(
+      (
+        [
+          id,
+          emoji,
+          zoneIndex,
+        ],
+        index
+      ) => {
+        addObject(
+          zoneElements[zoneIndex],
+          id,
+          emoji,
+          false,
+          index
+        );
+      }
+    );
+
+    addObject(
+      zoneElements[
+        level.targetZone
+      ],
+      level.target,
+      level.targetEmoji,
+      true,
+      level.decoys.length + 1
+    );
+
+    /*
+     * Always begin around the middle
+     * of the full adventure world.
+     */
+    window.requestAnimationFrame(
+      () => {
+        scrollWindow.scrollTop =
+          (
+            scrollWindow.scrollHeight -
+            scrollWindow.clientHeight
+          ) / 2;
+      }
+    );
+  }
+
+  scrollWindow.addEventListener(
+    'scroll',
+    playWeek7ScrollSound,
+    {
+      passive: true,
+    }
+  );
+
+  renderLevel();
 }
 
