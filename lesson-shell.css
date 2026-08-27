@@ -19503,3 +19503,199 @@ body[data-lesson-view="student"]
 .copy-student-lesson-link-status {
   display: none !important;
 }
+
+/* ========================================
+   WEEK 2 — STUDENT FINAL FIT
+   Steps 1, 2, 3, 5, 6 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Use the top of the available activity
+     region instead of wasting vertical space. */
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week2-review-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week2-follow-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week2-butterfly-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week2-dots-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week2-search-step) {
+    align-items: flex-start;
+    padding-top: 5px;
+  }
+
+
+  /* Shared wrappers */
+
+  body[data-lesson-view="student"]
+  .week2-review-step,
+
+  body[data-lesson-view="student"]
+  .week2-follow-step,
+
+  body[data-lesson-view="student"]
+  .week2-butterfly-step,
+
+  body[data-lesson-view="student"]
+  .week2-dots-step,
+
+  body[data-lesson-view="student"]
+  .week2-search-step {
+    width: min(900px, 96%);
+    height: auto;
+    max-height: 100%;
+
+    overflow: hidden;
+  }
+
+
+  /* -------------------------------
+     STEP 1 — QUICK REVIEW
+  -------------------------------- */
+
+  body[data-lesson-view="student"]
+  .week2-review-step h2 {
+    margin: 0 0 3px;
+    font-size: 2.15rem;
+    line-height: 1.05;
+  }
+
+  body[data-lesson-view="student"]
+  .quick-review-badge {
+    margin-bottom: 3px;
+    padding: 4px 10px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-review-grid {
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-review-card {
+    min-height: 150px;
+    padding: 12px 10px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-review-icon {
+    margin-top: 8px;
+    font-size: 3.8rem;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-mini {
+    width: 175px;
+    margin: 8px auto 5px;
+    padding: 7px 7px 9px;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-mini-keyboard {
+    padding: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-mini-trackpad {
+    height: 25px;
+    margin-top: 6px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-review-card p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-review-step
+  .lesson-find-challenge {
+    margin-top: 6px;
+    padding: 5px 14px;
+    font-size: 0.9rem;
+  }
+
+
+  /* -------------------------------
+     STEP 2 — FOLLOW THE LEADER
+  -------------------------------- */
+
+  body[data-lesson-view="student"]
+  .follow-leader-area {
+    height: 285px;
+    margin-top: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .follow-leader-progress-wrap {
+    margin-top: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-follow-step
+  .star-step-reminder {
+    margin-top: 5px;
+    padding: 5px 12px;
+  }
+
+
+  /* -------------------------------
+     STEP 3 — BUTTERFLY
+  -------------------------------- */
+
+  body[data-lesson-view="student"]
+  .butterfly-practice-area {
+    height: 295px;
+    margin-top: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-butterfly-step
+  .star-step-reminder {
+    margin-top: 5px;
+    padding: 5px 12px;
+  }
+
+
+  /* -------------------------------
+     STEP 5 — CONNECT THE DOTS
+  -------------------------------- */
+
+  body[data-lesson-view="student"]
+  .dot-practice-area {
+    height: 295px;
+    margin-top: 5px;
+  }
+
+
+  /* -------------------------------
+     STEP 6 — CURSOR SEARCH
+  -------------------------------- */
+
+  body[data-lesson-view="student"]
+  .week2-search-step h2 {
+    margin-bottom: 3px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-search-step
+  .picture-target-prompt {
+    margin: 2px auto 5px;
+    padding: 5px 12px;
+  }
+
+  body[data-lesson-view="student"]
+  .scene-search-area {
+    height: 295px;
+    margin-top: 0;
+  }
+}
