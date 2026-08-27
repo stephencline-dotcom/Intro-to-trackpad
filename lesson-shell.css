@@ -18740,3 +18740,189 @@ cat >> lesson-shell.css <<'EOF'
     line-height: 1.1;
   }
 }
+
+/* ========================================
+   WEEK 1 — STEPS 3–7
+   DEFINITIVE CHROMEBOOK FIT
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Keep Steps 3–7 at the top of the
+     available activity region. */
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-arrow-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-star-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-path-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-find-picture-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-reveal-step) {
+    align-items: flex-start;
+    padding-top: 8px;
+  }
+
+
+  /* Shared wrappers */
+
+  body[data-lesson-view="student"]
+  .lesson-arrow-step,
+
+  body[data-lesson-view="student"]
+  .lesson-star-step,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step,
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step {
+    width: min(900px, 96%);
+    height: auto;
+    max-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow: hidden;
+  }
+
+
+  /* Shared headings */
+
+  body[data-lesson-view="student"]
+  .lesson-arrow-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-star-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step h2,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step h2 {
+    margin: 0 0 2px;
+
+    font-size:
+      clamp(1.8rem, 3.8vw, 2.6rem);
+
+    line-height: 1.05;
+  }
+
+
+  /* Shared student prompts */
+
+  body[data-lesson-view="student"]
+  .lesson-arrow-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-star-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .lesson-kid-prompt {
+    margin: 2px 0 6px;
+    line-height: 1.15;
+  }
+
+
+  /* Step 3 — Watch the Arrow Move */
+
+  body[data-lesson-view="student"]
+  .arrow-motion-demo {
+    margin-top: 6px;
+    transform: scale(0.82);
+    transform-origin: top center;
+  }
+
+
+  /* Step 4 — Move to the Star */
+
+  body[data-lesson-view="student"]
+  .star-practice-area {
+    height: 300px;
+    margin-top: 6px;
+  }
+
+
+  /* Step 5 — Follow the Path */
+
+  body[data-lesson-view="student"]
+  .path-practice-area {
+    height: 300px;
+    margin-top: 6px;
+  }
+
+
+  /* Step 6 — Find the Picture */
+
+  body[data-lesson-view="student"]
+  .picture-target-prompt {
+    margin: 2px auto 5px;
+    padding: 6px 14px;
+    font-size: 1rem;
+  }
+
+  body[data-lesson-view="student"]
+  .picture-practice-area {
+    height: 285px;
+    margin-top: 0;
+  }
+
+
+  /* Step 7 — Reveal the Picture */
+
+  body[data-lesson-view="student"]
+  .reveal-practice-area {
+    width: min(760px, 92%);
+    height: 285px;
+    min-height: 285px;
+    margin-top: 5px;
+  }
+
+
+  /* Keep bottom reminders inside the screen */
+
+  body[data-lesson-view="student"]
+  .lesson-star-step
+  .star-step-reminder,
+
+  body[data-lesson-view="student"]
+  .lesson-path-step
+  .star-step-reminder,
+
+  body[data-lesson-view="student"]
+  .lesson-find-picture-step
+  .star-step-reminder,
+
+  body[data-lesson-view="student"]
+  .lesson-reveal-step
+  .star-step-reminder {
+    margin: 5px auto 0;
+    padding: 5px 12px;
+    font-size: 0.88rem;
+  }
+}
