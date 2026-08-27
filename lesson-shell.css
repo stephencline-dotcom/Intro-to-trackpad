@@ -18702,3 +18702,41 @@ cat >> lesson-shell.css <<'EOF'
     padding: 6px 14px;
   }
 }
+
+/* ========================================
+   WEEK 1 — STEP 1
+   FINAL VERTICAL SPACING
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-find-trackpad) {
+    padding-top: 2px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad h2 {
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad
+  .lesson-kid-prompt {
+    margin: 0 0 2px;
+    line-height: 1.1;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-visual {
+    margin-top: 0;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-challenge {
+    margin-top: 3px;
+    padding: 5px 14px;
+    line-height: 1.1;
+  }
+}
