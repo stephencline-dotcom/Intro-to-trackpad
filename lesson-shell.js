@@ -5677,27 +5677,37 @@ function initializeWeek4RevealChoose() {
     return;
   }
 
-  const rect =
-    area.getBoundingClientRect();
+  /*
+   * Use the reveal area's untransformed layout
+   * dimensions. Student and teacher lesson views
+   * can visually scale the complete activity,
+   * while the scratch canvas still needs to cover
+   * the full logical reveal area.
+   */
+  const revealWidth =
+    area.clientWidth;
+
+  const revealHeight =
+    area.clientHeight;
 
   const scale =
     window.devicePixelRatio || 1;
 
   canvas.width =
     Math.round(
-      rect.width * scale
+      revealWidth * scale
     );
 
   canvas.height =
     Math.round(
-      rect.height * scale
+      revealHeight * scale
     );
 
   canvas.style.width =
-    `${rect.width}px`;
+    `${revealWidth}px`;
 
   canvas.style.height =
-    `${rect.height}px`;
+    `${revealHeight}px`;
 
   context.setTransform(
     scale,
@@ -5717,8 +5727,8 @@ function initializeWeek4RevealChoose() {
   context.fillRect(
     0,
     0,
-    rect.width,
-    rect.height
+    revealWidth,
+    revealHeight
   );
 
   context.fillStyle =
@@ -5726,12 +5736,12 @@ function initializeWeek4RevealChoose() {
 
   for (
     let y = 0;
-    y < rect.height;
+    y < revealHeight;
     y += 32
   ) {
     for (
       let x = 0;
-      x < rect.width;
+      x < revealWidth;
       x += 32
     ) {
       context.beginPath();
@@ -5833,8 +5843,8 @@ function initializeWeek4RevealChoose() {
     context.clearRect(
       0,
       0,
-      rect.width,
-      rect.height
+      revealWidth,
+      revealHeight
     );
 
     spider.hidden = true;
@@ -5886,7 +5896,7 @@ function initializeWeek4RevealChoose() {
         Math.min(
           columns - 1,
           Math.floor(
-            (x / rect.width) *
+            (x / revealWidth) *
             columns
           )
         )
@@ -5898,7 +5908,7 @@ function initializeWeek4RevealChoose() {
         Math.min(
           rows - 1,
           Math.floor(
-            (y / rect.height) *
+            (y / revealHeight) *
             rows
           )
         )
@@ -5948,12 +5958,30 @@ function initializeWeek4RevealChoose() {
       canvas.getBoundingClientRect();
 
     const x =
-      event.clientX -
-      bounds.left;
+      (
+        event.clientX -
+        bounds.left
+      ) *
+      (
+        revealWidth /
+        Math.max(
+          bounds.width,
+          1
+        )
+      );
 
     const y =
-      event.clientY -
-      bounds.top;
+      (
+        event.clientY -
+        bounds.top
+      ) *
+      (
+        revealHeight /
+        Math.max(
+          bounds.height,
+          1
+        )
+      );
 
     context.beginPath();
 
