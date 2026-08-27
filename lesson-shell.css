@@ -19765,3 +19765,12 @@ body[data-lesson-view="teacher"]
 .scene-search-area {
   width: min(900px, 96%);
 }
+
+/* Week 2 teacher Step 6 — keep reminder visible */
+
+body[data-lesson-view="teacher"]
+.week2-search-step
+.star-step-reminder {
+  margin-top: 4px;
+  transform: translateY(-8px);
+}
