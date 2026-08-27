@@ -18634,3 +18634,71 @@ cat >> lesson-shell.css <<'EOF'
     padding-top: 22px;
   }
 }
+
+/* ========================================
+   WEEK 1 — STEP 1
+   FINAL CHROMEBOOK FIT
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-find-trackpad) {
+    padding-top: 10px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad h2 {
+    font-size: 2.25rem;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad
+  .lesson-kid-prompt {
+    margin: 2px 0 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-visual {
+    width: min(485px, 86%);
+    margin-top: 2px;
+    padding: 9px 14px 9px;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-keyboard {
+    width: min(420px, 92%);
+    padding: 8px;
+  }
+
+  body[data-lesson-view="student"]
+  .keyboard-row span {
+    height: 21px;
+  }
+
+  body[data-lesson-view="student"]
+  .keyboard-space-key {
+    height: 19px;
+  }
+
+  body[data-lesson-view="student"]
+  .trackpad-pointer {
+    height: 42px;
+  }
+
+  body[data-lesson-view="student"]
+  .trackpad-arrow {
+    font-size: 2.7rem;
+  }
+
+  body[data-lesson-view="student"]
+  .generic-trackpad {
+    height: 88px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-challenge {
+    margin-top: 5px;
+    padding: 6px 14px;
+  }
+}
