@@ -19774,3 +19774,91 @@ body[data-lesson-view="teacher"]
   margin-top: 4px;
   transform: translateY(-8px);
 }
+
+/* ========================================
+   WEEK 3 — STUDENT FULL LESSON FIT
+   Slides 1–8
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-review-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-click-intro),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-click-wait-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-watch-click),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-big-button-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-picture-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-bubble-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week3-treasure-step) {
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+
+
+  /* Scale every Week 3 student slide
+     as one complete presentation. */
+
+  body[data-lesson-view="student"]
+  .week3-review-step,
+
+  body[data-lesson-view="student"]
+  .week3-click-intro,
+
+  body[data-lesson-view="student"]
+  .week3-click-wait-step,
+
+  body[data-lesson-view="student"]
+  .week3-watch-click,
+
+  body[data-lesson-view="student"]
+  .week3-big-button-step,
+
+  body[data-lesson-view="student"]
+  .week3-picture-step,
+
+  body[data-lesson-view="student"]
+  .week3-bubble-step,
+
+  body[data-lesson-view="student"]
+  .week3-treasure-step {
+    transform: scale(0.78);
+    transform-origin: top center;
+
+    flex: 0 0 auto;
+  }
+
+
+  /* Later interactive areas were still
+     too tall in the older Week 3 fit rules. */
+
+  body[data-lesson-view="student"]
+  .big-button-practice-area,
+
+  body[data-lesson-view="student"]
+  .week3-picture-step
+  .picture-practice-area,
+
+  body[data-lesson-view="student"]
+  .bubble-practice-area,
+
+  body[data-lesson-view="student"]
+  .treasure-practice-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+}
