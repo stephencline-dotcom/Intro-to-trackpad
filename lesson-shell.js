@@ -1458,23 +1458,39 @@ function initializeRevealPractice() {
     return;
   }
 
-  const rect =
-    area.getBoundingClientRect();
+  /*
+   * Use the reveal area's untransformed layout
+   * size. Teacher view visually scales lesson
+   * activities with CSS transforms, and
+   * getBoundingClientRect() reports that scaled
+   * size. Using clientWidth/clientHeight keeps
+   * the scratch canvas matched to the full
+   * reveal area in both teacher and student view.
+   */
+  const revealWidth =
+    area.clientWidth;
+
+  const revealHeight =
+    area.clientHeight;
 
   const scale =
     window.devicePixelRatio || 1;
 
   canvas.width =
-    Math.round(rect.width * scale);
+    Math.round(
+      revealWidth * scale
+    );
 
   canvas.height =
-    Math.round(rect.height * scale);
+    Math.round(
+      revealHeight * scale
+    );
 
   canvas.style.width =
-    `${rect.width}px`;
+    `${revealWidth}px`;
 
   canvas.style.height =
-    `${rect.height}px`;
+    `${revealHeight}px`;
 
   context.setTransform(
     scale,
@@ -1494,8 +1510,8 @@ function initializeRevealPractice() {
   context.fillRect(
     0,
     0,
-    rect.width,
-    rect.height
+    revealWidth,
+    revealHeight
   );
 
   context.fillStyle =
@@ -1503,12 +1519,12 @@ function initializeRevealPractice() {
 
   for (
     let y = 0;
-    y < rect.height;
+    y < revealHeight;
     y += 34
   ) {
     for (
       let x = 0;
-      x < rect.width;
+      x < revealWidth;
       x += 34
     ) {
       context.beginPath();
@@ -1546,7 +1562,7 @@ function initializeRevealPractice() {
         Math.min(
           columns - 1,
           Math.floor(
-            (x / rect.width) *
+            (x / revealWidth) *
             columns
           )
         )
@@ -1558,7 +1574,7 @@ function initializeRevealPractice() {
         Math.min(
           rows - 1,
           Math.floor(
-            (y / rect.height) *
+            (y / revealHeight) *
             rows
           )
         )
