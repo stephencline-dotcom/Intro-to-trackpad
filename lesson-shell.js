@@ -5271,16 +5271,45 @@ function initializeWeek4Sequence() {
     const targetRect =
       target.getBoundingClientRect();
 
+    /*
+     * Convert the visually scaled screen-space
+     * coordinates back into the sequence area's
+     * unscaled internal coordinate system.
+     *
+     * Week 4 student view scales the complete
+     * activity, while the SVG line layer still
+     * fills the full logical activity area.
+     */
+    const scaleX =
+      area.clientWidth /
+      Math.max(
+        areaRect.width,
+        1
+      );
+
+    const scaleY =
+      area.clientHeight /
+      Math.max(
+        areaRect.height,
+        1
+      );
+
     return {
       x:
-        targetRect.left -
-        areaRect.left +
-        targetRect.width / 2,
+        (
+          targetRect.left -
+          areaRect.left +
+          targetRect.width / 2
+        ) *
+        scaleX,
 
       y:
-        targetRect.top -
-        areaRect.top +
-        targetRect.height / 2,
+        (
+          targetRect.top -
+          areaRect.top +
+          targetRect.height / 2
+        ) *
+        scaleY,
     };
   }
 
