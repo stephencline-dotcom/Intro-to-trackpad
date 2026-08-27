@@ -60,6 +60,69 @@ const lessonProgressText =
 const lessonProgressFill =
   document.getElementById('lessonProgressFill');
 
+const copyStudentLessonLinkButton =
+  document.getElementById(
+    'copyStudentLessonLinkButton'
+  );
+
+const copyStudentLessonLinkStatus =
+  document.getElementById(
+    'copyStudentLessonLinkStatus'
+  );
+
+if (
+  lessonView === 'teacher' &&
+  copyStudentLessonLinkButton
+) {
+  const studentUrl =
+    new URL(
+      'lesson.html?view=student',
+      window.location.href
+    ).href;
+
+  copyStudentLessonLinkButton.addEventListener(
+    'click',
+    async () => {
+      try {
+        await navigator.clipboard.writeText(
+          studentUrl
+        );
+      } catch {
+        const temporaryInput =
+          document.createElement('input');
+
+        temporaryInput.value =
+          studentUrl;
+
+        document.body.appendChild(
+          temporaryInput
+        );
+
+        temporaryInput.select();
+
+        document.execCommand(
+          'copy'
+        );
+
+        temporaryInput.remove();
+      }
+
+      if (copyStudentLessonLinkStatus) {
+        copyStudentLessonLinkStatus.textContent =
+          'Copied!';
+
+        window.setTimeout(
+          () => {
+            copyStudentLessonLinkStatus.textContent =
+              '';
+          },
+          1800
+        );
+      }
+    }
+  );
+}
+
 const previousStepButton =
   document.getElementById('previousStepButton');
 

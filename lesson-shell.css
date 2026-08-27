@@ -18926,3 +18926,289 @@ cat >> lesson-shell.css <<'EOF'
     font-size: 0.88rem;
   }
 }
+
+/* ========================================
+   TEACHER HEADER ACTIONS
+======================================== */
+
+body[data-lesson-view="teacher"]
+.teacher-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+body[data-lesson-view="teacher"]
+.copy-student-lesson-link-button {
+  min-height: 38px;
+  padding: 7px 12px;
+
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+
+  background: #38bdf8;
+  color: #082032;
+
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+body[data-lesson-view="teacher"]
+.copy-student-lesson-link-status {
+  min-width: 48px;
+
+  color: #86efac;
+
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-header-actions
+.lesson-progress {
+  width: 170px;
+}
+
+/* ========================================
+   TEACHER LESSON VIEWPORT
+   SINGLE-SCREEN CLASSROOM LAYOUT
+======================================== */
+
+body[data-lesson-view="teacher"] {
+  margin: 0;
+
+  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
+}
+
+body[data-lesson-view="teacher"]
+.lesson-shell {
+  width: min(1180px, calc(100% - 24px));
+
+  height: 100vh;
+  height: 100dvh;
+
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 10px 0;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  grid-template-rows:
+    auto
+    auto
+    minmax(0, 1fr)
+    auto;
+
+  gap: 8px;
+
+  overflow: hidden;
+}
+
+
+/* Header */
+
+body[data-lesson-view="teacher"]
+.lesson-header {
+  margin: 0;
+
+  padding: 4px 8px;
+
+  min-height: 0;
+
+  align-items: center;
+}
+
+body[data-lesson-view="teacher"]
+.lesson-title {
+  font-size:
+    clamp(
+      1.45rem,
+      2.6vw,
+      2rem
+    );
+}
+
+body[data-lesson-view="teacher"]
+.lesson-eyebrow {
+  margin-bottom: 2px;
+}
+
+
+/* Put classroom controls directly
+   underneath the header. */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-panel {
+  grid-row: 2;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 8px 12px;
+
+  box-sizing: border-box;
+
+  border-radius: 14px;
+}
+
+
+/* Lesson card owns the flexible
+   center of the screen. */
+
+body[data-lesson-view="teacher"]
+.lesson-card {
+  grid-row: 3;
+
+  min-height: 0;
+  height: 100%;
+
+  grid-template-columns:
+    minmax(220px, 270px)
+    minmax(0, 1fr);
+
+  overflow: hidden;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-panel {
+  min-height: 0;
+
+  padding: 18px;
+
+  overflow: auto;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-panel h2 {
+  margin-bottom: 10px;
+
+  font-size:
+    clamp(
+      1.25rem,
+      2vw,
+      1.55rem
+    );
+}
+
+body[data-lesson-view="teacher"]
+.teacher-prompt {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+
+/* Activity preview fits the available
+   center region. */
+
+body[data-lesson-view="teacher"]
+.lesson-activity {
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  padding: 10px 14px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+body[data-lesson-view="teacher"]
+.lesson-activity > * {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+/* Navigation always stays visible */
+
+body[data-lesson-view="teacher"]
+.lesson-controls {
+  grid-row: 4;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 6px 8px;
+
+  min-height: 48px;
+
+  box-sizing: border-box;
+}
+
+
+/* Compact classroom controls */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-panel {
+  grid-template-columns:
+    minmax(150px, 1fr)
+    auto
+    1px
+    minmax(150px, 1fr)
+    auto
+    auto;
+
+  gap: 10px;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-sync-label {
+  font-size: 0.72rem;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-sync-status {
+  font-size: 0.72rem;
+}
+
+body[data-lesson-view="teacher"]
+.teacher-unlock-button {
+  min-height: 36px;
+
+  padding: 6px 10px;
+}
+
+
+/* Short-height screens */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-shell {
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    gap: 6px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .teacher-sync-panel {
+    padding: 6px 10px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .teacher-panel {
+    padding: 14px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity {
+    padding: 6px 10px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-controls {
+    min-height: 44px;
+  }
+}
