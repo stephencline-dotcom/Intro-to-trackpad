@@ -18617,3 +18617,20 @@ cat >> lesson-shell.css <<'EOF'
     height: 95px;
   }
 }
+
+/* ========================================
+   WEEK 1 — STEPS 1 & 2
+   USE AVAILABLE VERTICAL SPACE
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-find-trackpad),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.lesson-pointer-finger-step) {
+    align-items: flex-start;
+    padding-top: 22px;
+  }
+}
