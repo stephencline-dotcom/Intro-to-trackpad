@@ -60,6 +60,92 @@ const lessonProgressText =
 const lessonProgressFill =
   document.getElementById('lessonProgressFill');
 
+/* ========================================
+   STUDENT WRONG-CLICK GUARD
+   Two-finger / right-click warning
+======================================== */
+
+let oneFingerWarningTimeoutId = 0;
+
+function showOneFingerClickWarning() {
+  let warning =
+    document.getElementById(
+      'oneFingerClickWarning'
+    );
+
+  if (!warning) {
+    warning =
+      document.createElement('div');
+
+    warning.id =
+      'oneFingerClickWarning';
+
+    warning.className =
+      'one-finger-click-warning';
+
+    warning.setAttribute(
+      'role',
+      'status'
+    );
+
+    warning.setAttribute(
+      'aria-live',
+      'polite'
+    );
+
+    warning.innerHTML = `
+      <div class="one-finger-click-warning-icon">
+        ☝️
+      </div>
+
+      <div>
+        <strong>ONE FINGER ONLY!</strong>
+        <span>Use your pointer finger to click.</span>
+      </div>
+    `;
+
+    document.body.appendChild(
+      warning
+    );
+  }
+
+  warning.classList.remove(
+    'is-showing'
+  );
+
+  void warning.offsetWidth;
+
+  warning.classList.add(
+    'is-showing'
+  );
+
+  window.clearTimeout(
+    oneFingerWarningTimeoutId
+  );
+
+  oneFingerWarningTimeoutId =
+    window.setTimeout(
+      () => {
+        warning.classList.remove(
+          'is-showing'
+        );
+      },
+      1800
+    );
+}
+
+if (lessonView === 'student') {
+  document.addEventListener(
+    'contextmenu',
+    (event) => {
+      event.preventDefault();
+
+      showOneFingerClickWarning();
+    },
+    true
+  );
+}
+
 const copyStudentLessonLinkButton =
   document.getElementById(
     'copyStudentLessonLinkButton'
