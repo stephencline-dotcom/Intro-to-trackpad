@@ -19862,3 +19862,95 @@ body[data-lesson-view="teacher"]
     margin-top: 6px;
   }
 }
+
+/* ========================================
+   WEEK 4 — STUDENT FULL LESSON FIT
+   Slides 1–7
+======================================== */
+
+@media (max-height: 800px) {
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-review-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-follow-click-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-moving-search-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-maze-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-sequence-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-wait-green-step),
+
+  body[data-lesson-view="student"]
+  .lesson-activity:has(.week4-reveal-step) {
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+
+
+  /* Scale complete Week 4 student slides */
+
+  body[data-lesson-view="student"]
+  .week4-review-step,
+
+  body[data-lesson-view="student"]
+  .week4-follow-click-step,
+
+  body[data-lesson-view="student"]
+  .week4-moving-search-step,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step,
+
+  body[data-lesson-view="student"]
+  .week4-reveal-step {
+    transform: scale(0.78);
+    transform-origin: top center;
+
+    flex: 0 0 auto;
+  }
+
+
+  /* Keep the large interactive regions
+     inside the Chromebook activity area. */
+
+  body[data-lesson-view="student"]
+  .week4-follow-click-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-moving-search-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-maze-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-sequence-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-wait-green-step
+  .week4-activity-area,
+
+  body[data-lesson-view="student"]
+  .week4-reveal-step
+  .reveal-practice-area {
+    height: 315px;
+    margin-top: 6px;
+  }
+}
