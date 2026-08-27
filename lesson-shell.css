@@ -18495,3 +18495,125 @@ cat >> lesson-shell.css <<'EOF'
   }
 }
 
+
+/* ========================================
+   WEEK 1 — STEPS 1 & 2
+   CHROMEBOOK HEIGHT FIT
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Step 1 — Find Your Trackpad */
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad {
+    max-height: 100%;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-trackpad h2 {
+    font-size:
+      clamp(1.7rem, 3.6vw, 2.5rem);
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-visual {
+    width: min(540px, 90%);
+    margin-top: 6px;
+    padding: 12px 18px 12px;
+  }
+
+  body[data-lesson-view="student"]
+  .chromebook-keyboard {
+    width: min(460px, 92%);
+    padding: 10px;
+  }
+
+  body[data-lesson-view="student"]
+  .keyboard-row {
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  body[data-lesson-view="student"]
+  .keyboard-row span {
+    height: 24px;
+  }
+
+  body[data-lesson-view="student"]
+  .keyboard-space-key {
+    height: 22px;
+  }
+
+  body[data-lesson-view="student"]
+  .trackpad-pointer {
+    height: 52px;
+  }
+
+  body[data-lesson-view="student"]
+  .trackpad-arrow {
+    font-size: 3.2rem;
+  }
+
+  body[data-lesson-view="student"]
+  .generic-trackpad {
+    height: 105px;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-find-challenge {
+    margin-top: 8px;
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+
+  /* Step 2 — Pointer Finger */
+
+  body[data-lesson-view="student"]
+  .lesson-pointer-finger-step {
+    max-height: 100%;
+  }
+
+  body[data-lesson-view="student"]
+  .lesson-pointer-finger-step h2 {
+    font-size:
+      clamp(1.7rem, 3.6vw, 2.5rem);
+  }
+
+  body[data-lesson-view="student"]
+  .pointer-finger-visual {
+    width: min(590px, 92%);
+    margin-top: 8px;
+    gap: 18px;
+  }
+
+  body[data-lesson-view="student"]
+  .pointer-hand-card,
+
+  body[data-lesson-view="student"]
+  .pointer-trackpad-card {
+    min-height: 205px;
+    padding: 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .pointer-hand-emoji {
+    font-size: 5rem;
+  }
+
+  body[data-lesson-view="student"]
+  .pointer-finger-arrow {
+    font-size: 2.3rem;
+  }
+
+  body[data-lesson-view="student"]
+  .finger-demo {
+    height: 170px;
+  }
+
+  body[data-lesson-view="student"]
+  .pointer-trackpad-small {
+    height: 95px;
+  }
+}
