@@ -78,6 +78,35 @@
     </section>
 
     <section
+      id="teacherToolbar"
+      class="teacher-toolbar"
+      aria-label="Teacher classroom controls"
+    >
+      <div class="teacher-toolbar-link">
+        <input
+          id="studentLinkInput"
+          class="teacher-toolbar-link-input"
+          type="text"
+          readonly
+          aria-label="Student lesson link"
+        />
+
+        <button
+          id="copyStudentLinkButton"
+          class="teacher-toolbar-button"
+          type="button"
+        >
+          Copy Student Link
+        </button>
+
+        <span
+          id="studentLinkStatus"
+          class="teacher-toolbar-status"
+          aria-live="polite"
+        ></span>
+      </div>
+
+    <section
       id="teacherSyncPanel"
       class="teacher-sync-panel"
       aria-label="Teacher Sync controls"
