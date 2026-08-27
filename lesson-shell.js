@@ -1614,13 +1614,40 @@ function initializeRevealPractice() {
     const bounds =
       canvas.getBoundingClientRect();
 
+    /*
+     * Convert screen-space pointer coordinates
+     * back into the reveal area's unscaled
+     * drawing coordinates.
+     *
+     * Teacher view scales the activity with CSS,
+     * so bounds.width / bounds.height can be
+     * smaller than revealWidth / revealHeight.
+     */
     const x =
-      event.clientX -
-      bounds.left;
+      (
+        event.clientX -
+        bounds.left
+      ) *
+      (
+        revealWidth /
+        Math.max(
+          bounds.width,
+          1
+        )
+      );
 
     const y =
-      event.clientY -
-      bounds.top;
+      (
+        event.clientY -
+        bounds.top
+      ) *
+      (
+        revealHeight /
+        Math.max(
+          bounds.height,
+          1
+        )
+      );
 
     context.beginPath();
 
