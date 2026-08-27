@@ -19489,3 +19489,17 @@ body[data-lesson-view="teacher"]
       scale(0.60);
   }
 }
+
+/* ========================================
+   STUDENT VIEW — HIDE TEACHER HEADER TOOLS
+======================================== */
+
+body[data-lesson-view="student"]
+.teacher-header-actions
+.copy-student-lesson-link-button,
+
+body[data-lesson-view="student"]
+.teacher-header-actions
+.copy-student-lesson-link-status {
+  display: none !important;
+}
