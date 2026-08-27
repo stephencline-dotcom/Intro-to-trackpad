@@ -19391,3 +19391,101 @@ body[data-lesson-view="teacher"]
 
   font-size: 0.74rem;
 }
+
+/* ========================================
+   TEACHER CLASSROOM VIEW
+   FINAL CONTROL + PREVIEW PLACEMENT
+======================================== */
+
+/* Release is now genuinely inside the
+   classroom control panel. */
+
+body[data-lesson-view="teacher"]
+#teacherPracticeReleaseButton {
+  position: static;
+
+  top: auto;
+  right: auto;
+
+  min-width: 175px;
+  min-height: 36px;
+
+  margin: 0;
+  padding: 6px 10px;
+
+  justify-self: end;
+}
+
+
+/* No artificial empty space is needed now. */
+
+body[data-lesson-view="teacher"]
+.teacher-sync-panel {
+  padding-right: 10px;
+
+  grid-template-columns:
+    minmax(145px, 1fr)
+    auto
+    1px
+    minmax(145px, 1fr)
+    auto
+    auto
+    auto;
+}
+
+
+/* The bottom bar now contains exactly
+   Previous / Lesson Home / Next. */
+
+body[data-lesson-view="teacher"]
+.lesson-controls {
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+}
+
+
+/* Give the activity preview the full
+   available vertical region. */
+
+body[data-lesson-view="teacher"]
+.lesson-activity {
+  align-items: flex-start;
+
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+
+/*
+ * Scaling visually shrinks an element but
+ * normally leaves its original layout height.
+ * Pull the scaled preview upward and remove
+ * unnecessary margins so its complete content
+ * fits inside the teacher presentation area.
+ */
+
+@media (max-height: 900px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity > * {
+    margin-top: 0 !important;
+
+    transform:
+      translateY(-4px)
+      scale(0.66);
+
+    transform-origin: top center;
+  }
+}
+
+@media (max-height: 760px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity > * {
+    transform:
+      translateY(-4px)
+      scale(0.60);
+  }
+}

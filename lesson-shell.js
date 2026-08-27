@@ -671,6 +671,25 @@ const teacherPracticeReleaseButton =
     'teacherPracticeReleaseButton'
   );
 
+/*
+ * Teacher classroom layout:
+ * move the existing Release button into
+ * the existing classroom control panel.
+ *
+ * This moves the actual DOM element rather
+ * than creating a copy, so its existing
+ * event listeners and Freeze behavior remain.
+ */
+if (
+  lessonView === 'teacher' &&
+  teacherSyncPanel &&
+  teacherPracticeReleaseButton
+) {
+  teacherSyncPanel.appendChild(
+    teacherPracticeReleaseButton
+  );
+}
+
 const TEACHER_FREEZE_KEY =
   'introTrackpadTeacherFreeze';
 
