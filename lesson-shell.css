@@ -19699,3 +19699,52 @@ body[data-lesson-view="student"]
     margin-top: 0;
   }
 }
+
+/* ========================================
+   WEEK 2 — STUDENT FINAL TIGHTENING
+   Steps 2 and 6 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Step 2 — Follow the Leader */
+
+  body[data-lesson-view="student"]
+  .follow-leader-area {
+    height: 260px;
+    margin-top: 3px;
+  }
+
+  body[data-lesson-view="student"]
+  .follow-leader-progress-wrap {
+    margin-top: 3px;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-follow-step
+  .star-step-reminder {
+    margin-top: 3px;
+    padding: 4px 10px;
+  }
+
+
+  /* Step 6 — Cursor Search */
+
+  body[data-lesson-view="student"]
+  .week2-search-step h2 {
+    font-size: 2.05rem;
+    line-height: 1.05;
+  }
+
+  body[data-lesson-view="student"]
+  .week2-search-step
+  .picture-target-prompt {
+    margin: 1px auto 3px;
+    padding: 4px 10px;
+  }
+
+  body[data-lesson-view="student"]
+  .scene-search-area {
+    height: 270px;
+  }
+}
