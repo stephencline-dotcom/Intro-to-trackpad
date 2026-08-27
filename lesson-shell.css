@@ -19749,34 +19749,19 @@ body[data-lesson-view="student"]
   }
 }
 
+
 /* ========================================
-   WEEK 2 — TEACHER STEP 6 POLISH
+   WEEK 2 — TEACHER STEP 6
+   LIGHT PRESENTATION ADJUSTMENT
 ======================================== */
 
-@media (max-height: 900px) {
+body[data-lesson-view="teacher"]
+.week2-search-step {
+  width: min(980px, 100%);
+}
 
-  body[data-lesson-view="teacher"]
-  .week2-search-step {
-    width: min(900px, 96%);
-  }
-
-  body[data-lesson-view="teacher"]
-  .week2-search-step h2 {
-    margin: 0 0 3px;
-    font-size: 2.05rem;
-    line-height: 1.05;
-  }
-
-  body[data-lesson-view="teacher"]
-  .week2-search-step
-  .picture-target-prompt {
-    margin: 2px auto 4px;
-    padding: 5px 12px;
-  }
-
-  body[data-lesson-view="teacher"]
-  .scene-search-area {
-    height: 300px;
-    margin-top: 2px;
-  }
+body[data-lesson-view="teacher"]
+.week2-search-step
+.scene-search-area {
+  width: min(900px, 96%);
 }
