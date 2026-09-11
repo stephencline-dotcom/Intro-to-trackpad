@@ -120,6 +120,61 @@
         'lesson.html?view=student';
     }
 
+    /*
+     * Prepare lesson audio during the
+     * student's existing Start Lesson click.
+     * This allows movement-only activities
+     * to play sounds without another prompt.
+     */
+    const studentLessonSoundPrimer =
+      new Audio(
+        'sounds/sparkle.mp3'
+      );
+
+    studentLessonSoundPrimer.preload =
+      'auto';
+
+    studentLessonSoundPrimer.volume =
+      0.18;
+
+    studentHomeStart.addEventListener(
+      'click',
+      async (event) => {
+        event.preventDefault();
+
+        const destination =
+          studentHomeStart.href;
+
+        try {
+          studentLessonSoundPrimer.currentTime =
+            0;
+
+          await studentLessonSoundPrimer.play();
+
+          /*
+           * Give the browser a moment to
+           * register audio playback before
+           * opening the lesson page.
+           */
+          window.setTimeout(
+            () => {
+              window.location.href =
+                destination;
+            },
+            140
+          );
+        } catch {
+          /*
+           * Never prevent a student from
+           * entering the lesson if audio
+           * happens to be unavailable.
+           */
+          window.location.href =
+            destination;
+        }
+      }
+    );
+
     updateStudentHome();
   </script>
 

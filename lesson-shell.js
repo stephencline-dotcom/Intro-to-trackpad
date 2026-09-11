@@ -162,7 +162,7 @@ if (
 ) {
   const studentUrl =
     new URL(
-      'lesson.html?view=student',
+      'student-home.html',
       window.location.href
     ).href;
 
