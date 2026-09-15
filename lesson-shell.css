@@ -9165,9 +9165,27 @@ EOFcat >> lesson-shell.css <<'EOF'
 
   /* Step 5 */
   body[data-lesson-view="student"]
-  .week5-hold-area {
-    height: 315px;
+  .week5-hold-practice-area {
+    width: min(820px, 92%);
+    height: 290px;
     margin-top: 6px;
+  }
+
+
+  body[data-lesson-view="student"]
+  .week5-target-step {
+    width: min(820px, 92%);
+  }
+
+  body[data-lesson-view="student"]
+  .week5-target-step h2 {
+    margin: 0 0 4px;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week5-target-step .lesson-kid-prompt {
+    margin: 2px 0 6px;
   }
 
   /* Step 6 */
@@ -20030,5 +20048,76 @@ body[data-lesson-view="teacher"]
 
   100% {
     scale: 1;
+  }
+}
+
+/* ========================================
+   WEEK 6 — STUDENT FIT
+   Step 7 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Step 7 — Picture Puzzle */
+  body[data-lesson-view="student"]
+  .week6-puzzle-area {
+    height: 350px;
+    min-height: 350px;
+  }
+}
+
+/* ========================================
+   WEEK 6 — STUDENT FIT FINAL
+   Steps 2 and 3 only
+======================================== */
+
+@media (max-height: 800px) {
+
+  /* Shared Slide 2 + 3 layout */
+  body[data-lesson-view="student"]
+  .week6-animal-step,
+
+  body[data-lesson-view="student"]
+  .week6-obstacle-step {
+    width: min(850px, 94%);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-animal-step h2,
+
+  body[data-lesson-view="student"]
+  .week6-obstacle-step h2 {
+    margin: 0 0 3px;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  body[data-lesson-view="student"]
+  .week6-animal-step
+  .lesson-kid-prompt,
+
+  body[data-lesson-view="student"]
+  .week6-obstacle-step
+  .lesson-kid-prompt {
+    margin: 2px 0 4px;
+  }
+
+  /* Slide 2 — Feed the Animals */
+  body[data-lesson-view="student"]
+  .week6-animal-area {
+    height: 315px;
+    margin: 4px auto 0;
+  }
+
+  /* Slide 3 — Obstacle Drag */
+  body[data-lesson-view="student"]
+  .week6-obstacle-prompt {
+    margin: 4px auto 5px;
+    padding: 5px 14px;
+  }
+
+  body[data-lesson-view="student"]
+  .week6-obstacle-area {
+    height: 315px;
+    margin: 4px auto 0;
   }
 }
