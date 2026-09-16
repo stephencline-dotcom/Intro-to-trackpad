@@ -20394,3 +20394,43 @@ body[data-lesson-view="teacher"]
   display: none !important;
 }
 
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 1 FIT
+   Slides 1, 3, 4, 5, 6 + 7 only.
+   Slide 2 and student view remain unchanged.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-find-trackpad,
+
+body[data-lesson-view="teacher"]
+.lesson-arrow-step,
+
+body[data-lesson-view="teacher"]
+.lesson-star-step,
+
+body[data-lesson-view="teacher"]
+.lesson-path-step,
+
+body[data-lesson-view="teacher"]
+.lesson-find-picture-step,
+
+body[data-lesson-view="teacher"]
+.lesson-reveal-step {
+  transform: scale(0.92) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 1 SLIDE 1 FINAL FIT
+   Slightly reduce only Meet the Trackpad.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-find-trackpad {
+  transform: scale(0.88) !important;
+  transform-origin: top center !important;
+}
+
