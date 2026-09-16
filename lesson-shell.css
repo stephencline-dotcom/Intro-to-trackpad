@@ -20434,3 +20434,146 @@ body[data-lesson-view="teacher"]
   transform-origin: top center !important;
 }
 
+
+/* ==========================================================
+   TEACHER PRESENTATION — SMALL VIEWPORT RESPONSIVE FIT
+   Keep Render / Chromebook-sized windows visually consistent.
+   ========================================================== */
+
+@media (max-height: 700px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-shell {
+    width: min(1180px, calc(100% - 12px));
+    padding-top: 4px;
+    padding-bottom: 4px;
+    gap: 4px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-header {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body[data-lesson-view="teacher"]
+  .teacher-sync-panel {
+    min-height: 42px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-controls {
+    min-height: 42px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity > * {
+    transform-origin: top center !important;
+  }
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — SMALL DISPLAY FIT
+   For 1280x720 / high-DPI classroom displays.
+   Leaves normal desktop teacher view unchanged.
+   ========================================================== */
+
+@media (max-width: 800px), (max-height: 650px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-shell {
+    width: calc(100% - 10px);
+    padding-top: 3px;
+    padding-bottom: 3px;
+    gap: 4px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-header {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body[data-lesson-view="teacher"]
+  .teacher-sync-panel {
+    min-height: 40px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-controls {
+    min-height: 40px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity {
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  body[data-lesson-view="teacher"]
+  .lesson-activity > * {
+    transform: scale(0.84) !important;
+    transform-origin: top center !important;
+  }
+}
+
+
+/* Small classroom display — final size adjustment */
+@media (max-width: 800px), (max-height: 650px) {
+  body[data-lesson-view="teacher"]
+  .lesson-activity > * {
+    transform: scale(0.80) !important;
+    transform-origin: top center !important;
+  }
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 1 SMALL DISPLAY FINAL TWEAK
+   Slides 1, 4, and 6 only.
+   ========================================================== */
+
+@media (max-width: 800px), (max-height: 650px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-find-trackpad,
+
+  body[data-lesson-view="teacher"]
+  .lesson-star-step,
+
+  body[data-lesson-view="teacher"]
+  .lesson-find-picture-step {
+    transform: scale(0.76) !important;
+    transform-origin: top center !important;
+  }
+}
+
+
+/* Week 1 small display — slides 4 + 6 final tiny adjustment */
+@media (max-width: 800px), (max-height: 650px) {
+
+  body[data-lesson-view="teacher"]
+  .lesson-star-step,
+
+  body[data-lesson-view="teacher"]
+  .lesson-find-picture-step {
+    transform: scale(0.73) !important;
+    transform-origin: top center !important;
+  }
+}
+
