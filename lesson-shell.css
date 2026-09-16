@@ -20121,3 +20121,276 @@ body[data-lesson-view="teacher"]
     margin: 4px auto 0;
   }
 }
+
+/* ==========================================================
+   TEACHER PRESENTATION VIEW
+   Full student-style lesson with teacher controls
+   ========================================================== */
+
+body[data-lesson-view="teacher"] .lesson-card {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+body[data-lesson-view="teacher"] .teacher-panel {
+  display: none;
+}
+
+body[data-lesson-view="teacher"] .lesson-activity {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  padding: 8px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/*
+ * Teacher presentation now shows the real lesson size.
+ * Do not use the old scaled-down teacher preview.
+ */
+body[data-lesson-view="teacher"] .lesson-activity > * {
+  transform: none !important;
+  transform-origin: center center !important;
+
+  margin-top: 0 !important;
+
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*
+ * Keep the teacher header compact so the lesson remains
+ * the visual focus of the presentation.
+ */
+body[data-lesson-view="teacher"] .lesson-header {
+  padding: 2px 8px;
+}
+
+body[data-lesson-view="teacher"] .lesson-title {
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+}
+
+/*
+ * Keep classroom controls compact while still visible
+ * during presentation.
+ */
+body[data-lesson-view="teacher"] .teacher-sync-panel {
+  min-height: 48px;
+  padding: 5px 10px;
+}
+
+/*
+ * Bottom navigation remains available at all times.
+ */
+body[data-lesson-view="teacher"] .lesson-controls {
+  min-height: 48px;
+  padding: 5px 8px;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — ACTIVITY BREATHING ROOM
+   Keep student-style presentation, slightly reduce visuals.
+   ========================================================== */
+
+body[data-lesson-view="teacher"] .lesson-activity > * {
+  transform: scale(0.92) !important;
+  transform-origin: center center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — REMOVE ACTIVITY HEADINGS
+   Teacher already sees lesson context in the top header.
+   Student lesson headings remain unchanged.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-activity > * > h2:first-child {
+  display: none !important;
+}
+
+/*
+ * Use the space recovered from the activity heading.
+ * Restore the activity to full size instead of shrinking it.
+ */
+body[data-lesson-view="teacher"]
+.lesson-activity {
+  align-items: flex-start;
+  padding-top: 6px;
+}
+
+body[data-lesson-view="teacher"]
+.lesson-activity > * {
+  transform: none !important;
+  transform-origin: top center !important;
+  margin-top: 0 !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 2 VERTICAL FIT
+   Preserve activity size; remove wasted vertical spacing.
+   ========================================================== */
+
+/* Follow the Leader — keep the full-size play area */
+body[data-lesson-view="teacher"]
+.week2-follow-step
+.follow-leader-area {
+  height: 360px;
+  margin-top: 4px;
+}
+
+/* Pull progress information closer to the activity */
+body[data-lesson-view="teacher"]
+.week2-follow-step
+.follow-leader-progress-wrap {
+  margin-top: 3px;
+}
+
+/* Keep the reminder visible above teacher navigation */
+body[data-lesson-view="teacher"]
+.week2-follow-step
+.star-step-reminder {
+  margin-top: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 2 SLIDES 6 + 7 VERTICAL FIT
+   Match the Follow the Leader treatment:
+   keep activity size, remove wasted vertical spacing.
+   ========================================================== */
+
+/* Slide 6 — Cursor Search */
+body[data-lesson-view="teacher"]
+.week2-search-step
+.scene-search-area {
+  margin-top: 4px;
+}
+
+body[data-lesson-view="teacher"]
+.week2-search-step
+.picture-target-prompt {
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+body[data-lesson-view="teacher"]
+.week2-search-step
+.star-step-reminder {
+  margin-top: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  transform: none;
+}
+
+/* Slide 7 — use the same compact teacher spacing */
+body[data-lesson-view="teacher"]
+.lesson-activity > *:last-child
+.star-step-reminder {
+  margin-top: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — HIDE ALL ACTIVITY H2 HEADINGS
+   Handles Week 5 slides where a badge appears before the H2.
+   Student view remains unchanged.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-activity > * > h2 {
+  display: none !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — FINAL ACTIVITY SIZE TUNING
+   Slightly reduce teacher visuals without affecting students.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.lesson-activity > * {
+  transform: scale(0.96) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 5 SLIDES 7 + 8
+   Slightly reduce only these two large activities.
+   Student view remains unchanged.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.week5-sort-step,
+body[data-lesson-view="teacher"]
+.week5-puzzle-step {
+  transform: scale(0.92) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 5 SLIDE 8 FINAL FIT
+   Slightly reduce only Build the Picture.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.week5-puzzle-step {
+  transform: scale(0.88) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 6 SLIDES 2, 3 + 7
+   Slightly reduce only the oversized teacher activities.
+   Student view remains unchanged.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.week6-animal-step,
+body[data-lesson-view="teacher"]
+.week6-obstacle-step,
+body[data-lesson-view="teacher"]
+.week6-puzzle-step {
+  transform: scale(0.92) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 6 SLIDE 3 FINAL FIT
+   Slightly reduce only Obstacle Drag.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.week6-obstacle-step {
+  transform: scale(0.88) !important;
+  transform-origin: top center !important;
+}
+
+
+/* ==========================================================
+   TEACHER PRESENTATION — WEEK 6 SLIDE 3
+   Hide the CONTROL CHALLENGE badge.
+   ========================================================== */
+
+body[data-lesson-view="teacher"]
+.week6-obstacle-step
+.week5-big-badge {
+  display: none !important;
+}
+
