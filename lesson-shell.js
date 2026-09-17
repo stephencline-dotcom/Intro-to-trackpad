@@ -6795,13 +6795,35 @@ function initializeWeek5TargetPractice() {
       const starRect =
         star.getBoundingClientRect();
 
+      /*
+       * Teacher presentation view can scale
+       * the complete activity. Convert the
+       * rendered pointer offset back into the
+       * star's unscaled local coordinates.
+       */
+      const starScaleX =
+        star.offsetWidth > 0
+          ? starRect.width /
+            star.offsetWidth
+          : 1;
+
+      const starScaleY =
+        star.offsetHeight > 0
+          ? starRect.height /
+            star.offsetHeight
+          : 1;
+
       offsetX =
-        event.clientX -
-        starRect.left;
+        (
+          event.clientX -
+          starRect.left
+        ) / starScaleX;
 
       offsetY =
-        event.clientY -
-        starRect.top;
+        (
+          event.clientY -
+          starRect.top
+        ) / starScaleY;
 
       holding = true;
       dragging = false;
@@ -6837,22 +6859,50 @@ function initializeWeek5TargetPractice() {
       const areaRect =
         area.getBoundingClientRect();
 
+      /*
+       * getBoundingClientRect() reports the
+       * visually scaled teacher dimensions,
+       * while style.left and style.top use
+       * the activity's unscaled dimensions.
+       */
+      const areaScaleX =
+        area.offsetWidth > 0
+          ? areaRect.width /
+            area.offsetWidth
+          : 1;
+
+      const areaScaleY =
+        area.offsetHeight > 0
+          ? areaRect.height /
+            area.offsetHeight
+          : 1;
+
+      const localPointerX =
+        (
+          event.clientX -
+          areaRect.left
+        ) / areaScaleX;
+
+      const localPointerY =
+        (
+          event.clientY -
+          areaRect.top
+        ) / areaScaleY;
+
       const x =
-        event.clientX -
-        areaRect.left -
+        localPointerX -
         offsetX;
 
       const y =
-        event.clientY -
-        areaRect.top -
+        localPointerY -
         offsetY;
 
       const maxX =
-        areaRect.width -
+        area.clientWidth -
         star.offsetWidth;
 
       const maxY =
-        areaRect.height -
+        area.clientHeight -
         star.offsetHeight;
 
       const clampedX =
