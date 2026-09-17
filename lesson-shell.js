@@ -1052,21 +1052,61 @@ function initializeStarPractice() {
     const rect =
       area.getBoundingClientRect();
 
+    /*
+     * Teacher presentation view scales the
+     * activity visually. Convert the cursor
+     * from rendered screen coordinates into
+     * the area's unscaled local coordinates.
+     */
+    const scaleX =
+      area.offsetWidth > 0
+        ? rect.width /
+          area.offsetWidth
+        : 1;
+
+    const scaleY =
+      area.offsetHeight > 0
+        ? rect.height /
+          area.offsetHeight
+        : 1;
+
+    const localX =
+      (
+        event.clientX -
+        rect.left
+      ) / scaleX -
+      area.clientLeft;
+
+    const localY =
+      (
+        event.clientY -
+        rect.top
+      ) / scaleY -
+      area.clientTop;
+
+    const halfStarWidth =
+      star.offsetWidth / 2;
+
+    const halfStarHeight =
+      star.offsetHeight / 2;
+
     const x =
       Math.max(
-        45,
+        halfStarWidth,
         Math.min(
-          rect.width - 45,
-          event.clientX - rect.left
+          area.clientWidth -
+            halfStarWidth,
+          localX
         )
       );
 
     const y =
       Math.max(
-        45,
+        halfStarHeight,
         Math.min(
-          rect.height - 45,
-          event.clientY - rect.top
+          area.clientHeight -
+            halfStarHeight,
+          localY
         )
       );
 
