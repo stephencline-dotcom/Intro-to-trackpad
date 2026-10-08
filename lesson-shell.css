@@ -20577,3 +20577,17 @@ body[data-lesson-view="teacher"]
   }
 }
 
+
+/* Week 3 CLICK card - point index fingertip at trackpad */
+.click-sequence-step[data-click-step="click"] .click-demo-finger {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
+
+
+/* Week 3 CLICK card - align fingertip with trackpad */
+.click-sequence-step[data-click-step="click"] .click-demo-finger {
+  left: 50%;
+  translate: -50% 0;
+}
+
